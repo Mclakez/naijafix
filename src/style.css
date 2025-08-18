@@ -1,1 +1,5 @@
 @import "tailwindcss";
+
+.card{
+  @apply bg-white rounded-2xl overflow-hidden shadow-md relative hover:shadow-2xl;
+}
