@@ -2,9 +2,11 @@ import sqlite3 from 'sqlite3'
 import { open } from 'sqlite'
 import path from 'node:path'
 
+let db;
+
 export async function inItDb() {
     const dbPath = path.join('database.db')
-    const db = await open({
+    db = await open({
         filename: dbPath,
         driver: sqlite3.Database
     })
@@ -43,4 +45,9 @@ export async function inItDb() {
             }
 }
 
-inItDb()
+
+
+export function getDB() {
+    if(!db) throw new Error('Database not initialized')
+        return db
+}
