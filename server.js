@@ -1,7 +1,7 @@
 import dotenv from "dotenv"
 dotenv.config()
 import express from 'express'
-import { router } from "./public/routes/authRoutes.js"
+import { authRouter } from "./public/routes/authRoutes.js"
 import { inItDb } from './public/config/db.js'
 
 const PORT = 4000
@@ -11,7 +11,7 @@ app.use(express.json())
 
 async function startServer() {
     await inItDb();
-    app.use("/api/auth", router);
+    app.use("/api/auth", authRouter);
 
     app.get('/', (req, res) => {
         res.send("API is running...");
