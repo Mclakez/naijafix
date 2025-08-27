@@ -18,7 +18,9 @@ export async function requireAuth(req, res, next) {
 }
 
 export async function requireOfficer(req, res, next) {
-    if(req.user.role !== 'officer') {
+    const user = await req.user
+    const role = user.role
+    if(role !== 'officer') {
         return res.status(403).json({error: "Officer role required"})
     }
     next()

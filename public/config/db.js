@@ -1,6 +1,7 @@
 import sqlite3 from 'sqlite3'
 import { open } from 'sqlite'
 import path from 'node:path'
+import bcrypt from 'bcrypt'
 
 let db;
 
@@ -37,17 +38,18 @@ export async function inItDb() {
 
             const officer = await db.get(`SELECT * FROM users WHERE role="officer"`)
             if(!officer) {
+                const hashedPassword = await bcrypt.hash("password123", 10)
                 await db.run(`
                    INSERT INTO users(username, password, role)
                    VALUES(?, ?, ?)  
-                    `, ["officer1", "password123", "officer"]);
+                    `, ["officer1", hashedPassword, "officer"]);
                     console.log("Seeded default officer: officer1 / password123")
             }
 }
 
 
 
-export function getDB() {
+export async function getDB() {
     if(!db) throw new Error('Database not initialized')
-        return db
+    return db
 }

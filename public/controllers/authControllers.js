@@ -5,7 +5,7 @@ import { generateToken } from '../config/jwt.js'
 
 export async function signup(req, res) {
     const { username, password } = req.body
-    let db = getDB()
+    let db = await getDB()
     try {
         const existing = await db.get("SELECT * FROM users WHERE username = ?", [username])
         if(existing) {
@@ -20,7 +20,8 @@ export async function signup(req, res) {
             `, [username, hashed, 'citizen'])
 
             const user = await db.get("SELECT id, username, role FROM users WHERE id = ?", [result.lastID])
-            const token = generateToken(user)
+            
+            const token = await generateToken(user)
             res.json({user, token})
 
         
@@ -32,7 +33,7 @@ export async function signup(req, res) {
 
 export async function login(req, res) {
     const { username, password } = req.body
-    let db = getDB()
+    let db = await getDB()
     try {
         const user = await db.get(`
             SELECT * FROM users WHERE username = ?
@@ -41,11 +42,13 @@ export async function login(req, res) {
                return res.status(400).json({error: 'Invalid credentials'})
             }
 
+            
+
             const match = await bcrypt.compare(password, user.password)
             if(!match) {
                 return res.status(400).json({error: 'Invalid credentials'})
             }
-            const token = generateToken(user)
+            const token = await generateToken(user)
             res.json({ user: {id: user.id, username: user.username, role: user.role}, token})
     } catch(err) {
         res.status(500).json({error: err.message})
