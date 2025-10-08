@@ -1,4 +1,7 @@
 @import "tailwindcss";
+@theme {
+  --color-naija-yellow: #ffcd39;
+}
 
 .card{
   @apply bg-white rounded-2xl overflow-hidden shadow-md relative hover:shadow-2xl;
