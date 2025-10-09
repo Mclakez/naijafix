@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./output.css" rel="stylesheet">
+    <title>Login page</title>
+</head>
+<body>
+    <div>
+        <img src="./images/nfix1.png" alt="logo" srcset="" class="w-25 mt-8 mb-16 mx-auto">
+
+        <main class="grid gap-8 px-4 place-items-center">
+
+            <article class="grid place-items-center gap-2">
+            <img src="./images/nfix4.png" alt="short-logo" srcset="" class="w-25 mt-8 ml-4">
+            <h1 class="text-3xl font-bold">Welcome to Naijafix</h1>
+        </article>
+
+        <article class="grid gap-6">
+            
+            <div class="rounded-3xl w-full border border-gray-400 h-15 px-3 py-3  text-lg outline-none font-semibold relative">
+                <img src="./images/icons8-google-48.png" alt="short-logo" srcset="" class="w-8 absolute top-1/2 -translate-y-1/2 left-2">
+                <p class="text-2xl text-center">Continue with Google</p>
+            </div>
+
+            <p class="text-center text-base">or</p>
+
+            <div class="grid gap-6">
+                <div >
+                    <label for="phone-number" class="text-xl font-semibold">Phone number</label>
+                    <input id="phone-number" class="rounded-lg w-full border border-gray-400 h-15 px-3 py-3 placeholder:text-lg text-lg outline-none" placeholder="Enter phone number">
+                </div>
+
+                <div >
+                    <label for="password" class="text-xl font-semibold">Password</label>
+                    <input id="password" class="rounded-lg w-full border border-gray-400 h-15 px-3 py-3 placeholder:text-lg text-lg outline-none" placeholder="Enter password">
+                </div>
+
+                <button class="bg-green-800 flex justify-center py-3 rounded text-white font-semibold w-full">Login</button>
+            </div>
+        </article>
+        <p class="text-base text-center">Not a user yet? <a class="text-blue-500" href="./signup.html">Create an account</a></p>
+        </main>
+    </div>
+</body>
+</html>
