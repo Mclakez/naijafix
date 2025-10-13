@@ -3,15 +3,43 @@ const menuBtn = document.getElementById("menu-btn")
 const menu = document.getElementById("menu")
 const closeBtn = document.getElementById("close-btn")
 const reportSection = document.getElementById("report-section")
-const reportBackBtn = document.getElementById("report-back-btn")
+// const reportBackBtn = document.getElementById("report-back-btn")
 const overlay = document.getElementById("overlay")
 const text = document.getElementById("text")
 let expanded = false
+
+const uploadBox = document.getElementById('uploadBox')
+const imageInput = document.getElementById('imageInput')
+const previewImage = document.getElementById('previewImage')
+const uploadIcon = document.getElementById('uploadIcon')
+
+const detailsBtns = document.querySelectorAll('.details-btn')
+const detailsSection = document.getElementById('details-section')
+const commentSection = document.getElementById('comment-section')
+
+uploadBox.addEventListener("click", () => {
+    imageInput.click()
+})
+
+imageInput.addEventListener("change", function() {
+    const file = this.files[0]
+    if(file) {
+        const reader = new FileReader()
+        reader.onload = function(e) {
+            previewImage.src = e.target.result
+            previewImage.classList.remove("hidden")
+            uploadIcon.classList.add("hidden")
+        }
+
+        reader.readAsDataURL(file)
+    }
+})
 
 addBtn.addEventListener("click", () => {
     if(reportSection.classList.contains('hidden')) {
         reportSection.classList.remove("hidden")
         document.body.classList.add("overflow-y-hidden")
+        console.log("I work, im just not working")
     }
     
 })
@@ -24,10 +52,12 @@ closeBtn.addEventListener("click", () => {
     menu.classList.add('hidden')
 })
 
-reportBackBtn.addEventListener("click", () => {
-    reportSection.classList.add("hidden")
-    document.body.classList.remove("overflow-y-hidden")
-})
+// reportBackBtn.addEventListener("click", () => {
+//     reportSection.classList.add("hidden")
+//     document.body.classList.remove("overflow-y-hidden")
+// })
+
+
 
 overlay.addEventListener("click", () => {
     expanded = !expanded
@@ -56,3 +86,23 @@ document.querySelector(".comment-container").addEventListener("click", (e) => {
 //   button.setAttribute("aria-expanded", expanded ? "true" : "false");
   button.textContent = expanded ? "see less" : "see more";
 });
+
+detailsBtns.forEach(detailsBtn => {
+    detailsBtn.addEventListener("click", () => {
+        detailsSection.classList.remove("hidden")
+        console.log('details-btn');
+        
+    })
+})
+
+document.addEventListener("click", (e) => {
+    let backBtn = e.target.closest(".back-btn")
+    if(!backBtn) return
+
+    let section = backBtn.closest("section")
+    section.classList.add("hidden")
+})
+
+document.getElementById("leave-comment-btn").addEventListener("click", () => {
+    commentSection.classList.remove("hidden")
+})

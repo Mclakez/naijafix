@@ -13,23 +13,23 @@
     <header class="bg-green-800 flex justify-between items-center px-4 py-6">
       <img src="./images/nfix3.png" alt="logo" class="w-40 ">
       <nav>
-        <div id="menu" class="fixed overflow-y-hidden top-0 left-0 h-screen w-full bg-white z-100 hidden" >
-           <div class="text-black text-xl flex justify-end py-8 px-8 mb-16">
+        <div id="menu" class="fixed overflow-y-hidden top-0 left-0 h-screen w-full bg-white z-100 sm:hidden md:relative md:flex md:h-fit md:bg-transparent" >
+           <div class="text-black text-xl flex justify-end py-8 px-8 mb-16 md:hidden">
             <button id="close-btn">
               <img src="./images/icon-menu-close.svg" alt="cancel button" class="w-6">
            </button>
           </div>
-          <ul id="navlist" class="flex flex-col justify-center items-center gap-3 w-fit mx-auto">
-        <li><a href="./index.html" class="uppercase text-3xl font-semibold">Home</a></li>
-         <li><a href="./profile.html" class="uppercase text-3xl font-semibold">Profile</a></li>
-          <li><a href="./about.html" class="uppercase text-3xl font-semibold">About us</a></li>
-           <li><a href="./contact.html" class="uppercase text-3xl font-semibold">Contact us</a></li>
-           <button class="bg-green-800 flex justify-center py-3 rounded text-white font-semibold w-full text-xl"><a href="./login.html">Log out</a></button>
+          <ul id="navlist" class="flex flex-col justify-center items-center gap-3 w-fit mx-auto md:flex-row md:justify-between">
+        <li><a href="./index.html" class="uppercase text-3xl font-semibold md:text-lg md:text-white md:font-medium">Home</a></li>
+         <li><a href="./profile.html" class="uppercase text-3xl font-semibold md:text-lg md:text-white md:font-medium">Profile</a></li>
+          <li><a href="./about.html" class="uppercase text-3xl font-semibold md:text-lg md:text-white md:font-medium">About us</a></li>
+           <li><a href="./contact.html" class="uppercase text-3xl font-semibold md:text-lg md:text-white md:font-medium">Contact us</a></li>
+           <button class="bg-green-800 flex justify-center py-3 rounded text-white font-semibold w-full text-xl md:bg-white md:text-green-800"><a href="./login.html">Log out</a></button>
 
           
         </ul>
         </div>
-        <button id="menu-btn"><img src="./images/menu_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24 (1).svg" alt="hamburger" class="w-8" ></button>
+        <button id="menu-btn" class="md:hidden"><img src="./images/menu_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24 (1).svg" alt="hamburger" class="w-8" ></button>
       </nav>
     </header>
 
@@ -55,7 +55,7 @@
             Pending
           </div>
           <p>Lagos, Nigeria</p>
-          <button class="bg-green-800 flex justify-center py-3 rounded text-white font-semibold">View Details</button>
+          <button class="details-btn bg-green-800 flex justify-center py-3 rounded text-white font-semibold">View Details</button>
         </div>
       </article>
 
@@ -70,7 +70,7 @@
             Pending
           </div>
           <p>Lagos, Nigeria</p>
-          <button class="bg-green-800 flex justify-center py-3 rounded text-white font-semibold">View Details</button>
+          <button class="details-btn bg-green-800 flex justify-center py-3 rounded text-white font-semibold">View Details</button>
         </div>
       </article>
 
@@ -85,7 +85,7 @@
             Pending
           </div>
           <p>Lagos, Nigeria</p>
-          <button class="bg-green-800 flex justify-center py-3 rounded text-white font-semibold">View Details</button>
+          <button class="details-btn bg-green-800 flex justify-center py-3 rounded text-white font-semibold">View Details</button>
         </div>
       </article>
 
@@ -99,7 +99,7 @@
             Pending
           </div>
           <p>Lagos, Nigeria</p>
-          <button class="bg-green-800 flex justify-center py-3 rounded text-white font-semibold">View Details</button>
+          <button class="details-btn bg-green-800 flex justify-center py-3 rounded text-white font-semibold">View Details</button>
         </div>
       </article>
 
@@ -111,13 +111,15 @@
 
     </main>
 
-    <section id="report-section" class="fixed inset-0 bg-white w-full z-50 overflow-y-auto overflow-x-hidden hidden">
-      <div  class="bg-green-800 flex justify-between items-center px-4 py-6 text-white ">
-        <button class="text-xl cursor-pointer" id="report-back-btn">&larr;</button>
+    <section id="report-section" class="fixed inset-0 bg-white  z-50 overflow-y-auto overflow-x-hidden hidden">
+      <div  class="bg-green-800 flex justify-between items-center px-4 py-6 text-white  relative">
+        <button class="back-btn cursor-pointer" >&larr;</button>
         <h4 class="text-white font-semibold">Report issue</h4>
+        <div class="bg-green-500 text-center py-3 rounded text-white font-semibold absolute bottom-0  w-[calc(100%-2rem)] left-1/2 -translate-x-1/2 translate-y-[102%] z-100">Report has been succesfully submitted</div>
       </div>
 
-      <div class="grid gap-6 px-4 my-8">
+      <div class="grid gap-6 px-4 my-8 relative max-w-4xl">
+        
         <div >
         <label for="title" class="text-xl font-semibold">Report title</label>
         <input id="title" class="rounded-lg w-full border border-gray-400 h-15 px-3 placeholder:text-lg text-lg outline-none" placeholder="Enter report title">
@@ -135,10 +137,9 @@
 
      <div>
       <label for="uploadBox" class="text-xl font-semibold">Image of the Report</label>
-       <div id="
-       uploadBox" class="rounded-xl w-full h-50 bg-gray-300 border-2 border-dashed border-gray-400 flex items-center justify-center cursor-pointer overflow-hidden hover:border-green-500 transition-colors">
-        <input id="imageInput" type="file" accept="image/*" >
-        <i class="fa-solid fa-image text-5xl" id="upload-icon"></i>
+       <div id="uploadBox" class="relative rounded-xl w-full h-50 bg-gray-300 border-2 border-dashed border-gray-400 flex items-center justify-center cursor-pointer overflow-hidden hover:border-green-500 transition-colors">
+        <input id="imageInput" type="file" accept="image/*"  hidden>
+        <i class="fa-solid fa-image text-5xl" id="uploadIcon"></i>
         <img id="previewImage" alt="Preview" class="absolute inset-0 w-full h-full object-cover hidden rounded">
       </div>
      </div>
@@ -148,7 +149,7 @@
 
     <section class="fixed inset-0 bg-white w-full z-50 overflow-y-auto overflow-x-hidden hidden" id="details-section">
        <div  class="bg-green-800 flex justify-between items-center px-4 py-6 text-white mb-8">
-        <button class="text-xl cursor-pointer" id="report-back-btn">&larr;</button>
+        <button class="back-btn text-xl cursor-pointer">&larr;</button>
         <h4 class="text-white font-semibold">Details</h4>
       </div>
 
@@ -216,7 +217,7 @@
             <hr class="my-4">
               </li>
             </ul>
-            <button class="bg-green-800 flex justify-center items-center gap-3 py-3 px-3 rounded w-fit text-white font-semibold"><span>&#128172;</span> <span>Leave a comment</span></button>
+            <button id="leave-comment-btn" class="bg-green-800 flex justify-center items-center gap-3 py-3 px-3 rounded w-fit text-white font-semibold"><span>&#128172;</span> <span>Leave a comment</span></button>
         </article>
 
         <article class="border border-gray-400 px-4 py-2 bg-white">
@@ -228,10 +229,11 @@
         <img src="./images/nfix1.png" alt="logo" srcset="" class="w-40 mt-8 ml-4">
     </section>
 
-    <section id="comment-section" class="fixed inset-0 bg-white w-full z-50 overflow-y-auto overflow-x-hidden hidden">
-      <div  class="bg-green-800 flex justify-between items-center px-4 py-6 text-white mb-8">
-        <button class="text-xl cursor-pointer" id="report-back-btn">&larr;</button>
+    <section id="comment-section" class="fixed inset-0 bg-white w-full z-70 overflow-y-auto overflow-x-hidden hidden">
+      <div  class="bg-green-800 flex justify-between items-center px-4 py-6 text-white mb-8 relative">
+        <button class="back-btn text-xl cursor-pointer">&larr;</button>
         <h4 class="text-white font-semibold">Comment</h4>
+        <div class="bg-green-500 text-center py-3 rounded text-white font-semibold absolute bottom-0  w-[calc(100%-2rem)] left-1/2 -translate-x-1/2 translate-y-[102%] z-100">Comment has been succesfully submitted</div>
       </div>
 
       <div class="px-4">
