@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./output.css" rel="stylesheet">
+    <script src="./signup.js" defer></script>
     <title>SignUp page</title>
 </head>
 <body>
@@ -26,7 +27,7 @@
 
             <p class="text-center text-base">or</p>
 
-            <div class="grid gap-6">
+            <form class="grid gap-6" id="signup-form">
 
                 <div >
                     <label for="username" class="text-xl font-semibold">Username</label>
@@ -34,8 +35,8 @@
                 </div>
 
                 <div >
-                    <label for="phone-number" class="text-xl font-semibold">Phone number</label>
-                    <input id="phone-number" class="rounded-lg w-full border border-gray-400 h-15 px-3 py-3 placeholder:text-lg text-lg outline-none" placeholder="Enter phone number">
+                    <label for="email" class="text-xl font-semibold">Email</label>
+                    <input id="email" class="rounded-lg w-full border border-gray-400 h-15 px-3 py-3 placeholder:text-lg text-lg outline-none" placeholder="Enter email address">
                 </div>
 
                 <div >
@@ -43,10 +44,10 @@
                     <input id="password" class="rounded-lg w-full border border-gray-400 h-15 px-3 py-3 placeholder:text-lg text-lg outline-none" placeholder="Enter password">
                 </div>
 
-                <button class="bg-green-800 flex justify-center py-3 rounded text-white font-semibold w-full">Register</button>
-            </div>
+                <button class="bg-green-800 flex justify-center py-3 rounded text-white font-semibold w-full" type="submit">Register</button>
+            </form>
         </article>
-        <p class="text-base text-center">Already have an account? <a class="text-blue-500" href="./login.html">Login</a></p>
+        <p class="text-base text-center">Already have an account? <a class="text-blue-500" href="./index.html">Login</a></p>
         </main>
     </div>
 </body>

@@ -1,255 +1,48 @@
-
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="./output.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <script src="./main.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./output.css" rel="stylesheet">
+    <script src="./login.js" defer></script>
+    <title>Login page</title>
 </head>
-<body class="pb-40 overflow-x-hidden relative">
-  <div>
-    <header class="bg-green-800 flex justify-between items-center px-4 py-6">
-      <img src="./images/nfix3.png" alt="logo" class="w-40 ">
-      <nav>
-        <div id="menu" class="fixed overflow-y-hidden top-0 left-0 h-screen w-full bg-white z-100 sm:hidden md:relative md:flex md:h-fit md:bg-transparent" >
-           <div class="text-black text-xl flex justify-end py-8 px-8 mb-16 md:hidden">
-            <button id="close-btn">
-              <img src="./images/icon-menu-close.svg" alt="cancel button" class="w-6">
-           </button>
-          </div>
-          <ul id="navlist" class="flex flex-col justify-center items-center gap-3 w-fit mx-auto md:flex-row md:justify-between">
-        <li><a href="./index.html" class="uppercase text-3xl font-semibold md:text-lg md:text-white md:font-medium">Home</a></li>
-         <li><a href="./profile.html" class="uppercase text-3xl font-semibold md:text-lg md:text-white md:font-medium">Profile</a></li>
-          <li><a href="./about.html" class="uppercase text-3xl font-semibold md:text-lg md:text-white md:font-medium">About us</a></li>
-           <li><a href="./contact.html" class="uppercase text-3xl font-semibold md:text-lg md:text-white md:font-medium">Contact us</a></li>
-           <button class="bg-green-800 flex justify-center py-3 rounded text-white font-semibold w-full text-xl md:bg-white md:text-green-800"><a href="./login.html">Log out</a></button>
+<body>
+    <div>
+        <img src="./images/nfix1.png" alt="logo" srcset="" class="w-25 mt-8 mb-16 mx-auto">
 
-          
-        </ul>
-        </div>
-        <button id="menu-btn" class="md:hidden"><img src="./images/menu_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24 (1).svg" alt="hamburger" class="w-8" ></button>
-      </nav>
-    </header>
+        <main class="grid gap-8 px-4 place-items-center">
 
-    <section class="py-8 px-2.5 flex gap-6">
-      <button class="text-sm bg-naija-yellow rounded px-3 py-2">
-        All Reports
-      </button>
+            <article class="grid place-items-center gap-2">
+            <img src="./images/nfix4.png" alt="short-logo" srcset="" class="w-25 mt-8 ml-4">
+            <h1 class="text-3xl font-bold">Welcome to Naijafix</h1>
+        </article>
 
-      <button class="text-sm outline rounded px-3 py-2">
-        My Reports
-      </button>
-    </section>
-
-    <main class="grid [grid-template-columns:repeat(auto-fit,_minmax(200px,_1fr))] gap-4 gap-y-6 px-2.5">
-      
-      <article  class="bg-white rounded-xl shadow-md overflow-hidden ">
-        <div class="bg-[url('./images/5de09a7068512cd7e5cdae70566ce4cd.jpg')] bg-cover h-50">
-
-        </div>
-        <div class="px-3 grid gap-2 py-4">
-          <h3 class="text-xl font-semibold">Heavy Rainfall at Third Mainland bridge</h3>
-          <div class="text-sm bg-naija-yellow rounded w-fit px-3 py-2 font-semibold ">
-            Pending
-          </div>
-          <p>Lagos, Nigeria</p>
-          <button class="details-btn bg-green-800 flex justify-center py-3 rounded text-white font-semibold">View Details</button>
-        </div>
-      </article>
-
-      
-<article  class="bg-white rounded-xl shadow-md overflow-hidden ">
-        <div class="bg-[url('./images/5de09a7068512cd7e5cdae70566ce4cd.jpg')] bg-cover h-50">
-
-        </div>
-        <div class="px-3 grid gap-2 py-4">
-          <h3 class="text-xl font-semibold">Heavy Rainfall at Third Mainland bridge</h3>
-          <div class="text-sm bg-naija-yellow rounded w-fit px-3 py-2 font-semibold ">
-            Pending
-          </div>
-          <p>Lagos, Nigeria</p>
-          <button class="details-btn bg-green-800 flex justify-center py-3 rounded text-white font-semibold">View Details</button>
-        </div>
-      </article>
-
-
-     <article  class="bg-white rounded-xl shadow-md overflow-hidden ">
-        <div class="bg-[url('./images/5de09a7068512cd7e5cdae70566ce4cd.jpg')] bg-cover h-50">
-
-        </div>
-        <div class="px-3 grid gap-2 py-4">
-          <h3 class="text-xl font-semibold">Heavy Rainfall at Third Mainland bridge</h3>
-          <div class="text-sm bg-naija-yellow rounded w-fit px-3 py-2 font-semibold ">
-            Pending
-          </div>
-          <p>Lagos, Nigeria</p>
-          <button class="details-btn bg-green-800 flex justify-center py-3 rounded text-white font-semibold">View Details</button>
-        </div>
-      </article>
-
-      <article  class="bg-white rounded-xl shadow-md overflow-hidden ">
-        <div class="bg-[url('./images/5de09a7068512cd7e5cdae70566ce4cd.jpg')] bg-cover h-50">
-
-        </div>
-        <div class="px-3 grid gap-2 py-4">
-          <h3 class="text-xl font-semibold">Heavy Rainfall at Third Mainland bridge</h3>
-          <div class="text-sm bg-naija-yellow rounded w-fit px-3 py-2 font-semibold ">
-            Pending
-          </div>
-          <p>Lagos, Nigeria</p>
-          <button class="details-btn bg-green-800 flex justify-center py-3 rounded text-white font-semibold">View Details</button>
-        </div>
-      </article>
-
-
-      <button class="fixed bottom-20 right-6 bg-black h-16 w-16 rounded-full grid place-items-center" id="add-btn">
-  <span class="text-white text-5xl leading-none mb-2 overflow-hidden">+</span>
-</button>
-
-
-    </main>
-
-    <section id="report-section" class="fixed inset-0 bg-white  z-50 overflow-y-auto overflow-x-hidden hidden">
-      <div  class="bg-green-800 flex justify-between items-center px-4 py-6 text-white  relative">
-        <button class="back-btn cursor-pointer" >&larr;</button>
-        <h4 class="text-white font-semibold">Report issue</h4>
-        <div class="bg-green-500 text-center py-3 rounded text-white font-semibold absolute bottom-0  w-[calc(100%-2rem)] left-1/2 -translate-x-1/2 translate-y-[102%] z-100">Report has been succesfully submitted</div>
-      </div>
-
-      <div class="grid gap-6 px-4 my-8 relative max-w-4xl">
-        
-        <div >
-        <label for="title" class="text-xl font-semibold">Report title</label>
-        <input id="title" class="rounded-lg w-full border border-gray-400 h-15 px-3 placeholder:text-lg text-lg outline-none" placeholder="Enter report title">
-      </div>
-
-      <div >
-        <label for="description" class="text-xl font-semibold">Description</label>
-        <textarea id="description" class="rounded-lg w-full border border-gray-400 px-3 py-3 placeholder:text-lg text-lg outline-none" placeholder="Describe the issue" rows="6"></textarea>
-      </div>
-
-      <div >
-        <label for="location" class="text-xl font-semibold">Location</label>
-        <input id="location" class="rounded-lg w-full border border-gray-400 h-15 px-3 py-3 placeholder:text-lg text-lg outline-none" placeholder="Enter issue location">
-      </div>
-
-     <div>
-      <label for="uploadBox" class="text-xl font-semibold">Image of the Report</label>
-       <div id="uploadBox" class="relative rounded-xl w-full h-50 bg-gray-300 border-2 border-dashed border-gray-400 flex items-center justify-center cursor-pointer overflow-hidden hover:border-green-500 transition-colors">
-        <input id="imageInput" type="file" accept="image/*"  hidden>
-        <i class="fa-solid fa-image text-5xl" id="uploadIcon"></i>
-        <img id="previewImage" alt="Preview" class="absolute inset-0 w-full h-full object-cover hidden rounded">
-      </div>
-     </div>
-
-      <button class="bg-green-800 flex justify-center py-3 rounded w-full text-white font-semibold">Submit Report</button>
-    </section>
-
-    <section class="fixed inset-0 bg-white w-full z-50 overflow-y-auto overflow-x-hidden hidden" id="details-section">
-       <div  class="bg-green-800 flex justify-between items-center px-4 py-6 text-white mb-8">
-        <button class="back-btn text-xl cursor-pointer">&larr;</button>
-        <h4 class="text-white font-semibold">Details</h4>
-      </div>
-
-      <div class="grid gap-12 px-4">
-        <article aria-labelledby="sighting-title" class="border border-gray-400 px-4 py-2 bg-white">
-        <div class="bg-[url('./images/5de09a7068512cd7e5cdae70566ce4cd.jpg')] bg-cover h-72"></div>
-        
-        <div class="grid gap-2">
-          <h3 class="text-xl font-semibold">Heavy Rainfall at Third Mainland bridge</h3>
-        
+        <article class="grid gap-6">
             
-            <div class="relative text-container">
-                <p id="text" class="line-clamp-8 text-lg">I was drifting through town, lost in thought, when I stepped into the street without looking. A piercing shriek sliced through the air—an old woman, her voice cracking like dead leaves, screamed for me to stop. I froze and turned just in time to see a bus thunder past, a blast of air clawing at my face. My heart pounded as I looked across to thank her, but the street was empty. No trace of her remained. That’s when the chill set in—she looked exactly like my grandmother, who we buried seven years ago. I still remember the floral scarf she wore... the same one we buried her in.</p>
-
-                <button id="overlay" class="see-more-btn absolute bottom-0 right-0 bg-gradient-to-l from-white text-blue-600 cursor-pointer pl-40 text-lg">... see more</button>
+            <div class="rounded-3xl w-full border border-gray-400 h-15 px-3 py-3  text-lg outline-none font-semibold relative">
+                <img src="./images/icons8-google-48.png" alt="short-logo" srcset="" class="w-8 absolute top-1/2 -translate-y-1/2 left-2">
+                <p class="text-2xl text-center">Continue with Google</p>
             </div>
-            <div class="text-sm bg-naija-yellow rounded w-fit px-3 py-2 font-semibold ">
-            Pending
-          </div>
 
-          <p class="text-sm ">Lagos, Nigeria</p>
-          <p class="text-sm ">Reported 28th July 2025</p>
-          <p class="italic text-sm">Submitted by User1</p>
-        </div>
-        </article>
+            <p class="text-center text-base">or</p>
 
-        <article class="border border-gray-400 px-4 py-2 bg-white">
-            <ul>
-              <li>
-                <div class="flex justify-between">
-                  <span class="font-semibold">Sukura001</span>
-                  <span>13h ago</span>
+            <form class="grid gap-6" id="login-form">
+                <div >
+                    <label for="username" class="text-xl font-semibold">Username</label>
+                    <input id="username" class="rounded-lg w-full border border-gray-400 h-15 px-3 py-3 placeholder:text-lg text-lg outline-none" placeholder="Enter username">
                 </div>
-                <div class="relative comment-container">
-                <p id="text" class="comment-text line-clamp-4 text-lg transition-[max-height] duration-500 ease-in-out">I was drifting through town, lost in thought, when I stepped into the street without looking. A piercing shriek sliced through the air—an old woman, her voice cracking like dead leaves, screamed for me to stop. I froze and turned just in time to see a bus thunder past, a blast of air clawing at my face. My heart pounded as I looked across to thank her, but the street was empty. No trace of her remained. That’s when the chill set in—she looked exactly like my grandmother, who we buried seven years ago. I still remember the floral scarf she wore... the same one we buried her in.</p>
 
-                <button id="overlay" class="see-more-btn absolute bottom-0 right-0 bg-gradient-to-l from-white text-blue-600 cursor-pointer pl-40 text-lg">... see more</button>
-            </div>
-            <hr class="my-4">
-              </li>
-              
-              <li>
-                <div class="flex justify-between">
-                  <span class="font-semibold">Sukura001</span>
-                  <span>13h ago</span>
+                <div >
+                    <label for="password" class="text-xl font-semibold">Password</label>
+                    <input id="password" class="rounded-lg w-full border border-gray-400 h-15 px-3 py-3 placeholder:text-lg text-lg outline-none" placeholder="Enter password">
                 </div>
-                <div class="relative comment-container">
-                <p id="text" class="comment-text line-clamp-4 text-lg transition-[max-height] duration-500 ease-in-out">I was drifting through town, lost in thought, when I stepped into the street without looking. A piercing shriek sliced through the air—an old woman, her voice cracking like dead leaves, screamed for me to stop. I froze and turned just in time to see a bus thunder past, a blast of air clawing at my face. My heart pounded as I looked across to thank her, but the street was empty. No trace of her remained. That’s when the chill set in—she looked exactly like my grandmother, who we buried seven years ago. I still remember the floral scarf she wore... the same one we buried her in.</p>
 
-                <button id="overlay" class="see-more-btn absolute bottom-0 right-0 bg-gradient-to-l from-white text-blue-600 cursor-pointer pl-40 text-lg">... see more</button>
-            </div>
-            <hr class="my-4">
-              </li>
-
-              <li>
-                <div class="flex justify-between">
-                  <span class="font-semibold">Sukura001</span>
-                  <span>13h ago</span>
-                </div>
-                <div class="relative comment-container">
-                <p id="text" class="comment-text line-clamp-4 text-lg transition-[max-height] duration-500 ease-in-out">I was drifting through town, lost in thought, when I stepped into the street without looking. A piercing shriek sliced through the air—an old woman, her voice cracking like dead leaves, screamed for me to stop. I froze and turned just in time to see a bus thunder past, a blast of air clawing at my face. My heart pounded as I looked across to thank her, but the street was empty. No trace of her remained. That’s when the chill set in—she looked exactly like my grandmother, who we buried seven years ago. I still remember the floral scarf she wore... the same one we buried her in.</p>
-
-                <button id="overlay" class="see-more-btn absolute bottom-0 right-0 bg-gradient-to-l from-white text-blue-600 cursor-pointer pl-40 text-lg">... see more</button>
-            </div>
-            <hr class="my-4">
-              </li>
-            </ul>
-            <button id="leave-comment-btn" class="bg-green-800 flex justify-center items-center gap-3 py-3 px-3 rounded w-fit text-white font-semibold"><span>&#128172;</span> <span>Leave a comment</span></button>
+                <button class="bg-green-800 flex justify-center py-3 rounded text-white font-semibold w-full" type="submit">Login</button>
+            </form>
         </article>
-
-        <article class="border border-gray-400 px-4 py-2 bg-white">
-          <h4 class="mb-4 text-3xl font-semibold">Proof of fix</h4>
-          <div class="bg-[url('./images/5de09a7068512cd7e5cdae70566ce4cd.jpg')] bg-cover h-72"></div>
-        </article>
-      </div>
-
-        <img src="./images/nfix1.png" alt="logo" srcset="" class="w-40 mt-8 ml-4">
-    </section>
-
-    <section id="comment-section" class="fixed inset-0 bg-white w-full z-70 overflow-y-auto overflow-x-hidden hidden">
-      <div  class="bg-green-800 flex justify-between items-center px-4 py-6 text-white mb-8 relative">
-        <button class="back-btn text-xl cursor-pointer">&larr;</button>
-        <h4 class="text-white font-semibold">Comment</h4>
-        <div class="bg-green-500 text-center py-3 rounded text-white font-semibold absolute bottom-0  w-[calc(100%-2rem)] left-1/2 -translate-x-1/2 translate-y-[102%] z-100">Comment has been succesfully submitted</div>
-      </div>
-
-      <div class="px-4">
-        <div >
-        <label for="comment" class="text-xl font-semibold">Comment</label>
-        <textarea id="comment" class="rounded-lg w-full border border-gray-400 px-3 py-3 placeholder:text-lg text-lg outline-none" placeholder="Enter comment" rows="6"></textarea>
-      </div>
-
-       <button class="bg-green-800 flex justify-center py-3 rounded w-full text-white font-semibold mt-8">Submit</button>
-
-       <img src="./images/nfix1.png" alt="logo" srcset="" class="w-40 mt-16 ml-4">
-      </div>
-    </section>
-      </div>
-   
-  
+        <p class="text-base text-center">Not a user yet? <a class="text-blue-500" href="./signup.html">Create an account</a></p>
+        </main>
+    </div>
 </body>
 </html>
- 

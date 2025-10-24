@@ -378,6 +378,9 @@
   .max-w-md {
     max-width: var(--container-md);
   }
+  .flex-shrink-0 {
+    flex-shrink: 0;
+  }
   .border-collapse {
     border-collapse: collapse;
   }
@@ -620,6 +623,9 @@
     --tw-font-weight: var(--font-weight-semibold);
     font-weight: var(--font-weight-semibold);
   }
+  .whitespace-nowrap {
+    white-space: nowrap;
+  }
   .text-black {
     color: var(--color-black);
   }
@@ -684,6 +690,11 @@
       }
     }
   }
+  .sm\:fixed {
+    @media (width >= 40rem) {
+      position: fixed;
+    }
+  }
   .sm\:hidden {
     @media (width >= 40rem) {
       display: none;
@@ -699,6 +710,11 @@
       position: static;
     }
   }
+  .md\:z-0 {
+    @media (width >= 48rem) {
+      z-index: 0;
+    }
+  }
   .md\:flex {
     @media (width >= 48rem) {
       display: flex;
@@ -712,6 +728,21 @@
   .md\:h-fit {
     @media (width >= 48rem) {
       height: fit-content;
+    }
+  }
+  .md\:w-16 {
+    @media (width >= 48rem) {
+      width: calc(var(--spacing) * 16);
+    }
+  }
+  .md\:w-40 {
+    @media (width >= 48rem) {
+      width: calc(var(--spacing) * 40);
+    }
+  }
+  .md\:w-auto {
+    @media (width >= 48rem) {
+      width: auto;
     }
   }
   .md\:w-full {
@@ -734,6 +765,11 @@
       gap: calc(var(--spacing) * 6);
     }
   }
+  .md\:overflow-y-auto {
+    @media (width >= 48rem) {
+      overflow-y: auto;
+    }
+  }
   .md\:bg-transparent {
     @media (width >= 48rem) {
       background-color: transparent;
@@ -747,6 +783,16 @@
   .md\:bg-none {
     @media (width >= 48rem) {
       background-image: none;
+    }
+  }
+  .md\:px-0 {
+    @media (width >= 48rem) {
+      padding-inline: calc(var(--spacing) * 0);
+    }
+  }
+  .md\:py-0 {
+    @media (width >= 48rem) {
+      padding-block: calc(var(--spacing) * 0);
     }
   }
   .md\:text-lg {

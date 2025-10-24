@@ -14,18 +14,18 @@ const __dirname = path.dirname(__filename);
 
 const app = express()
 app.use(express.json())
+// app.use(express.static('src'))
+app.use(express.static(path.join(__dirname, "src")))
 
-async function startServer() {
-    await inItDb();
+
+    
+   await inItDb();
 
     app.use("/uploads", express.static(path.join(__dirname, "uploads")))
     app.use("/api/auth", authRouter);
     app.use("/api/issues", issuesRouter)
 
-    app.get('/', (req, res) => {
-        res.send("API is running...");
-    });
+    // app.get('/', (req, res) => {
+    //     res.send("API is running...");
+    // });
     app.listen(PORT, () => console.log(`Server is running at http://localhost:${PORT}`));
-}
-
-startServer();

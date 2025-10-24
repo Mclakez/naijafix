@@ -1,31 +1,33 @@
 import { getDB } from '../config/db.js'
+import { Issue } from '../models/Issues.js'
+
 
 
 export async function postIssue(req, res) {
-    let db = await getDB()
     const {title, description, location} = req.body
-    const image = req.file ? req.file.filename : null
+    const issueImage = req.file ? req.file.filename : null
     const user = await req.user;
-    const citizenId = user.id;
+    const citizenId = user._id;
 
     try {
-        const result = await db.run(`
-        INSERT INTO issues (title, description, image, location, status, citizenId)
-        VALUES (?, ?, ?, ?, ?, ?)
-        `, [title, description, image, location, "pending", citizenId])
-        const issue = await db.get(`SELECT * FROM issues WHERE id = ?`, [result.lastID])
-        res.json(issue)
+        const newIssue = await Issue.create({
+            title,
+            description,
+            location,
+            createdBy: citizenId,
+            issueImage
+        })
+        res.json(newIssue)
     } catch (err) {
         res.status(500).json({error: err.message})
     }
 }
 
 export async function getMyIssues(req, res) {
-    let db = await getDB()
     const user = await req.user;
     const citizenId = user.id;
     try {
-        const issues = await db.all(`SELECT * FROM issues WHERE citizenId = ?`, [citizenId])
+        const issues = await Issue.find({createdBy: citizenId})
         res.json(issues)
     } catch (err) {
         res.status(500).json({error: err.message})
@@ -33,9 +35,9 @@ export async function getMyIssues(req, res) {
 }
 
 export async function getAllIssues(req, res) {
-    let db = await getDB()
+    
     try {
-        const issues = await db.all(`SELECT * FROM issues`)
+        const issues = await Issue.find()
         res.json(issues)
     } catch (err) {
         res.status(500).json({error: err.message})
