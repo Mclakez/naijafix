@@ -7,8 +7,8 @@ export async function postIssue(req, res) {
     const {title, description, location} = req.body
     const issueImage = req.file ? req.file.filename : null
     const user = await req.user;
-    const citizenId = user._id;
-
+    const citizenId = user.id;
+    
     try {
         const newIssue = await Issue.create({
             title,

@@ -25,7 +25,7 @@
          <li><a href="./profile.html" class="uppercase text-3xl font-semibold md:text-lg md:text-white md:font-medium">Profile</a></li>
           <li><a href="./about.html" class="uppercase text-3xl font-semibold md:text-lg md:text-white md:font-medium">About us</a></li>
            <li><a href="./contact.html" class="uppercase text-3xl font-semibold md:text-lg md:text-white md:font-medium">Contact us</a></li>
-           <button class="bg-green-800 flex justify-center py-3 rounded text-white font-semibold w-full text-xl md:bg-white md:text-green-800 md:w-40"><a href="./login.html">Log out</a></button>
+           <button class="bg-green-800 flex justify-center py-3 rounded text-white font-semibold w-full text-xl md:bg-white md:text-green-800 md:w-40"><a href="./index.html">Log out</a></button>
 
           
         </ul>
@@ -44,7 +44,8 @@
       </button>
     </section>
 
-    <main class="grid [grid-template-columns:repeat(auto-fit,_minmax(200px,_1fr))] gap-4 gap-y-6 px-2.5" id="main-container">
+    <div>
+      <main class="grid [grid-template-columns:repeat(auto-fit,_minmax(200px,_1fr))] gap-4 gap-y-6 px-2.5" id="main-container">
       
       <!-- <article  class="bg-white rounded-xl shadow-md overflow-hidden ">
         <div class="bg-[url('./images/5de09a7068512cd7e5cdae70566ce4cd.jpg')] bg-cover h-50">
@@ -105,18 +106,20 @@
       </article> -->
 
 
-      <button class="fixed bottom-20 right-6 bg-black h-16 w-16 rounded-full grid place-items-center" id="add-btn">
+      
+
+    </main>
+    <button class="fixed bottom-20 right-6 bg-black h-16 w-16 rounded-full grid place-items-center" id="add-btn">
   <span class="text-white text-5xl leading-none mb-2 overflow-hidden">+</span>
 </button>
 
-
-    </main>
+    </div>
 
     <section id="report-section" class="fixed inset-0 bg-white  z-50 overflow-y-auto overflow-x-hidden hidden">
       <div  class="bg-green-800 flex justify-between items-center px-4 py-6 text-white  relative">
         <button class="back-btn cursor-pointer" >&larr;</button>
         <h4 class="text-white font-semibold">Report issue</h4>
-        <div class="bg-green-500 text-center py-3 rounded text-white font-semibold absolute bottom-0  w-[calc(100%-2rem)] left-1/2 -translate-x-1/2 translate-y-[102%] z-100 max-w-4xl">Report has been succesfully submitted</div>
+        <div id="message" class="bg-green-500 text-center py-3 rounded text-white font-semibold absolute bottom-0  w-[calc(100%-2rem)] left-1/2 -translate-x-1/2 translate-y-[102%] z-100 max-w-4xl hidden">Report has been succesfully submitted</div>
       </div>
 
       <form id="report-form" enctype="multipart/form-data" class="grid gap-6 px-4 my-8 mx-auto relative max-w-4xl">

@@ -1,1 +1,0 @@
-[{"stmt":"SELECT * FROM users;","header":["id","username","password","role"],"rows":[["1","officer1","password123","officer"],["2","testuser","$2b$10$.btuSYMGU1TvFDKLXGBUu.Ry3q81B42p.uthkM/Y0qVk4lkfy.jaO","citizen"],["3","user1","$2b$10$0tY07qDVyEi5UtDFoZKk.emTArRzkfT8Cha4rVBMO4DBR9kM/nRzi","citizen"]]}]

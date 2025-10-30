@@ -7,7 +7,7 @@ import { issuesValidator } from "../validators/issuesValidator.js";
 
 export const issuesRouter = express.Router()
 
-issuesRouter.post('/', issuesValidator, requireAuth, upload.single('image'), postIssue)
+issuesRouter.post('/', requireAuth, upload.single('issueImage'), issuesValidator, postIssue)
 issuesRouter.get('/', requireAuth, getAllIssues)
 issuesRouter.get('/my', requireAuth, getMyIssues)
 issuesRouter.patch('/:id/status', requireAuth, requireOfficer, upload.single('proof'),updateIssuesStatus)
