@@ -50,7 +50,7 @@ export async function getDetails(req, res) {
         let { id } = req.params
         console.log('getDetails handler invoked, params:', req.params, 'req.user:', req.user)
         console.log(id)
-        const issue = await Issue.findById(id)
+        const issue = await Issue.findById(id).populate('createdBy', 'username')
 
         if(!issue) {
             return res.status(404).json({ message: "Issue not found"})
