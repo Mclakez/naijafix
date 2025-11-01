@@ -3,6 +3,7 @@ const myReportsBtn = document.getElementById('my-report-btn')
 const allReportsBtn = document.getElementById('all-report-btn')
 const token = localStorage.getItem('token')
 const detailsSection = document.getElementById('details-section')
+const commentSection = document.getElementById('comment-section')
 
 async function getAllIssues() {
     try {
@@ -161,7 +162,7 @@ document.addEventListener('click', async (e) => {
             <hr class="my-4">
               </li>
             </ul>
-            <button id="leave-comment-btn" class="bg-green-800 flex justify-center items-center gap-3 py-3 px-3 rounded w-fit text-white font-semibold"><span>&#128172;</span> <span>Leave a comment</span></button>
+            <button id="leave-comment-btn" class="leave-comment-btn bg-green-800 flex justify-center items-center gap-3 py-3 px-3 rounded w-fit text-white font-semibold"><span>&#128172;</span> <span>Leave a comment</span></button>
         </article>
 
         <article class="border border-gray-400 px-4 py-2 bg-white">
@@ -179,4 +180,11 @@ document.addEventListener('click', async (e) => {
     }
 
     
+})
+
+document.addEventListener('click', async (e) => {
+  let leaveCommentBtn = e.target.closest('.leave-comment-btn')
+  if(!leaveCommentBtn) return
+  commentSection.classList.remove('hidden')
+ console.log('comment')
 })
