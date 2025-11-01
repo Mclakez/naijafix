@@ -44,6 +44,23 @@ export async function getAllIssues(req, res) {
     }
 }
 
+export async function getDetails(req, res) {
+    
+    try {
+        let { id } = req.params
+        console.log('getDetails handler invoked, params:', req.params, 'req.user:', req.user)
+        console.log(id)
+        const issue = await Issue.findById(id)
+
+        if(!issue) {
+            return res.status(404).json({ message: "Issue not found"})
+        }
+        res.json(issue)
+    } catch (err) {
+        res.status(500).json({error: err.message})
+    }
+}
+
 export async function updateIssuesStatus(req, res) {
     let db = await getDB()
     let {id} = req.params

@@ -39,7 +39,6 @@ addBtn.addEventListener("click", () => {
     if(reportSection.classList.contains('hidden')) {
         reportSection.classList.remove("hidden")
         document.body.classList.add("overflow-y-hidden")
-        console.log("I work, im just not working")
     }
     
 })
