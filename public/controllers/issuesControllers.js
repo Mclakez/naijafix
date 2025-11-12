@@ -2,7 +2,6 @@ import { getDB } from '../config/db.js'
 import { Issue } from '../models/Issues.js'
 
 
-
 export async function postIssue(req, res) {
     const {title, description, location} = req.body
     const issueImage = req.file ? req.file.filename : null
@@ -48,8 +47,6 @@ export async function getDetails(req, res) {
     
     try {
         let { id } = req.params
-        console.log('getDetails handler invoked, params:', req.params, 'req.user:', req.user)
-        console.log(id)
         const issue = await Issue.findById(id).populate('createdBy', 'username')
 
         if(!issue) {
@@ -58,6 +55,27 @@ export async function getDetails(req, res) {
         res.json(issue)
     } catch (err) {
         res.status(500).json({error: err.message})
+    }
+}
+
+export async function postComment(req, res) {
+        const { comment } = req.body
+        const user = await req.user;
+        const citizenId = user.id;
+        const { id } = req.params
+        console.log(id)
+
+    try {
+        
+        const issue = await Issue.findById(id)
+        if (!issue) {
+            return res.status(404).json({comment: "Issue not found"})
+        }
+        issue.comments.push({citizenId, comment})
+        await issue.save()
+        res.status(200).json(issue)
+    } catch (err) {
+        res.status(500).json({error: err.message + "true"})
     }
 }
 
@@ -83,6 +101,8 @@ export async function updateIssuesStatus(req, res) {
         res.status(500).json({error: err.message})
     }
 }
+
+
 
 // export async function addFixPhoto(req, res) {
 //     let db = await getDB()

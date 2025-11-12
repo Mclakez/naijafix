@@ -14,11 +14,7 @@ const __dirname = path.dirname(__filename);
 
 const app = express()
 app.use(express.json())
-// app.use(express.static('src'))
-// app.use((req, res, next) => {
-//     console.log(`${new Date().toISOString()} -> ${req.method} ${req.originalUrl} | Authorization: ${req.headers.authorization || 'NONE'}`)
-//     next()
-// })
+
 
 app.use(express.static(path.join(__dirname, "src")))
 

@@ -8,7 +8,6 @@ export async function requireAuth(req, res, next) {
 
     const token = authHeader.split(" ")[1]
     try {
-        console.log('requireAuth: token received (first 10 chars):', token?.slice(0,10))
        const decoded = verifyToken(token)
        req.user = decoded
        next()

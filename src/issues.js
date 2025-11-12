@@ -15,7 +15,7 @@ async function getAllIssues() {
         
         issues.forEach(issue => {
             let card = document.createElement('article')
-            card.className = `bg-white rounded-xl shadow-md overflow-hidden `
+            card.className = `bg-white rounded-xl shadow-md overflow-hidden h-full`
             card.innerHTML = `<div class="bg-cover h-50" style="background-image: url('/uploads/${encodeURIComponent(issue.issueImage)}')">
 
         </div>
@@ -27,7 +27,6 @@ async function getAllIssues() {
           <p>${issue.location}</p>
           <button class="details-btn bg-green-800 flex justify-center py-3 rounded text-white font-semibold" data-id="${issue._id}">View Details</button>
         </div>`
-        
         
         mainContainer.appendChild(card)
         });
@@ -49,7 +48,7 @@ async function getMyIssues() {
         const issues = await res.json()
         issues.forEach(issue => {
             let card = document.createElement('article')
-            card.className = `bg-white rounded-xl shadow-md overflow-hidden `
+            card.className = `bg-white rounded-xl shadow-md overflow-hidden h-full `
             card.innerHTML = `<div class="bg-cover h-50" style="background-image: url('/uploads/${encodeURIComponent(issue.issueImage || "placeholder.jpg")}')">
 
         </div>
@@ -100,6 +99,20 @@ document.addEventListener('click', async (e) => {
         const issue = await res.json()
         console.log(issue)
         const imgUrl = issue.issueImage ? `/uploads/${encodeURIComponent(issue.issueImage)}` : './images/placeholder.jpg'
+        issue.comments.forEach(comment => {
+          ` <li>
+                <div class="flex justify-between">
+                  <span class="font-semibold">${comment._id}</span>
+                  <span>${comment.date}</span>
+                </div>
+                <div class="relative comment-container">
+                <p id="text" class="comment-text line-clamp-4 text-lg transition-[max-height] duration-500 ease-in-out">${comment.comment}</p>
+
+                <button id="overlay" class="see-more-btn absolute bottom-0 right-0 bg-gradient-to-l from-white text-blue-600 cursor-pointer pl-40 text-lg">... see more</button>
+            </div>
+            <hr class="my-4">
+              </li>`
+        })
 
         detailsSection.innerHTML = `<div  class="bg-green-800 flex justify-between items-center px-4 py-6 text-white mb-8">
             <button class="back-btn text-xl cursor-pointer">&larr;</button>
@@ -123,46 +136,25 @@ document.addEventListener('click', async (e) => {
             </article>
             <article class="border border-gray-400 px-4 py-2 bg-white">
             <ul>
-              <li>
+
+              ${issue.comments.map(comment => 
+          ` <li>
                 <div class="flex justify-between">
-                  <span class="font-semibold">Sukura001</span>
-                  <span>13h ago</span>
+                  <span class="font-semibold">${comment._id}</span>
+                  <span>${comment.date}</span>
                 </div>
                 <div class="relative comment-container">
-                <p id="text" class="comment-text line-clamp-4 text-lg transition-[max-height] duration-500 ease-in-out">I was drifting through town, lost in thought, when I stepped into the street without looking. A piercing shriek sliced through the air—an old woman, her voice cracking like dead leaves, screamed for me to stop. I froze and turned just in time to see a bus thunder past, a blast of air clawing at my face. My heart pounded as I looked across to thank her, but the street was empty. No trace of her remained. That’s when the chill set in—she looked exactly like my grandmother, who we buried seven years ago. I still remember the floral scarf she wore... the same one we buried her in.</p>
+                <p id="text" class="comment-text line-clamp-4 text-lg transition-[max-height] duration-500 ease-in-out">${comment.comment}</p>
 
                 <button id="overlay" class="see-more-btn absolute bottom-0 right-0 bg-gradient-to-l from-white text-blue-600 cursor-pointer pl-40 text-lg">... see more</button>
             </div>
             <hr class="my-4">
-              </li>
-              
-              <li>
-                <div class="flex justify-between">
-                  <span class="font-semibold">Sukura001</span>
-                  <span>13h ago</span>
-                </div>
-                <div class="relative comment-container">
-                <p id="text" class="comment-text line-clamp-4 text-lg transition-[max-height] duration-500 ease-in-out">I was drifting through town, lost in thought, when I stepped into the street without looking. A piercing shriek sliced through the air—an old woman, her voice cracking like dead leaves, screamed for me to stop. I froze and turned just in time to see a bus thunder past, a blast of air clawing at my face. My heart pounded as I looked across to thank her, but the street was empty. No trace of her remained. That’s when the chill set in—she looked exactly like my grandmother, who we buried seven years ago. I still remember the floral scarf she wore... the same one we buried her in.</p>
+              </li>`
+        ).join('')
+}
 
-                <button id="overlay" class="see-more-btn absolute bottom-0 right-0 bg-gradient-to-l from-white text-blue-600 cursor-pointer pl-40 text-lg">... see more</button>
-            </div>
-            <hr class="my-4">
-              </li>
-
-              <li>
-                <div class="flex justify-between">
-                  <span class="font-semibold">Sukura001</span>
-                  <span>13h ago</span>
-                </div>
-                <div class="relative comment-container">
-                <p id="text" class="comment-text line-clamp-4 text-lg transition-[max-height] duration-500 ease-in-out">I was drifting through town, lost in thought, when I stepped into the street without looking. A piercing shriek sliced through the air—an old woman, her voice cracking like dead leaves, screamed for me to stop. I froze and turned just in time to see a bus thunder past, a blast of air clawing at my face. My heart pounded as I looked across to thank her, but the street was empty. No trace of her remained. That’s when the chill set in—she looked exactly like my grandmother, who we buried seven years ago. I still remember the floral scarf she wore... the same one we buried her in.</p>
-
-                <button id="overlay" class="see-more-btn absolute bottom-0 right-0 bg-gradient-to-l from-white text-blue-600 cursor-pointer pl-40 text-lg">... see more</button>
-            </div>
-            <hr class="my-4">
-              </li>
             </ul>
-            <button id="leave-comment-btn" class="leave-comment-btn bg-green-800 flex justify-center items-center gap-3 py-3 px-3 rounded w-fit text-white font-semibold"><span>&#128172;</span> <span>Leave a comment</span></button>
+            <button id="leave-comment-btn" class="leave-comment-btn bg-green-800 flex justify-center items-center gap-3 py-3 px-3 rounded w-fit text-white font-semibold" data-id="${id}"><span>&#128172;</span> <span>Leave a comment</span></button>
         </article>
 
         <article class="border border-gray-400 px-4 py-2 bg-white">
@@ -174,6 +166,7 @@ document.addEventListener('click', async (e) => {
         <img src="./images/nfix1.png" alt="logo" srcset="" class="w-40 mt-8 ml-4">
           </div>`
         detailsSection.classList.remove('hidden')
+      
 
     } catch(error) {
         alert('Error on getting details,' + error.message)
@@ -182,9 +175,3 @@ document.addEventListener('click', async (e) => {
     
 })
 
-document.addEventListener('click', async (e) => {
-  let leaveCommentBtn = e.target.closest('.leave-comment-btn')
-  if(!leaveCommentBtn) return
-  commentSection.classList.remove('hidden')
- console.log('comment')
-})

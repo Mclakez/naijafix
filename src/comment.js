@@ -1,0 +1,57 @@
+const token = localStorage.getItem("token")
+const form = document.getElementById('comment-form')
+const commentPopUp = document.getElementById('comment-popup')
+const commentSection = document.getElementById('comment-section')
+let issueID;
+
+document.addEventListener('click', async (e) => {
+  let leaveCommentBtn = e.target.closest('.leave-comment-btn')
+  if(!leaveCommentBtn) return
+  const id = leaveCommentBtn.getAttribute("data-id")
+    console.log('Fetching details for ID:', id)
+    issueID = id
+  commentSection.classList.remove('hidden')
+ console.log('comment')
+})
+
+form.addEventListener('submit', async (e) => {
+    e.preventDefault()
+
+        const formData = new FormData(form)
+        const data = Object.fromEntries(formData.entries())
+        console.log(data)
+
+    try {
+        const res = await fetch(`http://localhost:3000/api/issues/${issueID}/comment`, {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${token}` },
+            body: formData
+        })
+
+        if (!res.ok) {
+           
+            
+            throw new Error('Comment submission failed')
+        }
+
+        const data = await res.json()
+
+        console.log(data);
+       commentPopUp.textContent = 'Comment has been succesfully submitted'
+        commentPopUp.style.display = 'block'
+        setTimeout(() => {
+            commentPopUp.style.display = 'none'
+            form.reset()
+            
+        }, 3000)
+        
+    } catch (error) {
+        commentPopUp.textContent = `${error.message}`
+        commentPopUp.classList.add('bg-red-500')
+        commentPopUp.style.display = 'block'
+        setTimeout(() => {
+            commentPopUp.style.display = 'none'
+            
+        }, 5000)
+    }
+})

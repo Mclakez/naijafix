@@ -8,10 +8,11 @@
   <script type="module" src="./main.js" defer></script>
   <script type="module" src="./issues.js" defer></script>
   <script type="module" src="./report.js" defer></script>
+  <script type="module" src="./comment.js" defer></script>
 </head>
 <body class="pb-40 overflow-x-hidden relative">
-  <div>
-    <header class="bg-green-800 relative flex justify-between items-center px-4 py-6">
+  <div class="max-w-6xl mx-auto px-4 bg-red-500">
+    <header class="bg-green-800 relative flex justify-between items-center px-4 py-6 max-w-6xl">
       <img src="./images/nfix3.png" alt="logo" class="w-40 ">
       <nav>
         <div id="menu" class="fixed overflow-y-hidden top-0 left-0 h-screen w-full bg-white z-100 hidden md:relative md:flex md:h-fit md:bg-transparent md:overflow-y-auto md:z-0" >
@@ -44,8 +45,8 @@
       </button>
     </section>
 
-    <div>
-      <main class="grid [grid-template-columns:repeat(auto-fit,_minmax(200px,_1fr))] gap-4 gap-y-6 px-2.5" id="main-container">
+    <div class="max-w-[800px]">
+      <main class="grid [grid-template-columns:repeat(auto-fit,_minmax(200px,_1fr))] gap-4 gap-y-6 px-2.5 items-stretch relative" id="main-container">
       
       <!-- <article  class="bg-white rounded-xl shadow-md overflow-hidden ">
         <div class="bg-[url('./images/5de09a7068512cd7e5cdae70566ce4cd.jpg')] bg-cover h-50">
@@ -153,7 +154,7 @@
     </section>
 
     <section class="fixed inset-0 bg-white w-full z-50 overflow-y-auto overflow-x-hidden hidden" id="details-section">
-       <div  class="bg-green-800 flex justify-between items-center px-4 py-6 text-white mb-8">
+       <!-- <div  class="bg-green-800 flex justify-between items-center px-4 py-6 text-white mb-8">
         <button class="back-btn text-xl cursor-pointer">&larr;</button>
         <h4 class="text-white font-semibold">Details</h4>
       </div>
@@ -231,26 +232,26 @@
         </article>
       </div>
 
-        <img src="./images/nfix1.png" alt="logo" srcset="" class="w-40 mt-8 ml-4">
+        <img src="./images/nfix1.png" alt="logo" srcset="" class="w-40 mt-8 ml-4"> -->
     </section>
 
     <section id="comment-section" class="fixed inset-0 bg-white w-full z-70 overflow-y-auto overflow-x-hidden hidden">
       <div  class="bg-green-800 flex justify-between items-center px-4 py-6 text-white mb-8 relative">
         <button class="back-btn text-xl cursor-pointer">&larr;</button>
         <h4 class="text-white font-semibold">Comment</h4>
-        <div class="bg-green-500 text-center py-3 rounded text-white font-semibold absolute bottom-0  w-[calc(100%-2rem)] left-1/2 -translate-x-1/2 translate-y-[102%] z-100 max-w-4xl">Comment has been succesfully submitted</div>
+        <div class="bg-green-500 text-center py-3 rounded text-white font-semibold absolute bottom-0  w-[calc(100%-2rem)] left-1/2 -translate-x-1/2 translate-y-[102%] z-100 max-w-4xl hidden" id="comment-popup">Comment has been succesfully submitted</div>
       </div>
 
-      <div class="px-4 mx-auto max-w-4xl">
+      <form id="comment-form" class="px-4 mx-auto max-w-4xl" >
         <div >
         <label for="comment" class="text-xl font-semibold">Comment</label>
-        <textarea id="comment" class="rounded-lg w-full border border-gray-400 px-3 py-3 placeholder:text-lg text-lg outline-none" placeholder="Enter comment" rows="6"></textarea>
+        <textarea id="comment" name="comment" class="rounded-lg w-full border border-gray-400 px-3 py-3 placeholder:text-lg text-lg outline-none" placeholder="Enter comment" rows="6"></textarea>
       </div>
 
-       <button class="bg-green-800 flex justify-center py-3 rounded w-full text-white font-semibold mt-8">Submit</button>
-
+       <button class="bg-green-800 flex justify-center py-3 rounded w-full text-white font-semibold mt-8" type="submit">Submit</button>
+        </form>
        <img src="./images/nfix1.png" alt="logo" srcset="" class="w-40 mt-16 ml-4">
-      </div>
+    
     </section>
       </div>
    

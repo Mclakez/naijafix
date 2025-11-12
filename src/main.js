@@ -58,33 +58,33 @@ closeBtn.addEventListener("click", () => {
 
 
 
-overlay.addEventListener("click", () => {
-    expanded = !expanded
+// overlay.addEventListener("click", () => {
+//     expanded = !expanded
 
-    if (expanded) {
-        text.classList.remove('line-clamp-8')
-        overlay.textContent = "... see less"
-        overlay.classList.remove('bg-gradient-to-l', 'from-white', 'pl-8')
-    } else{
-        text.classList.add('line-clamp-8')
-        overlay.textContent = "... see more"
-        overlay.classList.add('bg-gradient-to-l', 'from-white', 'pl-8')
-    }
-})
+//     if (expanded) {
+//         text.classList.remove('line-clamp-8')
+//         overlay.textContent = "... see less"
+//         overlay.classList.remove('bg-gradient-to-l', 'from-white', 'pl-8')
+//     } else{
+//         text.classList.add('line-clamp-8')
+//         overlay.textContent = "... see more"
+//         overlay.classList.add('bg-gradient-to-l', 'from-white', 'pl-8')
+//     }
+// })
 
-document.querySelector(".comment-container").addEventListener("click", (e) => {
-  if (!e.target.classList.contains("see-more-btn")) return;
+// document.querySelector(".comment-container").addEventListener("click", (e) => {
+//   if (!e.target.classList.contains("see-more-btn")) return;
 
-  const button = e.target;
+//   const button = e.target;
   
-  const commentContainer = button.closest(".comment-container");
-  const comment = commentContainer.querySelector(".comment-text")
+//   const commentContainer = button.closest(".comment-container");
+//   const comment = commentContainer.querySelector(".comment-text")
   
-  const expanded = comment.classList.toggle("expanded");
+//   const expanded = comment.classList.toggle("expanded");
 
-//   button.setAttribute("aria-expanded", expanded ? "true" : "false");
-  button.textContent = expanded ? "see less" : "see more";
-});
+// //   button.setAttribute("aria-expanded", expanded ? "true" : "false");
+//   button.textContent = expanded ? "see less" : "see more";
+// });
 
 detailsBtns.forEach(detailsBtn => {
     detailsBtn.addEventListener("click", () => {
@@ -102,6 +102,6 @@ document.addEventListener("click", (e) => {
     section.classList.add("hidden")
 })
 
-document.getElementById("leave-comment-btn").addEventListener("click", () => {
-    commentSection.classList.remove("hidden")
-})
+// document.getElementById("leave-comment-btn").addEventListener("click", () => {
+//     commentSection.classList.remove("hidden")
+// })

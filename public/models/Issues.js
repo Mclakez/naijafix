@@ -35,7 +35,14 @@ const issueSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
-    }
+    },
+    comments: [
+        {
+            userID: mongoose.Schema.Types.ObjectId,
+            comment: String,
+            date: { type: Date, default: Date.now }
+        }
+    ]
 })
 
 export const Issue = mongoose.model("Issue", issueSchema)
