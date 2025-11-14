@@ -52,7 +52,7 @@ export async function getDetails(req, res) {
         if(!issue) {
             return res.status(404).json({ message: "Issue not found"})
         }
-        res.json(issue)
+        return res.status(200).json(issue)
     } catch (err) {
         res.status(500).json({error: err.message})
     }

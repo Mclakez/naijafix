@@ -24,8 +24,7 @@ export async function signup(req, res) {
             role,
             department: role === "officer" ? department : null
         })
-            console.log(username);
-            console.log(newUser);
+            
             
             
             
