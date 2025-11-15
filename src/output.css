@@ -446,6 +446,9 @@
   .border-gray-400 {
     border-color: var(--color-gray-400);
   }
+  .border-red-500 {
+    border-color: var(--color-red-500);
+  }
   .bg-black {
     background-color: var(--color-black);
   }
@@ -709,6 +712,11 @@
   .md\:text-white {
     @media (width >= 48rem) {
       color: var(--color-white);
+    }
+  }
+  .lg\:px-0 {
+    @media (width >= 64rem) {
+      padding-inline: calc(var(--spacing) * 0);
     }
   }
   .xl\:right-\[calc\(\(100vw-80rem\)\/2\+1rem\)\] {

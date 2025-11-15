@@ -100,7 +100,7 @@ document.addEventListener('click', async (e) => {
         const imgUrl = issue.issueImage ? `/uploads/${encodeURIComponent(issue.issueImage)}` : './images/placeholder.jpg'
         
 
-        detailsSection.innerHTML = `<div  class="bg-green-800 flex justify-between items-center px-4 py-6 text-white mb-8">
+        detailsSection.innerHTML = `<div  class="bg-green-800 flex justify-between items-center px-4 py-6 text-white mb-8  ">
             <button class="back-btn text-xl cursor-pointer">&larr;</button>
             <h4 class="text-white font-semibold">Details</h4>
           </div>
@@ -147,10 +147,12 @@ document.addEventListener('click', async (e) => {
           <h4 class="mb-4 text-3xl font-semibold">Proof of fix</h4>
           <div class="bg-[url('./images/5de09a7068512cd7e5cdae70566ce4cd.jpg')] bg-cover h-72"></div>
         </article>
+
+        <img src="./images/nfix1.png" alt="logo" srcset="" class="w-40 mt-8">
       </div>
 
-        <img src="./images/nfix1.png" alt="logo" srcset="" class="w-40 mt-8 ml-4">
-          </div>`
+        
+          `
         detailsSection.classList.remove('hidden')
         document.body.classList.add("overflow-y-hidden")
       
