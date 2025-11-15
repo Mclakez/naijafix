@@ -47,7 +47,9 @@ export async function getDetails(req, res) {
     
     try {
         let { id } = req.params
-        const issue = await Issue.findById(id).populate('createdBy', 'username')
+        const issue = await Issue.findById(id).populate('createdBy', 'username').populate('comments.userID', 'username')
+        console.log("Issue after populate", JSON.stringify(issue, null, 2))
+
 
         if(!issue) {
             return res.status(404).json({ message: "Issue not found"})
@@ -71,7 +73,7 @@ export async function postComment(req, res) {
         if (!issue) {
             return res.status(404).json({comment: "Issue not found"})
         }
-        issue.comments.push({citizenId, comment})
+        issue.comments.push({userID: citizenId, comment})
         await issue.save()
         res.status(200).json(issue)
     } catch (err) {

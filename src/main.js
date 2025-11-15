@@ -13,7 +13,7 @@ const imageInput = document.getElementById('imageInput')
 const previewImage = document.getElementById('previewImage')
 const uploadIcon = document.getElementById('uploadIcon')
 
-const detailsBtns = document.querySelectorAll('.details-btn')
+// const detailsBtns = document.querySelectorAll('.details-btn')
 const detailsSection = document.getElementById('details-section')
 const commentSection = document.getElementById('comment-section')
 
@@ -86,13 +86,13 @@ closeBtn.addEventListener("click", () => {
 //   button.textContent = expanded ? "see less" : "see more";
 // });
 
-detailsBtns.forEach(detailsBtn => {
-    detailsBtn.addEventListener("click", () => {
-        detailsSection.classList.remove("hidden")
-        console.log('details-btn');
-        
-    })
-})
+// detailsBtns.forEach(detailsBtn => {
+//     detailsBtn.addEventListener("click", () => {
+//         detailsSection.classList.remove("hidden")
+//         console.log('details-btn');
+//         document.body.classList.add("overflow-y-hidden")
+//     })
+// })
 
 document.addEventListener("click", (e) => {
     let backBtn = e.target.closest(".back-btn")
@@ -100,6 +100,12 @@ document.addEventListener("click", (e) => {
 
     let section = backBtn.closest("section")
     section.classList.add("hidden")
+    if (section.id === "comment-section") {
+        detailsSection.classList.remove("overflow-y-hidden");
+        return
+    }
+
+    document.body.classList.remove("overflow-y-hidden")
 })
 
 // document.getElementById("leave-comment-btn").addEventListener("click", () => {

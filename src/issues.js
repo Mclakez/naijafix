@@ -97,22 +97,8 @@ document.addEventListener('click', async (e) => {
         })
         if (!res.ok) throw new Error('Failed to load issue details')
         const issue = await res.json()
-        console.log(issue)
         const imgUrl = issue.issueImage ? `/uploads/${encodeURIComponent(issue.issueImage)}` : './images/placeholder.jpg'
-        issue.comments.forEach(comment => {
-          ` <li>
-                <div class="flex justify-between">
-                  <span class="font-semibold">${comment._id}</span>
-                  <span>${comment.date}</span>
-                </div>
-                <div class="relative comment-container">
-                <p id="text" class="comment-text line-clamp-4 text-lg transition-[max-height] duration-500 ease-in-out">${comment.comment}</p>
-
-                <button id="overlay" class="see-more-btn absolute bottom-0 right-0 bg-gradient-to-l from-white text-blue-600 cursor-pointer pl-40 text-lg">... see more</button>
-            </div>
-            <hr class="my-4">
-              </li>`
-        })
+        
 
         detailsSection.innerHTML = `<div  class="bg-green-800 flex justify-between items-center px-4 py-6 text-white mb-8">
             <button class="back-btn text-xl cursor-pointer">&larr;</button>
@@ -137,11 +123,11 @@ document.addEventListener('click', async (e) => {
             <article class="border border-gray-400 px-4 py-2 bg-white">
             <ul>
 
-              ${issue.comments.map(comment => 
-          ` <li>
+              ${issue.comments.map(comment => {
+          return ` <li>
                 <div class="flex justify-between">
-                  <span class="font-semibold">${comment._id}</span>
-                  <span>${comment.date}</span>
+                  <span class="font-semibold">${comment.userID.username}</span>
+                  <span>${new Date(comment.date).toLocaleString()}</span>
                 </div>
                 <div class="relative comment-container">
                 <p id="text" class="comment-text line-clamp-4 text-lg transition-[max-height] duration-500 ease-in-out">${comment.comment}</p>
@@ -150,7 +136,7 @@ document.addEventListener('click', async (e) => {
             </div>
             <hr class="my-4">
               </li>`
-        ).join('')
+              }).join('')
 }
 
             </ul>
@@ -166,6 +152,7 @@ document.addEventListener('click', async (e) => {
         <img src="./images/nfix1.png" alt="logo" srcset="" class="w-40 mt-8 ml-4">
           </div>`
         detailsSection.classList.remove('hidden')
+        document.body.classList.add("overflow-y-hidden")
       
 
     } catch(error) {

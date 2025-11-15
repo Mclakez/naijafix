@@ -3,6 +3,7 @@ const form = document.getElementById('comment-form')
 const commentPopUp = document.getElementById('comment-popup')
 const commentSection = document.getElementById('comment-section')
 let issueID;
+const detailsSection = document.getElementById('details-section')
 
 document.addEventListener('click', async (e) => {
   let leaveCommentBtn = e.target.closest('.leave-comment-btn')
@@ -11,7 +12,9 @@ document.addEventListener('click', async (e) => {
     console.log('Fetching details for ID:', id)
     issueID = id
   commentSection.classList.remove('hidden')
- console.log('comment')
+  detailsSection.classList.add("overflow-y-hidden")
+  document.body.classList.add("overflow-y-hidden")
+  
 })
 
 form.addEventListener('submit', async (e) => {
@@ -19,7 +22,6 @@ form.addEventListener('submit', async (e) => {
 
         const formData = new FormData(form)
         const data = Object.fromEntries(formData.entries())
-        console.log(data)
 
     try {
         const res = await fetch(`http://localhost:3000/api/issues/${issueID}/comment`, {

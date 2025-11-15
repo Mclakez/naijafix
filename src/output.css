@@ -17,9 +17,7 @@
     --color-black: #000;
     --color-white: #fff;
     --spacing: 0.25rem;
-    --container-2xl: 42rem;
     --container-4xl: 56rem;
-    --container-6xl: 72rem;
     --container-7xl: 80rem;
     --text-sm: 0.875rem;
     --text-sm--line-height: calc(1.25 / 0.875);
@@ -222,9 +220,6 @@
   }
   .right-6 {
     right: calc(var(--spacing) * 6);
-  }
-  .right-\[calc\(\(100vw-80rem\)\/2\+1rem\)\] {
-    right: calc((100vw - 80rem) / 2 + 1rem);
   }
   .bottom-0 {
     bottom: calc(var(--spacing) * 0);
@@ -714,11 +709,6 @@
   .md\:text-white {
     @media (width >= 48rem) {
       color: var(--color-white);
-    }
-  }
-  .lg\:right-\[calc\(\(100vw-80rem\)\/2\+1rem\)\] {
-    @media (width >= 64rem) {
-      right: calc((100vw - 80rem) / 2 + 1rem);
     }
   }
   .xl\:right-\[calc\(\(100vw-80rem\)\/2\+1rem\)\] {

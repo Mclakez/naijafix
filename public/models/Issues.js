@@ -38,7 +38,10 @@ const issueSchema = new mongoose.Schema({
     },
     comments: [
         {
-            userID: mongoose.Schema.Types.ObjectId,
+            userID: {
+                type:mongoose.Schema.Types.ObjectId,
+                ref: "User"
+            },
             comment: String,
             date: { type: Date, default: Date.now }
         }
