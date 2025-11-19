@@ -17,6 +17,47 @@ document.addEventListener('click', async (e) => {
   
 })
 
+document.addEventListener('click', async (e) => {
+  let seeMoreBtn = e.target.closest('.see-more-btn')
+  if(!seeMoreBtn) return
+//   seeMoreBtn.addEventListener("click", () => {
+//     let expanded = false;
+//     expanded = !expanded
+
+//     if (expanded) {
+//         seeMoreBtn.classList.remove('line-clamp-8')
+//         seeMoreBtn.textContent = "... see less"
+//         seeMoreBtn.classList.remove('bg-gradient-to-l', 'from-white', 'pl-8')
+//     } else{
+//         seeMoreBtn.classList.add('line-clamp-8')
+//         seeMoreBtn.textContent = "... see more"
+//         seeMoreBtn.classList.add('bg-gradient-to-l', 'from-white', 'pl-8')
+//     }
+
+     const commentContainer = seeMoreBtn.closest(".comment-container");
+  const comment = commentContainer.querySelector(".comment-text")
+  
+  const expanded = comment.classList.toggle("expanded");
+
+//   button.setAttribute("aria-expanded", expanded ? "true" : "false");
+  seeMoreBtn.textContent = expanded ? "see less" : "see more";
+})
+
+// document.querySelector(".comment-container").addEventListener("click", (e) => {
+//   if (!e.target.classList.contains("see-more-btn")) return;
+
+//   const button = e.target;
+  
+//   const commentContainer = button.closest(".comment-container");
+//   const comment = commentContainer.querySelector(".comment-text")
+  
+//   const expanded = comment.classList.toggle("expanded");
+ //   button.setAttribute("aria-expanded", expanded ? "true" : "false");
+//   button.textContent = expanded ? "see less" : "see more";
+// });
+  
+
+
 form.addEventListener('submit', async (e) => {
     e.preventDefault()
 
@@ -37,8 +78,6 @@ form.addEventListener('submit', async (e) => {
         }
 
         const data = await res.json()
-
-        console.log(data);
        commentPopUp.textContent = 'Comment has been succesfully submitted'
         commentPopUp.style.display = 'block'
         setTimeout(() => {

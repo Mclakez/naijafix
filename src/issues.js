@@ -98,11 +98,26 @@ document.addEventListener('click', async (e) => {
         if (!res.ok) throw new Error('Failed to load issue details')
         const issue = await res.json()
         const imgUrl = issue.issueImage ? `/uploads/${encodeURIComponent(issue.issueImage)}` : './images/placeholder.jpg'
+        const proofImage = issue.fixImage ? `/uploads/${encodeURIComponent(issue.fixImage)}` : null
+        let proofHtml;
+
+        if(proofImage) {
+          proofHtml = `
+          <article class="border border-gray-400 px-4 py-2 bg-white">
+          <h4 class="mb-4 text-3xl font-semibold">Proof of fix</h4>
+          <div class="bg-[url('${proofImage}')] bg-cover h-72"></div>
+        </article>
+          `
+        } else {
+          proofHtml = ''
+        }
         
 
-        detailsSection.innerHTML = `<div  class="bg-green-800 flex justify-between items-center px-4 py-6 text-white mb-8  ">
-            <button class="back-btn text-xl cursor-pointer">&larr;</button>
-            <h4 class="text-white font-semibold">Details</h4>
+        detailsSection.innerHTML = `<div  class="bg-green-800  mb-8  ">
+            <div class="max-w-7xl mx-auto flex justify-between items-center px-4 py-6 text-white">
+              <button class="back-btn text-xl cursor-pointer">&larr;</button>
+              <h4 class="text-white font-semibold">Details</h4>
+            </div>
           </div>
 
           <div class="grid gap-12 px-4 mx-auto max-w-4xl">
@@ -116,7 +131,7 @@ document.addEventListener('click', async (e) => {
                 ${issue.status}
               </div>
               <p class="text-sm ">${issue.location}</p>
-              <p class="text-sm ">Reported ${new Date(issue.createdAt).toLocaleString()}</p>
+              <p class="text-sm ">Reported ${formatDate(issue.createdAt)}</p>
               <p class="italic text-sm">Submitted by ${issue.createdBy?.username || issue.createdBy || 'User'}</p>
             </div>
             </article>
@@ -127,14 +142,14 @@ document.addEventListener('click', async (e) => {
           return ` <li>
                 <div class="flex justify-between">
                   <span class="font-semibold">${comment.userID.username}</span>
-                  <span>${new Date(comment.date).toLocaleString()}</span>
+                  <span>${formatDate(comment.date)}</span>
                 </div>
                 <div class="relative comment-container">
-                <p id="text" class="comment-text line-clamp-4 text-lg transition-[max-height] duration-500 ease-in-out">${comment.comment}</p>
+                <p class="comment-text break-words break-all line-clamp-4 text-lg transition-[max-height] duration-500 ease-in-out">${comment.comment}</p>
 
                 <button id="overlay" class="see-more-btn absolute bottom-0 right-0 bg-gradient-to-l from-white text-blue-600 cursor-pointer pl-40 text-lg">... see more</button>
             </div>
-            <hr class="my-4">
+            <hr class="my-4 bg-none border-[0.5px] border-gray-500">
               </li>`
               }).join('')
 }
@@ -143,16 +158,31 @@ document.addEventListener('click', async (e) => {
             <button id="leave-comment-btn" class="leave-comment-btn bg-green-800 flex justify-center items-center gap-3 py-3 px-3 rounded w-fit text-white font-semibold" data-id="${id}"><span>&#128172;</span> <span>Leave a comment</span></button>
         </article>
 
-        <article class="border border-gray-400 px-4 py-2 bg-white">
-          <h4 class="mb-4 text-3xl font-semibold">Proof of fix</h4>
-          <div class="bg-[url('./images/5de09a7068512cd7e5cdae70566ce4cd.jpg')] bg-cover h-72"></div>
-        </article>
+        ${proofHtml}
 
         <img src="./images/nfix1.png" alt="logo" srcset="" class="w-40 mt-8">
       </div>
 
         
           `
+
+        const commentParagraphs = detailsSection.querySelectorAll('.comment-text')
+        
+        commentParagraphs.forEach(paragraph => {
+          
+          setTimeout(() => {
+          let visibleHeight = paragraph.clientHeight
+          let fullHeight = paragraph.scrollHeight
+          const seeMoreBtn = paragraph.closest("li").querySelector(".see-more-btn")
+          console.log(seeMoreBtn)
+          if(fullHeight > visibleHeight) {
+             seeMoreBtn.style.display = "block"
+          } else {
+            seeMoreBtn.style.display = "none"
+          }
+          
+          }, 0);
+        })
         detailsSection.classList.remove('hidden')
         document.body.classList.add("overflow-y-hidden")
       
@@ -164,3 +194,34 @@ document.addEventListener('click', async (e) => {
     
 })
 
+function formatDate(date) {
+  let now = new Date()
+  let past = new Date(date)
+
+  let diffMs = now - past
+  console.log(diffMs);
+  
+  let diffMins = Math.floor(diffMs / (1000 * 60))
+  let diffHrs = Math.floor(diffMs / (1000 *60 *60))
+  let diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24))
+
+  if(diffMins < 60) {
+    return `${diffMins} min ago`
+  }
+
+  if(diffHrs < 24) {
+    return `${diffHrs} hr${diffHrs === 1 ? '' : 's'} ago`
+  }
+
+  if(diffDays <= 31) {
+    return `${diffDays} day${diffDays === 1 ? '' : 's'} ago`
+  }
+
+  let options = {
+    year: "numeric",
+    month: "short",
+    day: "numeric"
+  }
+
+  return past.toLocaleDateString('en-us', options)
+}

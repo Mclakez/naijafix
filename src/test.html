@@ -5,119 +5,55 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="./output.css" rel="stylesheet">
 </head>
-<body>
-    
-    <div class="bg-red-500 relative">
-      <main class="grid [grid-template-columns:repeat(auto-fit,_minmax(250px,_1fr))] gap-4 gap-y-6 px-2 bg-red-500" id="main-container">
-      
-      <article  class="bg-white rounded-xl shadow-md overflow-hidden">
-        <div class="bg-[url('./images/5de09a7068512cd7e5cdae70566ce4cd.jpg')] bg-cover h-50">
+<body class="overflow-x-hidden"> <!-- Prevent horizontal scrolling -->
+<main>
+  <div class="bg-green-800 flex justify-between items-center px-4 py-6 text-white mb-8">
+    <button class="back-btn text-xl cursor-pointer">&larr;</button>
+    <h4 class="text-white font-semibold">Details</h4>
+  </div>
 
+  <div class="grid gap-12 px-4 mx-auto max-w-4xl">
+    <article aria-labelledby="sighting-title" class="border border-gray-400 px-4 py-2 bg-white">
+      <div class="bg-cover h-72" style="background-image: url('./images/5de09a7068512cd7e5cdae70566ce4cd.jpg')"></div>
+      <div class="grid gap-2">
+        <h3 class="text-xl font-semibold">Overflow</h3>
+        <p class="line-clamp-8 text-lg">The page is overflowing</p>
+        <div class="text-sm bg-naija-yellow rounded w-fit px-3 py-2 font-semibold">
+          ${issue.status}
         </div>
-        <div class="px-3 grid gap-2 py-4">
-          <h3 class="text-xl font-semibold">Heavy Rainfall at Third Mainland bridge</h3>
-          <div class="text-sm bg-naija-yellow rounded w-fit px-3 py-2 font-semibold ">
-            Pending
+        <p class="text-sm">Nigeria</p>
+        <p class="text-sm">Reported 281103</p>
+        <p class="italic text-sm">Submitted by Me</p>
+      </div>
+    </article>
+    <article class="border border-gray-400 px-4 py-2 bg-white">
+      <ul>
+        <li>
+          <div class="flex justify-between">
+            <span class="font-semibold">Tster</span>
+            <span>28/11/2003</span>
           </div>
-          <p>Lagos, Nigeria</p>
-          <button class="details-btn bg-green-800 flex justify-center py-3 rounded text-white font-semibold">View Details</button>
-        </div>
-      </article>
-
-
-      <article  class="bg-white rounded-xl shadow-md overflow-hidden ">
-        <div class="bg-[url('./images/5de09a7068512cd7e5cdae70566ce4cd.jpg')] bg-cover h-50">
-
-        </div>
-        <div class="px-3 grid gap-2 py-4">
-          <h3 class="text-xl font-semibold">Heavy Rainfall at Third Mainland bridge</h3>
-          <div class="text-sm bg-naija-yellow rounded w-fit px-3 py-2 font-semibold ">
-            Pending
+          <div class="relative comment-container">
+            <p class="comment-text break-words break-all text-lg transition-[max-height] duration-500 ease-in-out">
+              Life hasn't been all that easy. I've been going through this and that while being coupled with quite a lot of responsibilities. There's no rest for me in this world. I find my rest in Jesus. lsjflksafjhs.jfgsa,hjgfjhsfl;sjfslfflkdflsfljfdlfjdfkjdfkdsfndskvdskvndskvndsv,dnvds,vdfjdfehwfjnewfhelfekfhewuf;eheur;tjr gfm bcd. ;l nsvdvn.d/vbdbewbj;ggjeg;ilgjigdljghd;ljgdsvkjdg;djgd;lgjd;lgkdj;d;kjdslgjdlfksjg'oflkj'fkjfr'wiwurwjrpwrkjwq'rkjw'rwrkwfjwfefjd;giogj'kjgog'kdfj;d'ld;fj'df;jldvb;doorltur'tjepgj;rdo;bhglghewoiekegeldj;ldkjgfjlfj;oiewtiegkndvbdm.vbsdvsdvklnvhlkheuigfhe;gnr;eoginregkrkb/dfmb/bvndvndgdngldfggrhhtjtrjyjyjyjtrjrtj
+            </p>
+            <button id="overlay" class="see-more-btn absolute bottom-0 right-0 bg-gradient-to-l from-white text-blue-600 cursor-pointer pl-40 text-lg">... see more</button>
           </div>
-          <p>Lagos, Nigeria</p>
-          <button class="details-btn bg-green-800 flex justify-center py-3 rounded text-white font-semibold">View Details</button>
-        </div>
-      </article>
+          <hr class="my-4 bg-none border-[0.5px] border-gray-500">
+        </li>
+      </ul>
+      <button id="leave-comment-btn" class="leave-comment-btn bg-green-800 flex justify-center items-center gap-3 py-3 px-3 rounded w-fit text-white font-semibold" data-id="${id}">
+        <span>&#128172;</span> <span>Leave a comment</span>
+      </button>
+    </article>
 
-      <article  class="bg-white rounded-xl shadow-md overflow-hidden ">
-        <div class="bg-[url('./images/5de09a7068512cd7e5cdae70566ce4cd.jpg')] bg-cover h-50">
+    <article class="border border-gray-400 px-4 py-2 bg-white">
+      <h4 class="mb-4 text-3xl font-semibold">Proof of fix</h4>
+      <div class="bg-[url('./images/5de09a7068512cd7e5cdae70566ce4cd.jpg')] bg-cover h-72"></div>
+    </article>
+  </div>
 
-        </div>
-        <div class="px-3 grid gap-2 py-4">
-          <h3 class="text-xl font-semibold">Heavy Rainfall at Third Mainland bridge</h3>
-          <div class="text-sm bg-naija-yellow rounded w-fit px-3 py-2 font-semibold ">
-            Pending
-          </div>
-          <p>Lagos, Nigeria</p>
-          <button class="details-btn bg-green-800 flex justify-center py-3 rounded text-white font-semibold">View Details</button>
-        </div>
-      </article>
-
-      <article  class="bg-white rounded-xl shadow-md overflow-hidden ">
-        <div class="bg-[url('./images/5de09a7068512cd7e5cdae70566ce4cd.jpg')] bg-cover h-50">
-
-        </div>
-        <div class="px-3 grid gap-2 py-4">
-          <h3 class="text-xl font-semibold">Heavy Rainfall at Third Mainland bridge</h3>
-          <div class="text-sm bg-naija-yellow rounded w-fit px-3 py-2 font-semibold ">
-            Pending
-          </div>
-          <p>Lagos, Nigeria</p>
-          <button class="details-btn bg-green-800 flex justify-center py-3 rounded text-white font-semibold">View Details</button>
-        </div>
-      </article>
-
-      <article  class="bg-white rounded-xl shadow-md overflow-hidden ">
-        <div class="bg-[url('./images/5de09a7068512cd7e5cdae70566ce4cd.jpg')] bg-cover h-50">
-
-        </div>
-        <div class="px-3 grid gap-2 py-4">
-          <h3 class="text-xl font-semibold">Heavy Rainfall at Third Mainland bridge</h3>
-          <div class="text-sm bg-naija-yellow rounded w-fit px-3 py-2 font-semibold ">
-            Pending
-          </div>
-          <p>Lagos, Nigeria</p>
-          <button class="details-btn bg-green-800 flex justify-center py-3 rounded text-white font-semibold">View Details</button>
-        </div>
-      </article>
-
-      <article  class="bg-white rounded-xl shadow-md overflow-hidden ">
-        <div class="bg-[url('./images/5de09a7068512cd7e5cdae70566ce4cd.jpg')] bg-cover h-50">
-
-        </div>
-        <div class="px-3 grid gap-2 py-4">
-          <h3 class="text-xl font-semibold">Heavy Rainfall at Third Mainland bridge</h3>
-          <div class="text-sm bg-naija-yellow rounded w-fit px-3 py-2 font-semibold ">
-            Pending
-          </div>
-          <p>Lagos, Nigeria</p>
-          <button class="details-btn bg-green-800 flex justify-center py-3 rounded text-white font-semibold">View Details</button>
-        </div>
-      </article>
-
-      <article  class="bg-white rounded-xl shadow-md overflow-hidden ">
-        <div class="bg-[url('./images/5de09a7068512cd7e5cdae70566ce4cd.jpg')] bg-cover h-50">
-
-        </div>
-        <div class="px-3 grid gap-2 py-4">
-          <h3 class="text-xl font-semibold">Heavy Rainfall at Third Mainland bridge</h3>
-          <div class="text-sm bg-naija-yellow rounded w-fit px-3 py-2 font-semibold ">
-            Pending
-          </div>
-          <p>Lagos, Nigeria</p>
-          <button class="details-btn bg-green-800 flex justify-center py-3 rounded text-white font-semibold">View Details</button>
-        </div>
-      </article>
-
-      
-
-    </main>
-    <button class="fixed bottom-20 right-6 bg-black h-16 w-16 rounded-full grid place-items-center" id="add-btn">
-  <span class="text-white text-5xl leading-none mb-2 overflow-hidden">+</span>
-</button>
-
-    </div>
-
-  
+  <img src="./images/nfix1.png" alt="logo" class="w-40 mt-8 ml-4">
+</main>
 </body>
 </html>

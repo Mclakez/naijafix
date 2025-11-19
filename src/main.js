@@ -107,7 +107,3 @@ document.addEventListener("click", (e) => {
 
     document.body.classList.remove("overflow-y-hidden")
 })
-
-// document.getElementById("leave-comment-btn").addEventListener("click", () => {
-//     commentSection.classList.remove("hidden")
-// })
