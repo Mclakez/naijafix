@@ -88,10 +88,10 @@
 
      <div>
       <label for="uploadBox" class="text-xl font-semibold">Image of the Report</label>
-       <div id="uploadBox" class="relative rounded-xl w-full h-50 bg-gray-300 border-2 border-dashed border-gray-400 flex items-center justify-center cursor-pointer overflow-hidden hover:border-green-500 transition-colors">
+       <div id="uploadBox" class="relative rounded-xl w-full h-50 md:h-100 bg-gray-300 border-2 border-dashed border-gray-400 flex items-center justify-center cursor-pointer overflow-hidden hover:border-green-500 transition-colors">
         <input name="issueImage" id="imageInput" type="file" accept="image/*"  hidden>
         <i class="fa-solid fa-image text-5xl" id="uploadIcon"></i>
-        <img id="previewImage" alt="Preview" class="absolute inset-0 w-full h-full object-cover hidden rounded">
+        <img id="previewImage" alt="Preview" class="absolute inset-0 mx-auto my-auto object-fit hidden rounded">
       </div>
      </div>
 

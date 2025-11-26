@@ -1,3 +1,5 @@
+import { loadIssues } from "./issues.js"
+
 const token = localStorage.getItem("token")
 const form = document.getElementById('report-form')
 const imageInput = document.getElementById('imageInput')
@@ -27,9 +29,18 @@ form.addEventListener('submit', async (e) => {
         }
 
         const data = await res.json()
-        console.log(data);
         successMessage.textContent = 'Report has been succesfully submitted'
-        successMessage.style.display = 'block'
+        successMessage.style.display = 'block' 
+        const myReportsBtn = document.getElementById('my-report-btn')
+        if(myReportsBtn.classList.contains('bg-naija-yellow')) {
+            const activeFilter = "my"
+            await loadIssues(activeFilter)
+        } else {
+            const activeFilter = "all"
+            await loadIssues(activeFilter)
+        }
+
+         
         setTimeout(() => {
             successMessage.style.display = 'none'
             previewImage.classList.add('hidden')
@@ -37,6 +48,7 @@ form.addEventListener('submit', async (e) => {
             form.reset()
             
         }, 3000)
+       
         
     } catch (error) {
         successMessage.textContent = `${error.message}`
@@ -64,3 +76,4 @@ imageInput.addEventListener('change', (e) => {
         reader.readAsDataURL(file)
     }
 })
+

@@ -69,6 +69,16 @@ async function getMyIssues() {
     }
 }
 
+export async function loadIssues(filter) {
+  mainContainer.innerHTML = ""
+  if(filter === 'my') {
+    await getMyIssues()
+  } else {
+    await getAllIssues()
+  }
+
+}
+
 allReportsBtn.addEventListener('click', (e) => {
     mainContainer.innerHTML = ""
     getAllIssues()
@@ -122,7 +132,7 @@ document.addEventListener('click', async (e) => {
 
           <div class="grid gap-12 px-4 mx-auto max-w-4xl">
             <article aria-labelledby="sighting-title" class="border border-gray-400 px-4 py-2 bg-white">
-            <div class="bg-cover h-72" style="background-image: url('${imgUrl}')"></div>
+            <div class="bg-contain bg-no-repeat h-72" style="background-image: url('${imgUrl}')"></div>
             
             <div class="grid gap-2">
               <h3 class="text-xl font-semibold">${issue.title}</h3>
@@ -174,7 +184,6 @@ document.addEventListener('click', async (e) => {
           let visibleHeight = paragraph.clientHeight
           let fullHeight = paragraph.scrollHeight
           const seeMoreBtn = paragraph.closest("li").querySelector(".see-more-btn")
-          console.log(seeMoreBtn)
           if(fullHeight > visibleHeight) {
              seeMoreBtn.style.display = "block"
           } else {
@@ -225,3 +234,4 @@ function formatDate(date) {
 
   return past.toLocaleDateString('en-us', options)
 }
+
