@@ -4,12 +4,12 @@ const commentPopUp = document.getElementById('comment-popup')
 const commentSection = document.getElementById('comment-section')
 let issueID;
 const detailsSection = document.getElementById('details-section')
+import { getIssueDetails } from "./issues.js";
 
 document.addEventListener('click', async (e) => {
   let leaveCommentBtn = e.target.closest('.leave-comment-btn')
   if(!leaveCommentBtn) return
   const id = leaveCommentBtn.getAttribute("data-id")
-    console.log('Fetching details for ID:', id)
     issueID = id
   commentSection.classList.remove('hidden')
   detailsSection.classList.add("overflow-y-hidden")
@@ -54,6 +54,7 @@ form.addEventListener('submit', async (e) => {
         const data = await res.json()
        commentPopUp.textContent = 'Comment has been succesfully submitted'
         commentPopUp.style.display = 'block'
+        getIssueDetails(issueID)
         setTimeout(() => {
             commentPopUp.style.display = 'none'
             form.reset()

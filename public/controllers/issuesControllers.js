@@ -48,7 +48,7 @@ export async function getDetails(req, res) {
     try {
         let { id } = req.params
         const issue = await Issue.findById(id).populate('createdBy', 'username').populate('comments.userID', 'username')
-        console.log("Issue after populate", JSON.stringify(issue, null, 2))
+        // console.log("Issue after populate", JSON.stringify(issue, null, 2))
 
 
         if(!issue) {
@@ -65,7 +65,6 @@ export async function postComment(req, res) {
         const user = await req.user;
         const citizenId = user.id;
         const { id } = req.params
-        console.log(id)
 
     try {
         

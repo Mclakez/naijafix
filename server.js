@@ -1,11 +1,11 @@
 import dotenv from "dotenv"
 dotenv.config()
 import express from 'express'
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { authRouter } from "./public/routes/authRoutes.js"
 import { issuesRouter } from "./public/routes/issuesRoutes.js"
 import { inItDb } from './public/config/db.js'
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 
 const PORT = 3000
 
@@ -17,8 +17,6 @@ app.use(express.json())
 
 
 app.use(express.static(path.join(__dirname, "src")))
-
-
     
    await inItDb();
 
@@ -26,7 +24,4 @@ app.use(express.static(path.join(__dirname, "src")))
     app.use("/api/auth", authRouter);
     app.use("/api/issues", issuesRouter)
 
-    // app.get('/', (req, res) => {
-    //     res.send("API is running...");
-    // });
     app.listen(PORT, () => console.log(`Server is running at http://localhost:${PORT}`));

@@ -28,7 +28,7 @@ async function getAllIssues() {
           <button class="details-btn bg-green-800 flex justify-center py-3 rounded text-white font-semibold" data-id="${issue._id}">View Details</button>
         </div>`
         
-        mainContainer.appendChild(card)
+        mainContainer.prepend(card)
         });
         
     } catch (error) {
@@ -61,7 +61,7 @@ async function getMyIssues() {
           <button class="details-btn bg-green-800 flex justify-center py-3 rounded text-white font-semibold" data-id="${issue._id}">View Details</button>
         </div>`
 
-        mainContainer.appendChild(card)
+        mainContainer.prepend(card)
         });
         
     } catch (error) {
@@ -100,8 +100,12 @@ document.addEventListener('click', async (e) => {
     let viewBtn = e.target.closest('.details-btn')
     if(!viewBtn) return
     const id = viewBtn.getAttribute("data-id")
-    console.log('Fetching details for ID:', id)
-    try{
+    await getIssueDetails(id)
+    
+})
+
+export async function getIssueDetails(id) {
+  try{
         const res = await fetch(`http://localhost:3000/api/issues/${id}`, {
             headers: { 'Authorization': `Bearer ${token}` }
         })
@@ -200,8 +204,7 @@ document.addEventListener('click', async (e) => {
         alert('Error on getting details,' + error.message)
     }
 
-    
-})
+}
 
 function formatDate(date) {
   let now = new Date()
