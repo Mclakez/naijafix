@@ -46,7 +46,7 @@ export async function login(req, res) {
     const { username, password } = req.body
     
     
-    try {``
+    try {
         const user = await User.findOne({username})
             if (!user) {
                return res.status(400).json({error: 'Invalid username'})

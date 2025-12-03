@@ -3,17 +3,13 @@ const menuBtn = document.getElementById("menu-btn")
 const menu = document.getElementById("menu")
 const closeBtn = document.getElementById("close-btn")
 const reportSection = document.getElementById("report-section")
-// const reportBackBtn = document.getElementById("report-back-btn")
 const overlay = document.getElementById("overlay")
 const text = document.getElementById("text")
 let expanded = false
-
 const uploadBox = document.getElementById('uploadBox')
 const imageInput = document.getElementById('imageInput')
 const previewImage = document.getElementById('previewImage')
 const uploadIcon = document.getElementById('uploadIcon')
-
-// const detailsBtns = document.querySelectorAll('.details-btn')
 const detailsSection = document.getElementById('details-section')
 const commentSection = document.getElementById('comment-section')
 
@@ -50,49 +46,6 @@ menuBtn.addEventListener("click", () => {
 closeBtn.addEventListener("click", () => {
     menu.classList.add('hidden')
 })
-
-// reportBackBtn.addEventListener("click", () => {
-//     reportSection.classList.add("hidden")
-//     document.body.classList.remove("overflow-y-hidden")
-// })
-
-
-
-// overlay.addEventListener("click", () => {
-//     expanded = !expanded
-
-//     if (expanded) {
-//         text.classList.remove('line-clamp-8')
-//         overlay.textContent = "... see less"
-//         overlay.classList.remove('bg-gradient-to-l', 'from-white', 'pl-8')
-//     } else{
-//         text.classList.add('line-clamp-8')
-//         overlay.textContent = "... see more"
-//         overlay.classList.add('bg-gradient-to-l', 'from-white', 'pl-8')
-//     }
-// })
-
-// document.querySelector(".comment-container").addEventListener("click", (e) => {
-//   if (!e.target.classList.contains("see-more-btn")) return;
-
-//   const button = e.target;
-  
-//   const commentContainer = button.closest(".comment-container");
-//   const comment = commentContainer.querySelector(".comment-text")
-  
-//   const expanded = comment.classList.toggle("expanded");
-
-// //   button.setAttribute("aria-expanded", expanded ? "true" : "false");
-//   button.textContent = expanded ? "see less" : "see more";
-// });
-
-// detailsBtns.forEach(detailsBtn => {
-//     detailsBtn.addEventListener("click", () => {
-//         detailsSection.classList.remove("hidden")
-//         console.log('details-btn');
-//         document.body.classList.add("overflow-y-hidden")
-//     })
-// })
 
 document.addEventListener("click", (e) => {
     let backBtn = e.target.closest(".back-btn")

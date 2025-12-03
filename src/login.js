@@ -12,16 +12,24 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
         })
 
         if (!res.ok) {
-  const errorData = await res.json();
-  throw new Error(errorData.error || 'Login failed');
+            const errorData = await res.json();
+            throw new Error(errorData.error || 'Login failed');
 }
 
 
         const data = await res.json()
-        console.log(data);
-        
+        console.log(data)       
         localStorage.setItem('token', data.token)
-        window.location.href = './issues.html'
+        const role = data.user.role
+
+        if(role === "officer") {
+            window.location.href = './officer/officer_home.html'
+        } else if(role === "admin") {
+            window.location.href = './admin/admin_home.html'
+        } else {
+            window.location.href = './issues.html'
+        }
+        
     } catch (error) {
         alert(error.message)
     }
