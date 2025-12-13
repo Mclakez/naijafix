@@ -1,5 +1,6 @@
 import { getDB } from '../config/db.js'
 import { Issue } from '../models/Issues.js'
+let id = 0
 
 
 export async function postIssue(req, res) {
@@ -10,6 +11,7 @@ export async function postIssue(req, res) {
     
     try {
         const newIssue = await Issue.create({
+            id: id++,
             title,
             description,
             location,
@@ -36,7 +38,7 @@ export async function getMyIssues(req, res) {
 export async function getAllIssues(req, res) {
     
     try {
-        const issues = await Issue.find()
+        const issues = await Issue.find().populate('createdBy', 'username')
         res.json(issues)
     } catch (err) {
         res.status(500).json({error: err.message})
