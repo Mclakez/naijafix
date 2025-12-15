@@ -1,6 +1,7 @@
 import mongoose from "mongoose"
 
 const issueSchema = new mongoose.Schema({
+    issueId: Number,
     title: {
         type: String,
         required: true,

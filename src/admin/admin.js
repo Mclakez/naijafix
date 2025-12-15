@@ -3,7 +3,7 @@ const issuesTable = document.querySelector('.issuesTable')
 
 async function getReports() {
     try {
-        const res = await fetch('http://localhost:3000/api/issues', {
+        const res = await fetch('http://localhost:3000/api/issues?page=2&limit=10', {
             headers: { 'Authorization': `Bearer ${token}` }
         })
         if (!res.ok) throw new Error('Error with all issues')
@@ -14,7 +14,7 @@ async function getReports() {
             row.className = `w-full grid grid-cols-[100px_1fr_1fr_150px_150px_150px] gap-4 text-black px-2 py-4 bg-transparent items-center border-b border-gray-400`
 
             row.innerHTML = `
-                <p>${issue.id}</p>
+                <p>${issue.issueId}</p>
                 <p class="overflow-x-auto">${issue.createdBy?.username || issue.createdBy}</p>
                 <p class="overflow-x-auto">${issue.title}</p>
                 <p class="overflow-x-auto">Bankole</p>

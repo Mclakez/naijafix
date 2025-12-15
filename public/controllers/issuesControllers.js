@@ -1,17 +1,26 @@
 import { getDB } from '../config/db.js'
 import { Issue } from '../models/Issues.js'
-let id = 0
+import { Counter } from '../models/Counter.js'
 
+async function getIssueId() {
+    const counter = await Counter.findByIdAndUpdate("issues",
+        { $inc: { seq: 1 }},
+        { new: true, upsert: true }
+    )
+
+    return counter.seq
+}
 
 export async function postIssue(req, res) {
     const {title, description, location} = req.body
     const issueImage = req.file ? req.file.filename : null
     const user = await req.user;
     const citizenId = user.id;
+    const issueId = await getIssueId()
     
     try {
         const newIssue = await Issue.create({
-            id: id++,
+            issueId,
             title,
             description,
             location,
@@ -36,10 +45,23 @@ export async function getMyIssues(req, res) {
 }
 
 export async function getAllIssues(req, res) {
+    const page = parseInt(req.query.page)
+    const limit = parseInt(req.query.limit)
+
     
     try {
+        // if(page && limit) {
+        //     const skip = (page - 1) * limit
+             
+        //     const issues = await Issue.find().populate('createdBy', 'username').skip(skip).limit(limit).sort({createdAt: -1})
+        //     res.json(issues)
+        // }else {
+        //     const issues = await Issue.find().populate('createdBy', 'username')
+        //     res.json(issues)
+        // }
+
         const issues = await Issue.find().populate('createdBy', 'username')
-        res.json(issues)
+            res.json(issues)
     } catch (err) {
         res.status(500).json({error: err.message})
     }
