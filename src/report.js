@@ -40,12 +40,12 @@ form.addEventListener('submit', async (e) => {
             await loadIssues(activeFilter)
         }
 
-         
-        setTimeout(() => {
-            successMessage.style.display = 'none'
             previewImage.classList.add('hidden')
             uploadIcon.classList.remove('hidden')
             form.reset()
+            
+        setTimeout(() => {
+            successMessage.style.display = 'none'
             
         }, 3000)
        

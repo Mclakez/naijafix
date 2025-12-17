@@ -47,21 +47,26 @@ export async function getMyIssues(req, res) {
 export async function getAllIssues(req, res) {
     const page = parseInt(req.query.page)
     const limit = parseInt(req.query.limit)
-
+    const totalItems = await Issue.countDocuments()
+    const currentpage = page
     
     try {
-        // if(page && limit) {
-        //     const skip = (page - 1) * limit
+        if(page && limit) {
+            const skip = (page - 1) * limit
              
-        //     const issues = await Issue.find().populate('createdBy', 'username').skip(skip).limit(limit).sort({createdAt: -1})
-        //     res.json(issues)
-        // }else {
-        //     const issues = await Issue.find().populate('createdBy', 'username')
-        //     res.json(issues)
-        // }
-
-        const issues = await Issue.find().populate('createdBy', 'username')
+            const issues = await Issue.find().populate('createdBy', 'username').skip(skip).limit(limit)
+            res.json({
+                issues,
+                totalPages: Math.ceil(totalItems/limit),
+                currentpage
+            })
+        }else {
+            const issues = await Issue.find().populate('createdBy', 'username')
             res.json(issues)
+        }
+
+        // const issues = await Issue.find().populate('createdBy', 'username')
+        //     res.json(issues)
     } catch (err) {
         res.status(500).json({error: err.message})
     }
