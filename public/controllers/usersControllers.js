@@ -56,9 +56,7 @@ export async function getAllUsers(req, res) {
     }
 }
 
-export async function getAllOfficers(req, res) {
-    const allUsers = await User.find({}).select('username role')
-        console.log('All users and roles:', allUsers)  
+export async function getAllOfficers(req, res) { 
     
     try {     
               
@@ -75,14 +73,6 @@ export async function getAllOfficers(req, res) {
                 }
             ])
 
-console.log(officers)
-if(!officers) {
-    return res.status(404).json({
-        success: false,
-        message: "No officer present"
-    })
-
-} 
             
 res.status(200).json({officers})
         

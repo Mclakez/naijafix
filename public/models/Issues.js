@@ -37,6 +37,10 @@ const issueSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
+    officer: {
+        type: String,
+        default: null
+    },
     comments: [
         {
             userID: {

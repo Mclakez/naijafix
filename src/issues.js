@@ -211,7 +211,6 @@ function formatDate(date) {
   let past = new Date(date)
 
   let diffMs = now - past
-  console.log(diffMs);
   
   let diffMins = Math.floor(diffMs / (1000 * 60))
   let diffHrs = Math.floor(diffMs / (1000 *60 *60))

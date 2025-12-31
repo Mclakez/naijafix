@@ -9,6 +9,7 @@ let totalPages;
 const numberButtonContainer = document.getElementById('numberButtonContainer')
 const viewDetailsCard = document.getElementById('view-details-card')
 
+
 let pages = []
 let rangeWithDots = []
 const pageAround = 2
@@ -176,7 +177,7 @@ export async function getIssueDetails(id) {
           proofHtml = ''
         }
         
-
+        viewDetailsCard.dataset.id = `${issue._id}`
         viewDetailsCard.innerHTML = `
             <div class="max-w-7xl mx-auto flex justify-between justify-end items-center px-4 py-6 text-white">
               <img src="/images/icon-menu-close.svg" class="w-2 details-cancel-btn">
@@ -197,11 +198,16 @@ export async function getIssueDetails(id) {
               <p class="text-sm ">Reported ${formatDate(issue.createdAt)}</p>
               <p class="italic text-sm">Submitted by ${issue.createdBy?.username || issue.createdBy || 'User'}</p>
             </div>
+            
             <div class="flex gap-2 items-center my-6">
 
-                <div class="py-2 px-3 rounded bg-gray-200 flex items-center gap-2"><span>Select officer</span><img src="/images/ChevronDown.svg" class="select-officer-btn"></div>
+                <div class="relative">
+                  <div class="py-2 px-3 rounded bg-gray-200 flex items-center gap-2"><span class="officer-text">Select officer</span><img src="/images/ChevronDown.svg" class="select-officer-btn"></div>
+                  <ul class="officers-list-container absolute w-full bg-gray-300 top-full mt-2 rounded flex flex-col items-center max-h-[250px] overflow-y-auto overflow-x-auto py-2 gap-2 hidden"></ul>
+                </div>
                 <button class="bg-red-500 py-2 px-3 rounded flex items-center text-white gap-2 delete-btn" data-id="${issue._id}"><img src="/images/TrashOutline.svg"><span>Delete issue</span></button>
-            </div>
+           
+             </div>
             </article>
             <article class="border border-gray-400 px-4 py-2 bg-white">
             
@@ -283,8 +289,34 @@ document.addEventListener('click',async (e) => {
 
 document.addEventListener('click',async (e) => {
   let selectOfficerBtn = e.target.closest('.select-officer-btn')
+  const officersListContainer = document.querySelector('.officers-list-container')
+  
   if(selectOfficerBtn) {
-    getAllOfficers()
+    officersListContainer.innerHTML = ""
+    if(officersListContainer.classList.contains("hidden")) {
+      let officers = await getAllOfficers()
+    officers.forEach(officer => {
+      let officerListElement = document.createElement('li')
+      officerListElement.className = `text-left px-2 w-full officer-list-element`
+      officerListElement.innerHTML = `
+      ${officer.username}
+      `
+      officersListContainer.classList.remove("hidden")
+      officersListContainer.appendChild(officerListElement)
+    })
+    } else {
+      officersListContainer.classList.add("hidden")
+    }
+  }
+})
+
+document.addEventListener('click', (e) => {
+  let officerListElement = e.target.closest('.officer-list-element')
+  if(officerListElement) {
+         let id = viewDetailsCard.dataset.id
+         let officerText = viewDetailsCard.querySelector('.officer-text')
+         officerText.textContent = officerListElement.textContent
+         sendOfficerUpdate(id, officerListElement.textContent.trim())
   }
 })
 
@@ -344,14 +376,9 @@ async function getAllOfficers() {
     const res = await fetch(`http://localhost:3000/api/users/officers`, {
             headers: { 'Authorization': `Bearer ${token}` }
         })
-         console.log('Response status:', res.status)
-        console.log('Response ok:', res.ok)
-        console.log(res)
         
         if (!res.ok) {
-          // Get the error details from the response
           const errorData = await res.json()
-          console.log('Error data:', errorData)
           throw new Error(errorData.message || `Server error: ${res.status}`)
         }
         
@@ -361,5 +388,25 @@ async function getAllOfficers() {
   } catch (error) {
     console.error('Full error:', error)
     alert(error.message)
+  }
+}
+
+async function sendOfficerUpdate(id, text) {
+  try {
+    const res = await fetch(`http://localhost:3000/api/issues/officers/${id}`, {
+      method: "PATCH",
+      headers: { 'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      officer: `${text}`
+    })
+    })
+    let data = await res.json()
+    console.log(res)
+    console.log("Json:", data)
+  } catch(err) {
+    console.error('Full error:', err)
+    alert(err.message)
   }
 }

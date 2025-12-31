@@ -125,6 +125,31 @@ export async function postComment(req, res) {
     }
 }
 
+export async function updateIssueOfficer(req, res) {
+    let {id} = req.params
+    let {officer} = req.body
+    console.log(id)
+    console.log(typeof officer)
+
+    try {
+        let updatedIssue = await Issue.findByIdandUpdate(
+        id,
+        officer,
+        {new: true, runValidators: true}
+    )
+
+    console.log(updatedIssue)
+
+    if(!updatedIssue) {
+       return res.status(404).json({error: 'Issue not found'})
+    }
+
+    res.status(200).json(updatedIssue)
+    } catch(error) {
+        res.status(500).json({error: 'Issue not found'})
+    }
+}
+
 export async function updateIssuesStatus(req, res) {
     let db = await getDB()
     let {id} = req.params
