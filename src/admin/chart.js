@@ -130,10 +130,8 @@ async function getLineChart() {
 
 
 async function getMonthlyStats() {
-    console.log("getMonthlyStats() STARTED");
     try {
-        console.log("Token is:", token);
-console.log("Fetching issues...");
+      
         const res = await fetch('http://localhost:3000/api/issues', {
             headers: { 'Authorization': `Bearer ${token}` }
         })
@@ -141,15 +139,15 @@ console.log("Fetching issues...");
 
         if (!res.ok) throw new Error('Error with all issues')
         const issues = await res.json()
-        console.log(issues)
+        
         issues.forEach(issue => {
             let status = issue.status.toLowerCase()
-            console.log(status)
+            
             let date = new Date(issue.createdAt)
             let month = date.getMonth() 
-            console.log(month)
+            
             monthlyStats[status][month]++
-            console.log(monthlyStats)
+           
         })
         
     } catch (error) {

@@ -1,5 +1,5 @@
 import express from 'express'
-import { postIssue, getMyIssues, getAllIssues, getDetails, updateIssuesStatus, postComment} from '../controllers/issuesControllers.js'
+import { postIssue, getMyIssues, getAllIssues, getDetails, updateIssuesStatus, postComment, deleteIssue} from '../controllers/issuesControllers.js'
 import { requireAuth, requireOfficer } from '../middleware/auth.js'
 import { upload } from "../config/multer.js";
 import { issuesValidator } from "../validators/issuesValidator.js";
@@ -16,6 +16,7 @@ issuesRouter.post('/', requireAuth, upload.single('issueImage'), issuesValidator
 issuesRouter.get('/', requireAuth, getAllIssues)
 issuesRouter.get('/my', requireAuth, getMyIssues)
 issuesRouter.get('/:id', requireAuth, getDetails)
+issuesRouter.delete('/delete/:id', requireAuth, deleteIssue)
 issuesRouter.post('/:id/comment', requireAuth,upload.none(), postComment)
 issuesRouter.patch('/:id/status', requireAuth, requireOfficer, upload.single('proof'),updateIssuesStatus)
 

@@ -8,7 +8,8 @@
     <link href="../output.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="module" src="./chart.js"></script>
-    <script type="module" src="./admin.js"></script>
+    <script type="module" src="./admin_issues.js"></script>
+    <script type="module" src="./admin_users.js"></script>
     <title>Admin Dashboard</title>
 </head>
 <body>
@@ -99,7 +100,7 @@
 
             <article class="flex gap-2 justify-center my-4">
                 <button class="border border-green-800 px-6 py-3 text-lg" id="prev-btn">&#x2039;</button> 
-                <div id="numberButtonContainer">
+                <div id="numberButtonContainer" class="flex gap-2">
                     <!-- <button class="border border-green-800 px-6 py-3 text-lg">1</button> 
                     <button class="border border-green-800 px-6 py-3 text-lg">2</button> 
                     <button class="border border-green-800 px-6 py-3 text-lg">3</button> 
@@ -110,6 +111,23 @@
                 <button class="border border-green-800 px-6 py-3 text-lg" id="next-btn">&#x203A;</button>                
             </article>
 
+            <div id="view-details-card" class="fixed hidden top-0 right-0 bottom-0 overflow-y-auto w-1/2 z-100 bg-white">
+
+            </div>
+        </div>
+
+        <div>
+            <div class="w-full grid grid-cols-[100px_1fr_1fr_150px_150px] gap-4 bg-green-800  text-white p-2">
+                <p>ID</p>
+                <p>Username</p>
+                <p>Email</p>
+                <p>Issues reported</p>
+                <p>Action</p>
+            </div>
+
+            <article class="usersTable">
+
+            </article>
         </div>
 
     </main>

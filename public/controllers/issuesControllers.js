@@ -33,6 +33,22 @@ export async function postIssue(req, res) {
     }
 }
 
+export async function deleteIssue(req, res) {
+    try {
+        let { id } = req.params
+        const deletedIssue = await Issue.findByIdAndDelete(id)
+        if(!deletedIssue) {
+            return res.status(500).json("No issue found")
+        }
+        res.status(200).json({
+            message: "Issue deleted successfully",
+            deletedIssue
+        })
+    } catch (err) {
+        res.status(500).json({error: err.message})
+    }
+}
+
 export async function getMyIssues(req, res) {
     const user = await req.user;
     const citizenId = user.id;
@@ -54,7 +70,7 @@ export async function getAllIssues(req, res) {
         if(page && limit) {
             const skip = (page - 1) * limit
              
-            const issues = await Issue.find().populate('createdBy', 'username').skip(skip).limit(limit)
+            const issues = await Issue.find().populate('createdBy', 'username').sort({issueId: -1}).skip(skip).limit(limit)
             res.json({
                 issues,
                 totalPages: Math.ceil(totalItems/limit),
