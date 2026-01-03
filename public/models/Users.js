@@ -30,6 +30,15 @@ const userSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
+    },
+    suspension: {
+        type: String,
+        enum: ["active", "suspended"],
+        default: "active"
+    },
+    suspendedUntil: {
+        type: Date,
+        default: null
     }
 })
 

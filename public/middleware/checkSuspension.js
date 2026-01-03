@@ -1,0 +1,20 @@
+import { User } from "../models/Users.js"
+export async function checkSuspension(req, res, next) {
+    try {
+        let user = await User.findById(req.user.id)
+        if (user && user.suspension === "suspended") {
+            let currentDate = new Date()
+            if (currentDate < user.suspensionExpiry) {
+                return res.status(403).json({ error: "User is suspended" })
+            } else {
+                user.suspension = "active"
+                user.suspensionExpiry = null
+                await user.save()
+            }
+        }
+        next()
+    } catch (err) {
+        console.error('Error in checking suspension:', err)
+        res.status(500).json({ error: err.message })
+    }
+}

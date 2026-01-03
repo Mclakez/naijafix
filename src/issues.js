@@ -4,6 +4,8 @@ const allReportsBtn = document.getElementById('all-report-btn')
 const token = localStorage.getItem('token')
 const detailsSection = document.getElementById('details-section')
 const commentSection = document.getElementById('comment-section')
+const suspensionState = localStorage.getItem('suspension')
+console.log(suspensionState,"Issues getting")
 
 async function getAllIssues() {
     try {
@@ -30,6 +32,18 @@ async function getAllIssues() {
         
         mainContainer.prepend(card)
         });
+        if(suspensionState === "suspended") {
+    const detailsBtn = document.querySelectorAll('.details-btn')
+          detailsBtn.forEach(btn => {
+            btn.disabled = true
+       btn.classList.add('opacity-50', 'cursor-not-allowed')
+       btn.title = "Account suspended"
+          })
+    
+       
+    
+    alert("Your account is currently suspended. You cannot report new issues or comment on existing ones.")
+}
         
     } catch (error) {
         alert(error.message)
@@ -63,6 +77,18 @@ async function getMyIssues() {
 
         mainContainer.prepend(card)
         });
+        if(suspensionState === "suspended") {
+    const detailsBtn = document.querySelectorAll('.details-btn')
+          detailsBtn.forEach(btn => {
+            btn.disabled = true
+       btn.classList.add('opacity-50', 'cursor-not-allowed')
+       btn.title = "Account suspended"
+          })
+    
+       
+    
+    alert("Your account is currently suspended. You cannot report new issues or comment on existing ones.")
+}
         
     } catch (error) {
         alert(error.message)
@@ -196,6 +222,7 @@ export async function getIssueDetails(id) {
           
           }, 0);
         })
+        
         detailsSection.classList.remove('hidden')
         document.body.classList.add("overflow-y-hidden")
       

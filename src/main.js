@@ -12,6 +12,19 @@ const previewImage = document.getElementById('previewImage')
 const uploadIcon = document.getElementById('uploadIcon')
 const detailsSection = document.getElementById('details-section')
 const commentSection = document.getElementById('comment-section')
+const suspensionState = localStorage.getItem('suspension')
+const logOutBtn = document.querySelector('.log-out-btn')
+
+
+if(suspensionState === "suspended") {
+    const addBtn = document.querySelector('#add-btn')
+    
+       addBtn.disabled = true
+       addBtn.classList.add('opacity-50', 'cursor-not-allowed')
+       addBtn.title = "Account suspended"
+    
+    alert("Your account is currently suspended. You cannot report new issues or comment on existing ones.")
+}
 
 uploadBox.addEventListener("click", () => {
     imageInput.click()
@@ -59,4 +72,10 @@ document.addEventListener("click", (e) => {
     }
 
     document.body.classList.remove("overflow-y-hidden")
+})
+
+
+logOutBtn.addEventListener('click', () => {
+    localStorage.removeItem('suspension')
+    localStorage.removeItem('token')
 })

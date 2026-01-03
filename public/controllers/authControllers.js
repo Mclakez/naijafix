@@ -59,7 +59,7 @@ export async function login(req, res) {
                 return res.status(400).json({error: 'Invalid Password'})
             }
             const token = await generateToken(user)
-            res.json({ user: {id: user._id, username: user.username, role: user.role}, token})
+            res.json({ user: {id: user._id, username: user.username, role: user.role, suspension: user.suspension}, token})
     } catch(err) {
         res.status(500).json({error: err.message})
     } 

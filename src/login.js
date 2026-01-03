@@ -20,6 +20,8 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
         const data = await res.json()
         console.log(data)       
         localStorage.setItem('token', data.token)
+        localStorage.setItem('suspension', data.user.suspension)
+        console.log("login", data.user.suspension)
         const role = data.user.role
 
         if(role === "officer") {

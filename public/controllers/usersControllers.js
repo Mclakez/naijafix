@@ -4,7 +4,7 @@ import { Issue } from '../models/Issues.js'
 export async function getAllUsers(req, res) {
     const page = parseInt(req.query.page)
     const limit = parseInt(req.query.limit)
-    const totalItems = await User.countDocuments()
+    const totalItems = await User.countDocuments({role: "user"})
     const currentpage = page
     
     try {
@@ -57,10 +57,60 @@ export async function getAllUsers(req, res) {
 }
 
 export async function getAllOfficers(req, res) { 
-    
+    const page = parseInt(req.query.page)
+        const limit = parseInt(req.query.limit)
+        const totalItems = await User.countDocuments({role : "officer"})
+        const currentpage = page
     try {     
-              
-            const officers = await User.aggregate([
+            if(page && limit) {
+                let officers = await User.aggregate([
+                {
+                    $match: {
+                        role: "officer"
+                    }
+                },  
+                {
+                    $lookup: {
+                        from: "issues",
+                        localField: "username",
+                        foreignField: "officer",
+                        as: "issues"
+                    }
+                },
+                {
+                    $addFields: {
+                        totalIssues: {$size: "$issues"},
+                        issuesResolved: {$size: {
+                            $filter: {
+                                input: "$issues",
+                                as:"issue",
+                                cond: {$eq: ["$$issue.status", "resolved"]}
+                            }
+                        }}
+                    }
+                },         
+                {
+                    $sort: {
+                        createdAt: -1
+                    }
+                },
+                { 
+                    $skip: (page - 1) * limit 
+                },
+                { 
+                    $limit : limit
+                }
+            ])
+
+            
+            res.status(200).json({
+                officers,
+                totalPages: Math.ceil(totalItems/limit),
+                currentpage
+            })
+
+            } else {
+                let officers = await User.aggregate([
                 {
                     $match: {
                         role: "officer"
@@ -74,12 +124,48 @@ export async function getAllOfficers(req, res) {
             ])
 
             
-res.status(200).json({officers})
+        res.status(200).json({officers})
+            }
+            
         
 
 
     } catch (err) {
         console.error('Error in getAllOfficers:', err)
+        res.status(500).json({ error: err.message })
+    }
+}
+
+
+export async function deleteUser(req,res) {
+    let {id} = req.params
+
+    try {
+        let deletedUser = await User.findByIdAndDelete(id)
+        res.status(200).json({deletedUser})
+    } catch(err) {
+        console.error('Error in deleting user:', err)
+        res.status(500).json({ error: err.message })
+    }
+
+
+}
+
+export async function suspendUser(req, res){
+    let { id } = req.params
+    let days = 7
+    let expiryDate = new Date()
+    expiryDate.setDate(expiryDate.getDate() + days)
+
+    try{
+
+        let suspendedUser = await User.findByIdAndUpdate(
+            id,
+            {suspension : "suspended", suspensionExpiry: expiryDate}
+        )
+
+    } catch(err) {
+        console.error('Error in suspending user:', err)
         res.status(500).json({ error: err.message })
     }
 }

@@ -14,7 +14,7 @@ let pages = []
 let rangeWithDots = []
 const pageAround = 2
 let previousPage;
-let allOfficers = []
+// let allOfficers = []
    
 nextBtn.addEventListener('click', () => {
     if(currentPage < totalPages) {
@@ -63,13 +63,13 @@ async function getReports(currentPage, limit) {
         await renderPagination(currentPage, totalPages)
         issues.forEach(issue => {
             let row = document.createElement('div')
-            row.className = `w-full grid grid-cols-[100px_1fr_1fr_150px_150px_150px] gap-4 text-black px-2 py-4 bg-transparent items-center border-b border-gray-400`
+            row.className = `w-full grid grid-cols-[50px_1fr_1fr_150px_150px_150px] gap-4 text-black px-2 py-4 bg-transparent items-center border-b border-gray-400`
 
             row.innerHTML = `
                 <p>${issue.issueId}</p>
                 <p class="overflow-x-auto">${issue.createdBy?.username || issue.createdBy}</p>
                 <p class="overflow-x-auto">${issue.title}</p>
-                <p class="overflow-x-auto">Bankole</p>
+                <p class="overflow-x-auto">${issue.officer}</p>
                 <div>
                     <div class="text-sm bg-naija-yellow rounded w-fit px-3 py-2 font-semibold ">
                     ${issue.status}
@@ -202,7 +202,7 @@ export async function getIssueDetails(id) {
             <div class="flex gap-2 items-center my-6">
 
                 <div class="relative">
-                  <div class="py-2 px-3 rounded bg-gray-200 flex items-center gap-2"><span class="officer-text">Select officer</span><img src="/images/ChevronDown.svg" class="select-officer-btn"></div>
+                  <div class="py-2 px-3 rounded bg-gray-200 flex items-center gap-2 min-w-[200px]"><span class="officer-text">${issue.officer || "Select officer"}</span><img src="/images/ChevronDown.svg" class="select-officer-btn"></div>
                   <ul class="officers-list-container absolute w-full bg-gray-300 top-full mt-2 rounded flex flex-col items-center max-h-[250px] overflow-y-auto overflow-x-auto py-2 gap-2 hidden"></ul>
                 </div>
                 <button class="bg-red-500 py-2 px-3 rounded flex items-center text-white gap-2 delete-btn" data-id="${issue._id}"><img src="/images/TrashOutline.svg"><span>Delete issue</span></button>
@@ -314,6 +314,8 @@ document.addEventListener('click', (e) => {
   let officerListElement = e.target.closest('.officer-list-element')
   if(officerListElement) {
          let id = viewDetailsCard.dataset.id
+         let officerListContainer = officerListElement.parentElement
+         officerListContainer.classList.add("hidden")
          let officerText = viewDetailsCard.querySelector('.officer-text')
          officerText.textContent = officerListElement.textContent
          sendOfficerUpdate(id, officerListElement.textContent.trim())

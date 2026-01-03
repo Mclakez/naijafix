@@ -132,9 +132,9 @@ export async function updateIssueOfficer(req, res) {
     console.log(typeof officer)
 
     try {
-        let updatedIssue = await Issue.findByIdandUpdate(
+        let updatedIssue = await Issue.findByIdAndUpdate(
         id,
-        officer,
+        {officer : officer},
         {new: true, runValidators: true}
     )
 
