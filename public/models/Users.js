@@ -22,9 +22,6 @@ const userSchema = new mongoose.Schema({
     },
     department: {
         type: String,
-        required: function () {
-            return this.role === "officer"
-        },
         default: null
     },
     createdAt: {
@@ -39,6 +36,10 @@ const userSchema = new mongoose.Schema({
     suspendedUntil: {
         type: Date,
         default: null
+    },
+    lastSeen: {
+        type: Date,
+        default: Date.now()
     }
 })
 

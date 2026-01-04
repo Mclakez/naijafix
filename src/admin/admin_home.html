@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="../output.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="./admin_main.js"></script>
     <script type="module" src="./chart.js"></script>
     <script type="module" src="./admin_issues.js"></script>
     <script type="module" src="./admin_users.js"></script>
@@ -20,34 +21,34 @@
             <img src="../images/nfix3.png" alt="logo" srcset="" class="w-25">
             <nav>
                 <ul class="flex flex-col gap-2 py-15">
-                    <li class="bg-naija-yellow rounded-2xl text-black flex items-center gap-4 pl-4  py-2">
+                    <li class="bg-naija-yellow rounded-2xl text-black flex items-center gap-4 pl-4  py-2 nav-item" data-section="dashboard">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M10.5 6.75C10.5 4.67893 8.82107 3 6.75 3C4.67893 3 3 4.67893 3 6.75C3 8.82107 4.67893 10.5 6.75 10.5C8.82107 10.5 10.5 8.82107 10.5 6.75Z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
-<path d="M21 6.75C21 4.67893 19.3211 3 17.25 3C15.1789 3 13.5 4.67893 13.5 6.75C13.5 8.82107 15.1789 10.5 17.25 10.5C19.3211 10.5 21 8.82107 21 6.75Z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
-<path d="M10.5 17.25C10.5 15.1789 8.82107 13.5 6.75 13.5C4.67893 13.5 3 15.1789 3 17.25C3 19.3211 4.67893 21 6.75 21C8.82107 21 10.5 19.3211 10.5 17.25Z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
-<path d="M21 17.25C21 15.1789 19.3211 13.5 17.25 13.5C15.1789 13.5 13.5 15.1789 13.5 17.25C13.5 19.3211 15.1789 21 17.25 21C19.3211 21 21 19.3211 21 17.25Z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+<path d="M10.5 6.75C10.5 4.67893 8.82107 3 6.75 3C4.67893 3 3 4.67893 3 6.75C3 8.82107 4.67893 10.5 6.75 10.5C8.82107 10.5 10.5 8.82107 10.5 6.75Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+<path d="M21 6.75C21 4.67893 19.3211 3 17.25 3C15.1789 3 13.5 4.67893 13.5 6.75C13.5 8.82107 15.1789 10.5 17.25 10.5C19.3211 10.5 21 8.82107 21 6.75Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+<path d="M10.5 17.25C10.5 15.1789 8.82107 13.5 6.75 13.5C4.67893 13.5 3 15.1789 3 17.25C3 19.3211 4.67893 21 6.75 21C8.82107 21 10.5 19.3211 10.5 17.25Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+<path d="M21 17.25C21 15.1789 19.3211 13.5 17.25 13.5C15.1789 13.5 13.5 15.1789 13.5 17.25C13.5 19.3211 15.1789 21 17.25 21C19.3211 21 21 19.3211 21 17.25Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
 </svg>
 
 Dashboard</li>
-                    <li class="text-white flex items-center gap-4 pl-4  py-2">
+                    <li class="text-white flex items-center gap-4 pl-4  py-2 nav-item" data-section="issues">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M13.9248 21H10.0752C5.44476 21 3.12955 21 2.27636 19.4939C1.42317 17.9879 2.60736 15.9914 4.97574 11.9985L6.90057 8.75333C9.17559 4.91778 10.3131 3 12 3C13.6869 3 14.8244 4.91777 17.0994 8.75332L19.0243 11.9985C21.3926 15.9914 22.5768 17.9879 21.7236 19.4939C20.8704 21 18.5552 21 13.9248 21Z" stroke="#212121" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M12 17V12.5" stroke="#212121" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M12 8.99828V8.98828" stroke="#212121" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M13.9248 21H10.0752C5.44476 21 3.12955 21 2.27636 19.4939C1.42317 17.9879 2.60736 15.9914 4.97574 11.9985L6.90057 8.75333C9.17559 4.91778 10.3131 3 12 3C13.6869 3 14.8244 4.91777 17.0994 8.75332L19.0243 11.9985C21.3926 15.9914 22.5768 17.9879 21.7236 19.4939C20.8704 21 18.5552 21 13.9248 21Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12 17V12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12 8.99828V8.98828" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 Reports</li>
-                    <li class="text-white flex items-center gap-4 pl-4  py-2">
+                    <li class="text-white flex items-center gap-4 pl-4  py-2 nav-item" data-section="users">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M13 7C13 9.20914 11.2091 11 9 11C6.79086 11 5 9.20914 5 7C5 4.79086 6.79086 3 9 3C11.2091 3 13 4.79086 13 7Z" stroke="white" stroke-width="1.5"/>
-<path d="M15 11C17.2091 11 19 9.20914 19 7C19 4.79086 17.2091 3 15 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M11 14H7C4.23858 14 2 16.2386 2 19C2 20.1046 2.89543 21 4 21H14C15.1046 21 16 20.1046 16 19C16 16.2386 13.7614 14 11 14Z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
-<path d="M17 14C19.7614 14 22 16.2386 22 19C22 20.1046 21.1046 21 20 21H18.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M13 7C13 9.20914 11.2091 11 9 11C6.79086 11 5 9.20914 5 7C5 4.79086 6.79086 3 9 3C11.2091 3 13 4.79086 13 7Z" stroke="currentColor" stroke-width="1.5"/>
+<path d="M15 11C17.2091 11 19 9.20914 19 7C19 4.79086 17.2091 3 15 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M11 14H7C4.23858 14 2 16.2386 2 19C2 20.1046 2.89543 21 4 21H14C15.1046 21 16 20.1046 16 19C16 16.2386 13.7614 14 11 14Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+<path d="M17 14C19.7614 14 22 16.2386 22 19C22 20.1046 21.1046 21 20 21H18.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 Users</li>
-                    <li class="text-white flex items-center gap-4 pl-4  py-2">
+                    <li class="text-white flex items-center gap-4 pl-4  py-2 nav-item" data-section="officers">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M4.26759 4.32782C5.95399 3.02741 8.57337 2 12 2C15.4266 2 18.046 3.02741 19.7324 4.32782C19.9693 4.51048 20.0877 4.60181 20.1849 4.76366C20.2665 4.89952 20.3252 5.10558 20.3275 5.26404C20.3302 5.4528 20.2672 5.62069 20.1413 5.95648C19.8305 6.78539 19.6751 7.19984 19.6122 7.61031C19.533 8.12803 19.5322 8.25474 19.6053 8.77338C19.6632 9.18457 19.9795 10.0598 20.6121 11.8103C20.844 12.452 21 13.1792 21 14C21 17 18.5 19.375 16 20C13.8082 20.548 12.6667 21.3333 12 22C11.3333 21.3333 10.1918 20.548 8 20C5.5 19.375 3 17 3 14C3 13.1792 3.15595 12.452 3.38785 11.8103C4.0205 10.0598 4.33682 9.18457 4.39473 8.77338C4.46777 8.25474 4.46702 8.12803 4.38777 7.61031C4.32494 7.19984 4.16952 6.78539 3.85868 5.95648C3.73276 5.62069 3.6698 5.4528 3.67252 5.26404C3.6748 5.10558 3.73351 4.89952 3.81509 4.76366C3.91227 4.60181 4.03071 4.51048 4.26759 4.32782Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M12.6911 7.57767L13.395 8.99715C13.491 9.19475 13.7469 9.38428 13.9629 9.42057L15.2388 9.6343C16.0547 9.77141 16.2467 10.3682 15.6587 10.957L14.6668 11.9571C14.4989 12.1265 14.4069 12.4531 14.4589 12.687L14.7428 13.925C14.9668 14.9049 14.4509 15.284 13.591 14.7718L12.3951 14.0581C12.1791 13.929 11.8232 13.929 11.6032 14.0581L10.4073 14.7718C9.5514 15.284 9.03146 14.9009 9.25543 13.925L9.5394 12.687C9.5914 12.4531 9.49941 12.1265 9.33143 11.9571L8.33954 10.957C7.7556 10.3682 7.94358 9.77141 8.75949 9.6343L10.0353 9.42057C10.2473 9.38428 10.5033 9.19475 10.5993 8.99715L11.3032 7.57767C11.6872 6.80744 12.3111 6.80744 12.6911 7.57767Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M4.26759 4.32782C5.95399 3.02741 8.57337 2 12 2C15.4266 2 18.046 3.02741 19.7324 4.32782C19.9693 4.51048 20.0877 4.60181 20.1849 4.76366C20.2665 4.89952 20.3252 5.10558 20.3275 5.26404C20.3302 5.4528 20.2672 5.62069 20.1413 5.95648C19.8305 6.78539 19.6751 7.19984 19.6122 7.61031C19.533 8.12803 19.5322 8.25474 19.6053 8.77338C19.6632 9.18457 19.9795 10.0598 20.6121 11.8103C20.844 12.452 21 13.1792 21 14C21 17 18.5 19.375 16 20C13.8082 20.548 12.6667 21.3333 12 22C11.3333 21.3333 10.1918 20.548 8 20C5.5 19.375 3 17 3 14C3 13.1792 3.15595 12.452 3.38785 11.8103C4.0205 10.0598 4.33682 9.18457 4.39473 8.77338C4.46777 8.25474 4.46702 8.12803 4.38777 7.61031C4.32494 7.19984 4.16952 6.78539 3.85868 5.95648C3.73276 5.62069 3.6698 5.4528 3.67252 5.26404C3.6748 5.10558 3.73351 4.89952 3.81509 4.76366C3.91227 4.60181 4.03071 4.51048 4.26759 4.32782Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12.6911 7.57767L13.395 8.99715C13.491 9.19475 13.7469 9.38428 13.9629 9.42057L15.2388 9.6343C16.0547 9.77141 16.2467 10.3682 15.6587 10.957L14.6668 11.9571C14.4989 12.1265 14.4069 12.4531 14.4589 12.687L14.7428 13.925C14.9668 14.9049 14.4509 15.284 13.591 14.7718L12.3951 14.0581C12.1791 13.929 11.8232 13.929 11.6032 14.0581L10.4073 14.7718C9.5514 15.284 9.03146 14.9009 9.25543 13.925L9.5394 12.687C9.5914 12.4531 9.49941 12.1265 9.33143 11.9571L8.33954 10.957C7.7556 10.3682 7.94358 9.77141 8.75949 9.6343L10.0353 9.42057C10.2473 9.38428 10.5033 9.19475 10.5993 8.99715L11.3032 7.57767C11.6872 6.80744 12.3111 6.80744 12.6911 7.57767Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 Officers</li>
                     <li class="text-white flex items-center gap-4 pl-4  py-2 mt-auto">
@@ -58,7 +59,7 @@ Officers</li>
     </aside>
 
     <main class="flex-1 overflow-y-auto p-6 py-15">
-        <div class=" grid gap-14 hidden">
+        <div id="dashboard-section" class=" grid gap-14">
             <p>Dashboard</p>
             <h1 class="font-bold text-xl">Welcome Marvellous</h1>
             <section class="grid [grid-template-columns:repeat(auto-fit,_minmax(100px,_1fr))] gap-4 gap-y-6">
@@ -72,7 +73,7 @@ Officers</li>
                     <h2 class="text-5xl font-bold">80</h2>
                 </article>
 
-                <article class="bg-yellow-500 text-black flex flex-col gap-3 py-6 px-4 rounded">
+                <article class="bg-[#f97316] text-black flex flex-col gap-3 py-6 px-4 rounded">
                     <span  class="text-base">In-progress Reports</span>
                     <h2 class="text-5xl font-bold">80</h2>
                 </article>
@@ -94,7 +95,7 @@ Officers</li>
            </section>
         </div>
 
-        <div>
+        <div id="issues-section">
             <div class="flex items-center justify-start mb-2">
                 <span>Issues</span>
                 
@@ -148,7 +149,7 @@ Officers</li>
             </div>
         </div>
 
-        <div>
+        <div id="users-section">
             <div class="flex items-center justify-start mb-2">
                 <span>Users</span>
             </div>
@@ -175,10 +176,37 @@ Officers</li>
 
         </div>
 
-        <div>
+        <div id="officers-section">
             <div class="flex items-center justify-between mb-2">
                 <span>Officers</span>
-                <button class="flex gap-2 items-center justify-center py-3 px-4 bg-green-800 rounded-full"><img src="../images/add_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24 (1).svg"> Officer</button>
+                <div class="relative">
+                    <button class="add-officer-btn flex gap-2 items-center justify-center py-3 px-4 pr-5 bg-green-800 rounded-full text-white"><img src="../images/add_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24 (1).svg">Add Officer</button>
+                    <form class="bg-white shadow-lg absolute top-[calc(100%+0.5rem)] right-0 w-72 px-3 py-2 pb-4 flex flex-col gap-2 rounded z-100 hidden">
+                        <div class="flex  items-center justify-end my-2"><img src="/images/icon-menu-close.svg" class="w-4 officers-add-cancel-btn cursor-pointer"></div>
+                        <div>
+                            <label for="username" class="text-md text-bold">
+                                Username
+                            </label>
+                            <input placeholder="Enter username" id="username" name="username" class="outline-0 border border-gray-400 px-2 py-2 rounded w-full">
+                        </div>
+
+                        <div>
+                            <label for="email" class="text-md text-bold">
+                                Email
+                            </label>
+                            <input placeholder="Enter email address" id="email" name="email" class="outline-0 border border-gray-400 px-2 py-2 rounded w-full">
+                        </div>
+
+                        <div>
+                            <label for="password" class="text-md text-bold">
+                                Password
+                            </label>
+                            <input placeholder="Enter password" id="password" name="password" class="outline-0 border border-gray-400 px-2 py-2 rounded w-full">
+                        </div>
+
+                        <button type="submit" class="w-full bg-green-800 text-white py-3 text-center text-bold">Submit</button>
+                    </form>
+                </div>
             </div>
             <div class="w-full grid grid-cols-[1fr_1fr_150px_150px_150px_150px] gap-4 bg-green-800  text-white p-2">
                 <p>Username</p>
@@ -206,15 +234,6 @@ Officers</li>
 
     </main>
 
-
-
-    </div> 
-
-    </main>
-
-
-
-    </div> 
     
 
     

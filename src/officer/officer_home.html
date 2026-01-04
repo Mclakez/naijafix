@@ -3,29 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="../output.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="./officer_main.js"></script>
+    <script type="module" src="./officer_chart.js"></script>
+    <script type="module" src="./officer_issues.js"></script>
     <title>Officer Dashboard</title>
 </head>
 <body>
-    <div class="flex min-h-full">
-        <section class="bg-green-800 flex-col w-[15%] px-2 pr-4 h-full fixed" >
-        <img src="../images/nfix3.png" alt="logo" srcset="" class="w-25">
-    <nav>
-        <ul class="flex flex-col gap-2">
-            <li class="bg-naija-yellow rounded-3xl text-black flex items-center gap-4 pl-4  py-2"><img src="../images/icon-menu.svg" class="w-5">Dashboard</li>
-            <li class="text-white flex items-center gap-4 pl-4  py-2"><img src="../images/icon-menu.svg" class="w-5">Reports</li>
-        </ul>
-    </nav>
-    </section>
-
-    <main>
+    <div class="flex h-screen w-full overflow-y-hidden">
         
-        <article>
-            <span>Pending reports</span>
-            <h2>80</h2>
-        </article>
+        <aside class="bg-green-800 h-full flex-col w-56 px-2 pr-4 h-screen py-6" >
+            <img src="../images/nfix3.png" alt="logo" srcset="" class="w-25">
+            <nav>
+                <ul class="flex flex-col gap-2 py-15">
+                    <li class="bg-naija-yellow rounded-2xl text-black flex items-center gap-4 pl-4  py-2 nav-item cursor-pointer" data-section="dashboard">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M10.5 6.75C10.5 4.67893 8.82107 3 6.75 3C4.67893 3 3 4.67893 3 6.75C3 8.82107 4.67893 10.5 6.75 10.5C8.82107 10.5 10.5 8.82107 10.5 6.75Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+<path d="M21 6.75C21 4.67893 19.3211 3 17.25 3C15.1789 3 13.5 4.67893 13.5 6.75C13.5 8.82107 15.1789 10.5 17.25 10.5C19.3211 10.5 21 8.82107 21 6.75Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+<path d="M10.5 17.25C10.5 15.1789 8.82107 13.5 6.75 13.5C4.67893 13.5 3 15.1789 3 17.25C3 19.3211 4.67893 21 6.75 21C8.82107 21 10.5 19.3211 10.5 17.25Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+<path d="M21 17.25C21 15.1789 19.3211 13.5 17.25 13.5C15.1789 13.5 13.5 15.1789 13.5 17.25C13.5 19.3211 15.1789 21 17.25 21C19.3211 21 21 19.3211 21 17.25Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+</svg>
+
+Dashboard</li>
+                    <li class="text-white flex items-center gap-4 pl-4  py-2 nav-item cursor-pointer" data-section="issues">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M13.9248 21H10.0752C5.44476 21 3.12955 21 2.27636 19.4939C1.42317 17.9879 2.60736 15.9914 4.97574 11.9985L6.90057 8.75333C9.17559 4.91778 10.3131 3 12 3C13.6869 3 14.8244 4.91777 17.0994 8.75332L19.0243 11.9985C21.3926 15.9914 22.5768 17.9879 21.7236 19.4939C20.8704 21 18.5552 21 13.9248 21Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12 17V12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12 8.99828V8.98828" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+Reports</li>
+                    <li class="text-white flex items-center gap-4 pl-4  py-2 mt-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z"/></svg>Logout</li>
+
+                </ul>
+            </nav>
+    </aside>
+
+    <main class="flex-1 overflow-y-auto p-6 py-15">
+        <div id="dashboard-section" class=" grid gap-14">
+            <p>Dashboard</p>
+            <h1 class="font-bold text-xl name">Welcome <span class="officer-name">Incog</span></h1>
+            <section class="grid [grid-template-columns:repeat(auto-fit,_minmax(100px,_1fr))] gap-4 gap-y-6">
+                <article class="bg-naija-yellow text-black flex flex-col gap-3 py-6 px-4 rounded">
+                    <span class="text-base">Pending Reports</span>
+                    <h2 class="text-5xl font-bold pending-report">80</h2>
+                </article>
+
+                <article class="bg-blue-400 text-black flex flex-col gap-3 py-6 px-4 rounded">
+                    <span  class="text-base">Acknowledged Reports</span>
+                    <h2 class="text-5xl font-bold acknowledged-report">80</h2>
+                </article>
+
+                <article class="bg-[#f97316] text-black flex flex-col gap-3 py-6 px-4 rounded">
+                    <span  class="text-base">In-progress Reports</span>
+                    <h2 class="text-5xl font-bold in-progress-report">80</h2>
+                </article>
+
+                <article class="bg-green-800 text-black flex flex-col gap-3 py-6 px-4 rounded">
+                    <span  class="text-base">Resolved reports</span>
+                    <h2 class="text-5xl font-bold resolved-report">80</h2>
+                </article>
+            </section>
+
+            <section class="grid grid-cols-1 md:grid-cols-2 ">
+                <div class="bg-white p-4 w-full h-72">
+                    <canvas id="multiLineChart"></canvas>
+                </div>
+
+                <div class="bg-white p-4  w-full h-72 place-items-center">
+                    <canvas id="pieChart"></canvas>
+                </div>
+           </section>
+        </div>
+
+        <div id="issues-section">
+            <div class="flex items-center justify-start mb-2">
+                <span>Issues</span>
+                
+            </div>
+            <div class="w-full grid grid-cols-[100px_1fr_1fr_150px_150px_150px] gap-4 bg-green-800  text-white p-2">
+                <p>ID</p>
+                <p>Username</p>
+                <p>Title</p>
+                <p>Officer</p>
+                <p>Status</p> 
+                <p>Action</p>
+            </div>
+
+            <article class="issuesTable">
+                <!-- <div class="w-full grid grid-cols-[100px_1fr_1fr_150px_150px_150px] gap-4 text-black px-2 py-4 bg-transparent items-center border-b border-gray-400">
+                <p>1</p>
+                <p class="overflow-x-auto">Marvellous</p>
+                <p class="overflow-x-auto">Running test</p>
+                <p class="overflow-x-auto">Bankole</p>
+                <div>
+                    <div class="text-sm bg-naija-yellow rounded w-fit px-3 py-2 font-semibold ">
+                    Pending
+                    </div>
+                </div> 
+                <div>
+                    <button class="flex  items-center gap-2 border border-green-800 rounded px-3 py-2">
+                        <img src="../images/icon-menu.svg" class="w-5">
+                        <span>View Details</span>
+                    </button>
+                </div>
+            </div> -->
+
+            
+            </article>
+
+            <article class="flex gap-2 justify-center my-4">
+                <button class="border border-green-800 px-6 py-3 text-lg" id="prev-btn">&#x2039;</button> 
+                <div id="numberButtonContainer" class="flex gap-2">
+                    <!-- <button class="border border-green-800 px-6 py-3 text-lg">1</button> 
+                    <button class="border border-green-800 px-6 py-3 text-lg">2</button> 
+                    <button class="border border-green-800 px-6 py-3 text-lg">3</button> 
+                    <button class="border border-green-800 px-6 py-3 text-lg">4</button> 
+                    <button class="border border-green-800 px-6 py-3 text-lg">...</button> 
+                    <button class="border border-green-800 px-6 py-3 text-lg">17</button>  -->
+                </div>
+                <button class="border border-green-800 px-6 py-3 text-lg" id="next-btn">&#x203A;</button>                
+            </article>
+
+            <div id="view-details-card" class="fixed hidden top-0 right-0 bottom-0 overflow-y-auto w-1/2 z-100 bg-white">
+
+            </div>
+        </div>
+
+       
+
     </main>
-    </div>
+
     
 </body>
 </html>

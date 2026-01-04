@@ -1,9 +1,13 @@
+
+
 const token = localStorage.getItem('token')
 const officersTable = document.querySelector('.officersTable')
 const officerNextBtn = document.getElementById('officer-next-btn')
 const officerPrevBtn = document.getElementById('officer-prev-btn')
 let totalPages;
 const officerNumberButtonContainer = document.getElementById('officerNumberButtonContainer')
+const addOfficerBtn = document.querySelector('.add-officer-btn')
+const form = document.querySelector('form')
 let currentPage = 1
 const limit = 1
 
@@ -34,6 +38,7 @@ async function getOfficers(currentPage, limit) {
         officers.forEach((officer) => {
             const suspendedText = officer.suspension === "suspended" ? "Unsuspend" : "Suspend"
             const suspendedBtnColor = officer.suspension === "suspended" ? "bg-gray-400" : "bg-naija-yellow"
+            const formattedDate = formatDate(officer.lastSeen)
             let row = document.createElement('div')
             row.className = `w-full grid grid-cols-[1fr_1fr_150px_150px_150px_150px] gap-4 text-black px-2 py-4 bg-transparent items-center border-b border-gray-400`
 
@@ -53,7 +58,7 @@ async function getOfficers(currentPage, limit) {
                     </div>
                 </div> 
 
-                <p>21 Aug 2024</p>
+                <p>${formattedDate}</p>
                 
                 <div class="relative">
                     <button class="officer-action-btn flex items-center gap-2 border border-green-800 rounded px-3 py-2 " data-id="${officer._id}">
@@ -182,14 +187,22 @@ document.addEventListener('click', async (e) => {
   }
 })
 
+document.addEventListener('click', async (e) => {
+    let officersAddCancelBtn = e.target.closest('.officers-add-cancel-btn')
+  if(officersAddCancelBtn) {
+         let actionContainer = officersAddCancelBtn.closest('form')
+         actionContainer.classList.add('hidden')
+  }
+})
+
 
 
 document.addEventListener('click', async (e) => {
     let officerDeleteBtn = e.target.closest('.officer-delete-btn')
   if(officerDeleteBtn) {
          let id = officerDeleteBtn.getAttribute('data-id')
-         await deleteofficer(id)
-         await getofficers(currentPage, limit)
+         await deleteOfficer(id)
+         await getOfficers(currentPage, limit)
   }
 })
 
@@ -198,13 +211,16 @@ document.addEventListener('click', async (e) => {
   if(officerSuspendBtn) {
          let id = officerSuspendBtn.getAttribute('data-id')
          console.log("officer check:",id)
-         await suspendofficer(id)
-         await getofficers(currentPage, limit)
+         await suspendOfficer(id)
+         await getOfficers(currentPage, limit)
   }
 })
 
+addOfficerBtn.addEventListener('click', async (e) => {
+    form.classList.remove('hidden')
+})
 
-async function deleteofficer(id) {
+async function deleteOfficer(id) {
         try {
         const res = await fetch(`http://localhost:3000/api/users/${id}`, {
             method: "DELETE",
@@ -231,3 +247,70 @@ async function suspendOfficer(id) {
             alert(error.message)
         }
 }
+
+function formatDate(date) {
+  let now = new Date()
+  let past = new Date(date)
+
+  let diffMs = now - past
+  
+  let diffMins = Math.floor(diffMs / (1000 * 60))
+  let diffHrs = Math.floor(diffMs / (1000 *60 *60))
+  let diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24))
+
+  if(diffMins < 60) {
+    return `${diffMins} min ago`
+  }
+
+  if(diffHrs < 24) {
+    return `${diffHrs} hr${diffHrs === 1 ? '' : 's'} ago`
+  }
+
+  if(diffDays <= 31) {
+    return `${diffDays} day${diffDays === 1 ? '' : 's'} ago`
+  }
+
+  let options = {
+    year: "numeric",
+    month: "short",
+    day: "numeric"
+  }
+
+  return past.toLocaleDateString('en-us', options)
+}
+
+form.addEventListener('submit', async (e) => {
+    e.preventDefault()
+
+        const formData = new FormData(form)
+        const officerData = {
+        username: formData.get('username'),
+        email: formData.get('email'),
+        password: formData.get('password')
+    }
+        
+
+    try {
+        const res = await fetch('http://localhost:3000/api/users/officers', {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+
+            body: JSON.stringify(officerData)
+        })
+
+        if (!res.ok) {  
+            throw new Error('Officer failed')
+        }
+        const data = await res.json()
+        console.log(data)
+       await getOfficers(currentPage, limit)
+            form.reset()
+            form.classList.add('hidden')
+       
+        
+    } catch (error) {
+        console.error("Add officer failed", error.message)
+    }
+})

@@ -1,5 +1,7 @@
 import { User } from '../models/Users.js'
 import { Issue } from '../models/Issues.js'
+import bcrypt from 'bcrypt'
+
 
 export async function getAllUsers(req, res) {
     const page = parseInt(req.query.page)
@@ -167,5 +169,22 @@ export async function suspendUser(req, res){
     } catch(err) {
         console.error('Error in suspending user:', err)
         res.status(500).json({ error: err.message })
+    }
+}
+
+export async function addOfficer(req, res) {
+    let {username, email, password} = req.body
+    let hashed = await bcrypt.hash(password, 10)
+
+    try {
+        let newOfficer = await User.create({
+            username,
+            email,
+            password : hashed,
+            role: "officer"
+        })
+        res.status(200).json(newOfficer)
+    } catch (err) {
+        res.status(500).json({error: err.message})
     }
 }

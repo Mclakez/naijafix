@@ -1,0 +1,192 @@
+const token = localStorage.getItem('token')
+const username = localStorage.getItem('user')
+const monthlyStats = {
+            pending: Array(12).fill(0),
+            acknowledged: Array(12).fill(0),
+            "in-progress": Array(12).fill(0),
+            resolved: Array(12).fill(0)
+        }
+ 
+
+
+document.addEventListener('DOMContentLoaded', async () => {
+   await getMonthlyStats(username)
+   await getLineChart()
+   await getPieChart()
+})
+
+ async function getPieChart() {
+  const canvas = document.getElementById('pieChart')
+    const ctx = canvas.getContext('2d');
+
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Pending', 'Acknowledged', 'In-progress', 'Resolved'],
+        datasets: [
+          {
+            data: [
+              monthlyStats.pending.reduce((a, b) => a + b, 0),
+              monthlyStats.acknowledged.reduce((a, b) => a + b, 0),
+              monthlyStats["in-progress"].reduce((a, b) => a + b, 0),
+              monthlyStats.resolved.reduce((a, b) => a + b, 0)
+            ],
+            backgroundColor: [
+              'yellow',
+              'blue',
+              'red',
+              'green'
+
+            ],
+            borderWidth: 0
+          }
+        ]
+      },
+
+      options: {
+        cutout: '60%',
+        plugins: {
+          legend: {
+            display:false,
+            postion: 'bottom'
+          }
+        }
+      }
+    })
+
+ }
+
+
+async function getLineChart() {
+    const canvas = document.getElementById('multiLineChart')
+    const ctx = canvas.getContext('2d');
+    
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            datasets: [
+                {
+                    label: 'Pending',
+                    data: monthlyStats.pending,
+                    borderColor: '#facc15', // Yellow
+                    backgroundColor: 'transparent',
+                    borderWidth: 2,
+                    tension: 0.4, // Smooth curves like in the image
+                    pointRadius: 0, // Hide dots
+                    pointHoverRadius: 4 // Show dots on hover
+                },
+                {
+                    label: 'Acknowledged',
+                    data: monthlyStats.acknowledged,
+                    borderColor: '#3b82f6', // Blue
+                    backgroundColor: 'transparent',
+                    borderWidth: 2,
+                    tension: 0.4,
+                    pointRadius: 0,
+                    pointHoverRadius: 4
+                },
+                {
+                    label: 'In-progress',
+                    data: monthlyStats["in-progress"],
+                    borderColor: '#f97316', // Orange
+                    backgroundColor: 'transparent',
+                    borderWidth: 2,
+                    tension: 0.4,
+                    pointRadius: 0,
+                    pointHoverRadius: 4
+                },
+                {
+                    label: 'Resolved',
+                    data: monthlyStats.resolved,
+                    borderColor: '#14b8a6', // Teal/Cyan
+                    backgroundColor: 'transparent',
+                    borderWidth: 2,
+                    tension: 0.4,
+                    pointRadius: 0,
+                    pointHoverRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false // Hide legend since you have the cards above
+                },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: '#e5e7eb', // Light gray grid lines
+                        drawBorder: false
+                    },
+                    border: {
+                        display: false
+                    },
+                    ticks: {
+                        color: '#6b7280', // Gray text
+                        font: {
+                            size: 12
+                        },
+                        stepSize: 5 // Increments of 5
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false // Hide vertical grid lines
+                    },
+                    border: {
+                        display: false
+                    },
+                    ticks: {
+                        color: '#6b7280',
+                        font: {
+                            size: 12
+                        }
+                    }
+                }
+            },
+            interaction: {
+                mode: 'nearest',
+                axis: 'x',
+                intersect: false
+            }
+        }
+    });
+}
+
+
+async function getMonthlyStats(name) {
+    try {
+      
+        const res = await fetch(`http://localhost:3000/api/issues/officer/${name}`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        })
+        
+
+        if (!res.ok) throw new Error('Error with all issues')
+        const issues = await res.json()
+        
+        issues.forEach(issue => {
+            let status = issue.status.toLowerCase()
+            
+            let date = new Date(issue.createdAt)
+            let month = date.getMonth() 
+            
+            monthlyStats[status][month]++
+           
+        })
+        
+    } catch (error) {
+        alert(error.message)
+    }
+}
+
+

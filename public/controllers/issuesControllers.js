@@ -1,6 +1,7 @@
 import { getDB } from '../config/db.js'
 import { Issue } from '../models/Issues.js'
 import { Counter } from '../models/Counter.js'
+import { User } from '../models/Users.js'
 
 async function getIssueId() {
     const counter = await Counter.findByIdAndUpdate("issues",
@@ -128,8 +129,7 @@ export async function postComment(req, res) {
 export async function updateIssueOfficer(req, res) {
     let {id} = req.params
     let {officer} = req.body
-    console.log(id)
-    console.log(typeof officer)
+    
 
     try {
         let updatedIssue = await Issue.findByIdAndUpdate(
@@ -137,8 +137,6 @@ export async function updateIssueOfficer(req, res) {
         {officer : officer},
         {new: true, runValidators: true}
     )
-
-    console.log(updatedIssue)
 
     if(!updatedIssue) {
        return res.status(404).json({error: 'Issue not found'})
@@ -150,45 +148,112 @@ export async function updateIssueOfficer(req, res) {
     }
 }
 
-export async function updateIssuesStatus(req, res) {
-    let db = await getDB()
-    let {id} = req.params
-    let {status} = req.body
-    const proofImage = req.file ? req.file.filename: null
-    
-    const validStatuses = ["acknowledged", "in-progress", "resolved"]
-   
-    if(!validStatuses.includes(status)) return res.status(400).json({error: "Invalid status"})
-    if (status === "resolved" && !proofImage) return res.status(400).json({error: "Proof image is required when status is 'resolved'"})
+
+
+export async function getOfficerIssues(req, res) {
+            let {user} = req.params
+            const page = parseInt(req.query.page)
+            const limit = parseInt(req.query.limit)
+            const totalItems = await User.countDocuments({officer : user})
+            const currentpage = page
     
     try {
-        await db.run(`UPDATE issues
-             SET status = COALESCE(?, status),
-                 proofImage = COALESCE(?, status)
-              WHERE id = ?`, [status, proofImage, id])
-        const updated = await db.get(`SELECT * FROM issues WHERE id = ?`, [id])
-        res.json(updated)
-    } catch (err) {
-        res.status(500).json({error: err.message})
+    if(page && limit) {
+            const skip = (page - 1) * limit
+             
+            let officerIssues = await Issue.aggregate([
+        {
+            $match: {officer: user}
+        },
+        {
+            $sort: {issueId: -1}
+        },
+        {
+            $skip: skip
+        },
+        {
+            $limit: limit
+        }
+    ])
+            res.status(200).json({
+                officerIssues,
+                totalPages: Math.ceil(totalItems/limit),
+                currentpage
+            })
+        }else {
+            let officerIssues = await Issue.find({officer: user})
+            res.status(200).json(officerIssues)
+        }
+    } catch(err) {
+        console.error('Error in gettimg officer issues:', err)
+        res.status(500).json({ error: err.message })
+    }
+
+
+}
+
+export async function updateIssueStatus(req, res) {
+    let {id} = req.params
+    let {status} = req.body
+    console.log(id, status)
+    
+
+    try {
+        let updatedIssue = await Issue.findByIdAndUpdate(
+        id,
+        {status : status},
+        {new: true, runValidators: true}
+    )
+
+    if(!updatedIssue) {
+       return res.status(404).json({error: 'Issue not found'})
+    }
+
+    res.status(200).json(updatedIssue)
+    } catch(error) {
+        res.status(500).json({error: 'Issue not found'})
     }
 }
 
 
-
-// export async function addFixPhoto(req, res) {
+// export async function updateIssuesStatus(req, res) {
 //     let db = await getDB()
-//     const { id } = req.params
+//     let {id} = req.params
+//     let {status} = req.body
 //     const proofImage = req.file ? req.file.filename: null
+    
+//     const validStatuses = ["acknowledged", "in-progress", "resolved"]
+   
+//     if(!validStatuses.includes(status)) return res.status(400).json({error: "Invalid status"})
+//     if (status === "resolved" && !proofImage) return res.status(400).json({error: "Proof image is required when status is 'resolved'"})
+    
 //     try {
-//         await db.run(`
-//             UPDATE issues SET proofImage = ? WHERE id = ?
-//             `, [proofImage, id])
-
-//             const updated = await db.get(`
-//                 SELECT * FROM issues WHERE id = ?
-//                 `, [id])
-//                 res.json(updated)
+//         await db.run(`UPDATE issues
+//              SET status = COALESCE(?, status),
+//                  proofImage = COALESCE(?, status)
+//               WHERE id = ?`, [status, proofImage, id])
+//         const updated = await db.get(`SELECT * FROM issues WHERE id = ?`, [id])
+//         res.json(updated)
 //     } catch (err) {
 //         res.status(500).json({error: err.message})
 //     }
 // }
+
+
+export async function addFixPhoto(req, res) {
+    let db = await getDB()
+    const { id } = req.params
+    const proofImage = req.file ? req.file.filename: null
+    try {
+        await db.run(`
+            UPDATE issues SET proofImage = ? WHERE id = ?
+            `, [proofImage, id])
+
+            const updated = await db.get(`
+                SELECT * FROM issues WHERE id = ?
+                `, [id])
+                res.json(updated)
+    } catch (err) {
+        res.status(500).json({error: err.message})
+    }
+}
