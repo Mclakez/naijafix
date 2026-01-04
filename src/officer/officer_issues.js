@@ -68,7 +68,7 @@ async function getReports(name,currentPage, limit) {
         console.log(issues)
         pendingText.textContent = issues.filter(issue => issue.status === 'Pending').length
          acknowledgedText.textContent = issues.filter(issue => issue.status === 'Acknowledged').length
-          inProgressText.textContent = issues.filter(issue => issue.status === 'in-progress').length
+          inProgressText.textContent = issues.filter(issue => issue.status === 'In-progress').length
         resolvedText.textContent = issues.filter(issue => issue.status === 'Resolved').length
         await renderPagination(currentPage, totalPages)
         issues.forEach(issue => {
@@ -178,25 +178,25 @@ export async function getIssueDetails(id) {
 
         if(proofImage) {
           proofHtml = `
-          <article class="border border-gray-400 px-4 py-2 bg-white">
-          <h4 class="mb-4 text-3xl font-semibold">Proof of fix</h4>
-          <div class="bg-[url('${proofImage}')] bg-cover h-72"></div>
+        <article class="border border-gray-400 px-4 py-2 bg-white">
+            <h4 class="mb-4 text-3xl font-semibold">Proof of fix</h4>
+            <div style="background-image: url('${proofImage}'); background-size: cover; background-position: center;" class="h-72 rounded"></div>
         </article>
-          `
+    `
+
         } else {
           proofHtml = `
-          <form id="report-form" enctype="multipart/form-data" class="grid gap-6 px-4 my-8 mx-auto relative max-w-3xl">
-
+          <form id="report-form" enctype="multipart/form-data" class="grid gap-6 px-4 my-8 mx-auto relative w-full max-w-3xl">
      <div>
-      <label for="uploadBox" class="text-xl font-semibold">Image of the Report</label>
+      <label for="uploadBox" class="text-xl font-semibold">Add Fix Photo</label>
        <div id="uploadBox" class="relative rounded-xl w-full h-50 md:h-100 bg-gray-300 border-2 border-dashed border-gray-400 flex items-center justify-center cursor-pointer overflow-hidden hover:border-green-500 transition-colors">
-        <input name="issueImage" id="imageInput" type="file" accept="image/*"  hidden>
+        <input name="fixImage" id="imageInput" type="file" accept="image/*"  hidden>
         <i class="fa-solid fa-image text-5xl" id="uploadIcon"></i>
         <img id="previewImage" alt="Preview" class="absolute inset-0 mx-auto my-auto object-fit hidden rounded">
       </div>
      </div>
 
-      <button type="submit" class="bg-green-800 flex justify-center py-3 rounded w-full text-white font-semibold">Submit Report</button>
+      <button type="submit" class="bg-green-800 flex justify-center py-3 rounded w-full text-white font-semibold rounded mx-2">Submit Report</button>
     </form>`
         }
         
@@ -403,72 +403,74 @@ async function sendStatusUpdate(id, text) {
 // const uploadIcon = document.getElementById('uploadIcon')
 
 
-// form.addEventListener('submit', async (e) => {
-//     e.preventDefault()
+document.addEventListener('submit', async (e) => {     
 
-//         const formData = new FormData(form)
-        
-        
-
-//     try {
-//         const res = await fetch('http://localhost:3000/api/issues', {
-//             method: 'POST',
-//             headers: { 'Authorization': `Bearer ${token}` },
-//             body: formData
-//         })
-
-//         if (!res.ok) {
-           
-            
-//             throw new Error('Report submission failed')
-//         }
-
-//         const data = await res.json()
-//         successMessage.textContent = 'Report has been succesfully submitted'
-//         successMessage.style.display = 'block' 
-//         const myReportsBtn = document.getElementById('my-report-btn')
-//         if(myReportsBtn.classList.contains('bg-naija-yellow')) {
-//             const activeFilter = "my"
-//             await loadIssues(activeFilter)
-//         } else {
-//             const activeFilter = "all"
-//             await loadIssues(activeFilter)
-//         }
-
-//             previewImage.classList.add('hidden')
-//             uploadIcon.classList.remove('hidden')
-//             form.reset()
-            
-//         setTimeout(() => {
-//             successMessage.style.display = 'none'
-            
-//         }, 3000)
-       
-        
-//     } catch (error) {
-//         successMessage.textContent = `${error.message}`
-//         successMessage.classList.add('bg-red-500')
-//         successMessage.style.display = 'block'
-//         setTimeout(() => {
-//             successMessage.style.display = 'none'
-            
-//         }, 5000)
-//     }
-// })
+    if (e.target.id === 'report-form') {
+    e.preventDefault()
+    
+    const form = e.target
+    const imageInput = form.querySelector('#imageInput')
+    const issueId = viewDetailsCard.dataset.id
+    if (!imageInput.files || !imageInput.files[0]) {
+      alert('Please select an image before submitting')
+      return
+    }
+    
+    const formData = new FormData()
+    formData.append('fixImage', imageInput.files[0])
+    
+    try {
+      const res = await fetch(`http://localhost:3000/api/issues/fix/${issueId}`, {
+        method: 'PATCH',
+        headers: { 
+          'Authorization': `Bearer ${token}`
+        },
+        body: formData
+      })
+      
+      if (!res.ok) {
+        const errorText = await res.text()
+        console.error('Server error:', errorText)
+        throw new Error(`Failed to upload fix image: ${res.status}`)
+      }
+      
+      const data = await res.json()
+      console.log('Fix image uploaded successfully:', data)
+      
+      await getIssueDetails(issueId)
+      
+    } catch (err) {
+      console.error('Upload error:', err)
+      alert(`Error uploading proof of fix: ${err.message}`)
+    }
+  }
+})
 
 
 
 
-// imageInput.addEventListener('change', (e) => {
-//     const file = e.target.files[0]
-//     if (file) {
-//         const reader = new FileReader()
-//         reader.onload = (e) => {
-//             previewImage.src = e.target.result
-//             previewImage.classList.remove('hidden')
-//             uploadIcon.classList.add('hidden')
-//         }
-//         reader.readAsDataURL(file)
-//     }
-// })
 
+document.addEventListener('change', (e) => {
+    const file = e.target.files[0]
+    const uploadBox = document.getElementById('uploadBox')
+    const previewImage = document.getElementById('previewImage')
+    const uploadIcon = document.getElementById('uploadIcon')
+    if (file) {
+        const reader = new FileReader()
+        reader.onload = (e) => {
+            previewImage.src = e.target.result
+            previewImage.classList.remove('hidden')
+            uploadIcon.classList.add('hidden')
+        }
+        reader.readAsDataURL(file)
+    }
+})
+
+document.addEventListener('click', (e) => {
+  if (e.target.closest('#uploadBox')) {
+    const imageInput = document.getElementById('imageInput')
+    if (imageInput) {
+      imageInput.click()
+    }
+  }
+})

@@ -142,12 +142,12 @@ export async function getIssueDetails(id) {
         let proofHtml;
 
         if(proofImage) {
-          proofHtml = `
-          <article class="border border-gray-400 px-4 py-2 bg-white">
-          <h4 class="mb-4 text-3xl font-semibold">Proof of fix</h4>
-          <div class="bg-[url('${proofImage}')] bg-cover h-72"></div>
+          proofHtml =`
+        <article class="border border-gray-400 px-4 py-2 bg-white">
+            <h4 class="mb-4 text-3xl font-semibold">Proof of fix</h4>
+            <div style="background-image: url('${proofImage}'); background-size: cover; background-position: center;" class="h-72 rounded"></div>
         </article>
-          `
+    `
         } else {
           proofHtml = ''
         }

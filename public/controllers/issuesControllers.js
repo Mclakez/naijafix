@@ -167,6 +167,20 @@ export async function getOfficerIssues(req, res) {
             $match: {officer: name}
         },
         {
+            $lookup: {
+                from: "users",
+                localField: 'createdBy',
+                foreignField: '_id',
+                as: 'createdBy'
+            }
+        },
+        {
+                    $unwind: {
+                        path: '$createdBy',
+                        preserveNullAndEmptyArrays: true
+                    }
+                },
+        {
             $sort: {issueId: -1}
         },
         {
@@ -242,18 +256,16 @@ export async function updateIssueStatus(req, res) {
 
 
 export async function addFixPhoto(req, res) {
-    let db = await getDB()
     const { id } = req.params
-    const proofImage = req.file ? req.file.filename: null
+    const fixImage = req.file ? req.file.filename : null
+    
     try {
-        await db.run(`
-            UPDATE issues SET proofImage = ? WHERE id = ?
-            `, [proofImage, id])
-
-            const updated = await db.get(`
-                SELECT * FROM issues WHERE id = ?
-                `, [id])
-                res.json(updated)
+        const updatedIssue = await Issue.findByIdAndUpdate(
+            id,
+            {fixImage},
+            { new: true }
+        )
+        res.json(updatedIssue)
     } catch (err) {
         res.status(500).json({error: err.message})
     }

@@ -24,7 +24,8 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
         localStorage.setItem('id', data.user.id)
         localStorage.setItem('user', data.user.username)
         const role = data.user.role
-        console.log(data.token, data.user.username)
+        
+        localStorage.setItem('userObj', JSON.stringify(data.user))
 
         if(role === "officer") {
             window.location.href = './officer/officer_home.html'
