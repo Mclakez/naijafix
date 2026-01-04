@@ -4,11 +4,10 @@ export async function lastSeenOnline(req, res, next) {
     try {
                   if (req.user) {
                         await User.findByIdAndUpdate(req.user.id,
-                            {lastSeen: Date.now()},
-                            {lean: true}
+                            {lastSeen: Date.now()}
                         )
-                        console.log("Testing from last seen")
-                        console.log(req.user)
+                        console.log("Updated LAST sEEN")
+                        console.log(req.user.id)
                 }
                 
 

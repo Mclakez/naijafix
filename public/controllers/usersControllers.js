@@ -163,7 +163,7 @@ export async function suspendUser(req, res){
 
         let suspendedUser = await User.findByIdAndUpdate(
             id,
-            {suspension : "suspended", suspensionExpiry: expiryDate}
+            {suspension : "suspended", suspendedUntil: expiryDate}
         )
 
     } catch(err) {

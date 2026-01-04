@@ -4,11 +4,11 @@ export async function checkSuspension(req, res, next) {
         let user = await User.findById(req.user.id)
         if (user && user.suspension === "suspended") {
             let currentDate = new Date()
-            if (currentDate < user.suspensionExpiry) {
+            if (currentDate < user.suspendedUntil) {
                 return res.status(403).json({ error: "User is suspended" })
             } else {
                 user.suspension = "active"
-                user.suspensionExpiry = null
+                user.suspendedUntil = null
                 await user.save()
                 console.log("Testing for status")
             }
