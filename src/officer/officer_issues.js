@@ -12,7 +12,7 @@ const pendingText = document.querySelector('.pending-report')
 const acknowledgedText = document.querySelector('.acknowledged-report')
 const inProgressText = document.querySelector('.in-progress-report')
 const resolvedText = document.querySelector('.resolved-report')
-
+console.log(username)
 
 let pages = []
 let rangeWithDots = []

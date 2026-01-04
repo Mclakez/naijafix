@@ -163,10 +163,10 @@ async function getLineChart() {
 }
 
 
-async function getMonthlyStats(name) {
+async function getMonthlyStats(username) {
     try {
       
-        const res = await fetch(`http://localhost:3000/api/issues/officer/${name}`, {
+        const res = await fetch(`http://localhost:3000/api/issues/officer/${username}`, {
             headers: { 'Authorization': `Bearer ${token}` }
         })
         

@@ -151,11 +151,12 @@ export async function updateIssueOfficer(req, res) {
 
 
 export async function getOfficerIssues(req, res) {
-            let {user} = req.params
+            let {name} = req.params
             const page = parseInt(req.query.page)
             const limit = parseInt(req.query.limit)
-            const totalItems = await User.countDocuments({officer : user})
+            const totalItems = await Issue.countDocuments({officer : name})
             const currentpage = page
+            console.log(name)
     
     try {
     if(page && limit) {
@@ -163,7 +164,7 @@ export async function getOfficerIssues(req, res) {
              
             let officerIssues = await Issue.aggregate([
         {
-            $match: {officer: user}
+            $match: {officer: name}
         },
         {
             $sort: {issueId: -1}
@@ -181,7 +182,7 @@ export async function getOfficerIssues(req, res) {
                 currentpage
             })
         }else {
-            let officerIssues = await Issue.find({officer: user})
+            let officerIssues = await Issue.find({officer: name})
             res.status(200).json(officerIssues)
         }
     } catch(err) {
