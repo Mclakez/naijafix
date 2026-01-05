@@ -8,6 +8,10 @@ const prevBtn = document.getElementById('prev-btn')
 let totalPages;
 const numberButtonContainer = document.getElementById('numberButtonContainer')
 const viewDetailsCard = document.getElementById('view-details-card')
+const pendingText = document.querySelector('.pending-report')
+const acknowledgedText = document.querySelector('.acknowledged-report')
+const inProgressText = document.querySelector('.in-progress-report')
+const resolvedText = document.querySelector('.resolved-report')
 
 
 let pages = []
@@ -60,8 +64,22 @@ async function getReports(currentPage, limit) {
         numberButtonContainer.innerHTML = ""
         pages = []
         rangeWithDots = []
+         pendingText.textContent = issues.filter(issue => issue.status === 'Pending').length
+         acknowledgedText.textContent = issues.filter(issue => issue.status === 'Acknowledged').length
+          inProgressText.textContent = issues.filter(issue => issue.status === 'In-progress').length
+        resolvedText.textContent = issues.filter(issue => issue.status === 'Resolved').length
         await renderPagination(currentPage, totalPages)
         issues.forEach(issue => {
+          let statbgColor;
+          if(issue.status === 'Pending') {
+          statbgColor = "bg-naija-yellow"
+        } else if( issue.status === 'Acknowledged') {
+            statbgColor = "bg-blue-500"
+        } else if (issue.status === 'In-progress') {
+            statbgColor = "bg-[#f97316]"
+        } else if(issue.status === 'Resolved'){
+            statbgColor = "bg-green-800"
+        }
             let row = document.createElement('div')
             row.className = `w-full grid grid-cols-[50px_1fr_1fr_150px_150px_150px] gap-4 text-black px-2 py-4 bg-transparent items-center border-b border-gray-400`
 
@@ -71,7 +89,7 @@ async function getReports(currentPage, limit) {
                 <p class="overflow-x-auto">${issue.title}</p>
                 <p class="overflow-x-auto">${issue.officer}</p>
                 <div>
-                    <div class="text-sm bg-naija-yellow rounded w-fit px-3 py-2 font-semibold ">
+                    <div class="text-sm ${statbgColor} rounded w-fit px-3 py-2 font-semibold ">
                     ${issue.status}
                     </div>
                 </div> 
@@ -164,6 +182,16 @@ export async function getIssueDetails(id) {
         const issue = await res.json()
         const imgUrl = issue.issueImage ? `/uploads/${encodeURIComponent(issue.issueImage)}` : './images/placeholder.jpg'
         const proofImage = issue.fixImage ? `/uploads/${encodeURIComponent(issue.fixImage)}` : null
+        let statbgColor;
+          if(issue.status === 'Pending') {
+          statbgColor = "bg-naija-yellow"
+        } else if( issue.status === 'Acknowledged') {
+            statbgColor = "bg-blue-500"
+        } else if (issue.status === 'In-progress') {
+            statbgColor = "bg-[#f97316]"
+        } else if(issue.status === 'Resolved'){
+            statbgColor = "bg-green-800"
+        }
         let proofHtml;
 
         if(proofImage) {
@@ -179,7 +207,7 @@ export async function getIssueDetails(id) {
         
         viewDetailsCard.dataset.id = `${issue._id}`
         viewDetailsCard.innerHTML = `
-            <div class="max-w-7xl mx-auto flex justify-between justify-end items-center px-4 py-6 text-white">
+            <div class="max-w-7xl mx-auto flex justify-end items-center px-4 py-6 text-white">
               <img src="/images/icon-menu-close.svg" class="w-2 details-cancel-btn">
             </div>
           
@@ -191,7 +219,7 @@ export async function getIssueDetails(id) {
             <div class="grid gap-2">
               <h3 class="text-xl font-semibold">${issue.title}</h3>
               <p class="line-clamp-8 text-lg">${issue.description}</p>
-              <div class="text-sm bg-naija-yellow rounded w-fit px-3 py-2 font-semibold ">
+              <div class="text-sm ${statbgColor} rounded w-fit px-3 py-2 font-semibold ">
                 ${issue.status}
               </div>
               <p class="text-sm ">${issue.location}</p>

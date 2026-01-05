@@ -4,10 +4,11 @@ export async function lastSeenOnline(req, res, next) {
     try {
                   if (req.user) {
                         await User.findByIdAndUpdate(req.user.id,
-                            {lastSeen: Date.now()}
+                            {lastSeen: new Date()}
                         )
                         console.log("Updated LAST sEEN")
                         console.log(req.user.id)
+                        console.log(req.user)
                 }
                 
 
@@ -18,3 +19,23 @@ export async function lastSeenOnline(req, res, next) {
         next()
     }
 }
+
+// export async function lastSeenOnline(req, res, next) {
+//     try {
+//         // Check if user exists on the request (meaning they're authenticated)
+//         if (req.user && req.user.id) {
+//             await User.findByIdAndUpdate(
+//                 req.user.id,
+//                 { lastSeen: new Date() },
+//                 { new: true } // Optional: returns the updated document
+//             )
+//             console.log("Updated last seen for user:", req.user.id)
+//         }
+//     } catch (err) {
+//         // Log the error but don't block the request
+//         console.error('Error updating last seen:', err)
+//     } finally {
+//         // Always call next() to continue the request chain
+//         next()
+//     }
+// }

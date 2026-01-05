@@ -14,8 +14,19 @@ async function getAllIssues() {
         })
         if (!res.ok) throw new Error('Error with all issues')
         const issues = await res.json()
+
         
         issues.forEach(issue => {
+          let statbgColor;
+        if(issue.status === 'Pending') {
+          statbgColor = "bg-naija-yellow"
+        } else if( issue.status === 'Acknowledged') {
+            statbgColor = "bg-blue-500"
+        } else if (issue.status === 'In-progress') {
+            statbgColor = "bg-[#f97316]"
+        } else if(issue.status === 'Resolved'){
+            statbgColor = "bg-green-800"
+        }
             let card = document.createElement('article')
             card.className = `bg-white rounded-xl shadow-md overflow-hidden h-full`
             card.innerHTML = `<div class="bg-cover h-50" style="background-image: url('/uploads/${encodeURIComponent(issue.issueImage)}')">
@@ -23,7 +34,7 @@ async function getAllIssues() {
         </div>
         <div class="px-3 grid gap-2 py-4">
           <h3 class="text-xl font-semibold">${issue.title}</h3>
-          <div class="text-sm bg-naija-yellow rounded w-fit px-3 py-2 font-semibold ">
+          <div class="text-sm ${statbgColor} rounded w-fit px-3 py-2 font-semibold ">
             ${issue.status}
           </div>
           <p>${issue.location}</p>
@@ -60,7 +71,19 @@ async function getMyIssues() {
         if (!res.ok) throw new Error('Error with my issues')
         mainContainer.innerHTML = ""
         const issues = await res.json()
+        
+        
         issues.forEach(issue => {
+          let statbgColor;
+          if(issue.status === 'Pending') {
+          statbgColor = "bg-naija-yellow"
+        } else if( issue.status === 'Acknowledged') {
+            statbgColor = "bg-blue-500"
+        } else if (issue.status === 'In-progress') {
+            statbgColor = "bg-[#f97316]"
+        } else if(issue.status === 'Resolved'){
+            statbgColor = "bg-green-800"
+        }
             let card = document.createElement('article')
             card.className = `bg-white rounded-xl shadow-md overflow-hidden h-full `
             card.innerHTML = `<div class="bg-cover h-50" style="background-image: url('/uploads/${encodeURIComponent(issue.issueImage || "placeholder.jpg")}')">
@@ -68,7 +91,7 @@ async function getMyIssues() {
         </div>
         <div class="px-3 grid gap-2 py-4">
           <h3 class="text-xl font-semibold">${issue.title}</h3>
-          <div class="text-sm bg-naija-yellow rounded w-fit px-3 py-2 font-semibold ">
+          <div class="text-sm ${statbgColor} rounded w-fit px-3 py-2 font-semibold ">
             ${issue.status}
           </div>
           <p>${issue.location}</p>
@@ -139,6 +162,16 @@ export async function getIssueDetails(id) {
         const issue = await res.json()
         const imgUrl = issue.issueImage ? `/uploads/${encodeURIComponent(issue.issueImage)}` : './images/placeholder.jpg'
         const proofImage = issue.fixImage ? `/uploads/${encodeURIComponent(issue.fixImage)}` : null
+        let statbgColor;
+        if(issue.status === 'Pending') {
+          statbgColor = "bg-naija-yellow"
+        } else if( issue.status === 'Acknowledged') {
+            statbgColor = "bg-blue-500"
+        } else if (issue.status === 'In-progress') {
+            statbgColor = "bg-[#f97316]"
+        } else if(issue.status === 'Resolved'){
+            statbgColor = "bg-green-800"
+        }
         let proofHtml;
 
         if(proofImage) {
@@ -167,7 +200,7 @@ export async function getIssueDetails(id) {
             <div class="grid gap-2">
               <h3 class="text-xl font-semibold">${issue.title}</h3>
               <p class="line-clamp-8 text-lg">${issue.description}</p>
-              <div class="text-sm bg-naija-yellow rounded w-fit px-3 py-2 font-semibold ">
+              <div class="text-sm ${statbgColor} rounded w-fit px-3 py-2 font-semibold ">
                 ${issue.status}
               </div>
               <p class="text-sm ">${issue.location}</p>
