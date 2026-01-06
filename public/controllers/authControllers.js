@@ -4,6 +4,7 @@ import { getDB } from '../config/db.js'
 import { generateToken } from '../config/jwt.js'
 import { User } from '../models/Users.js'
 import { RefreshToken } from '../models/RefreshToken.js'
+import jwt from 'jsonwebtoken'
 
 export async function signup(req, res) {
     const { username, email, password } = req.body
@@ -47,7 +48,7 @@ export async function login(req, res) {
             if(!match) {
                 return res.status(400).json({error: 'Invalid Password'})
             }
-            const accessToken = await generateToken(user)
+            const accessToken = await generateToken(req,res,user)
             res.json({ user: {id: user._id, username: user.username, role: user.role, suspension: user.suspension}, accessToken})
     } catch(err) {
         res.status(500).json({error: err.message})

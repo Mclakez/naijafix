@@ -1,6 +1,8 @@
 let accessToken = null
 
-document.getElementById('login-form').addEventListener('submit', async (e) => {
+const form = document.getElementById('login-form')
+if (form){
+    form.addEventListener('submit', async (e) => {
     e.preventDefault()
 
     const username = document.getElementById('username').value
@@ -13,6 +15,7 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
             body: JSON.stringify({ username, password }),
             credentials: 'include'
         })
+        console.log(res)
 
         if (!res.ok) {
             const errorData = await res.json();
@@ -41,12 +44,12 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
         alert(error.message)
     }
 })
-
+}
 export async function fetchWithAuth(url, options = {} ){
     const authOptions = {
         ...options,
         headers: {
-        ...options.header,
+        ...options.headers,
         'Authorization': `Bearer ${accessToken}`
     },
     credentials: 'include'

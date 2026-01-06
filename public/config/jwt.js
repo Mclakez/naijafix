@@ -3,7 +3,7 @@ import { RefreshToken } from '../models/RefreshToken.js'
 
 
 
-export async function generateToken(user) {
+export async function generateToken(req,res,user) {
     const ACCESS_SECRET = process.env.ACCESS_TOKEN_SECRET
     const REFRESH_SECRET = process.env.REFRESH_TOKEN_SECRET
     let days = 1
