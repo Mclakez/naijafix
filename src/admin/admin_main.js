@@ -1,5 +1,8 @@
+import { fetchWithAuth } from '../login.js'
+
 const sections = document.querySelectorAll('#dashboard-section, #users-section, #officers-section, #issues-section')
 const navItems = document.querySelectorAll('.nav-item')
+const logOutBtn = document.querySelector('.log-out-btn')
 
 function hideAllSections() {
     sections.forEach(section => {
@@ -30,3 +33,21 @@ function showSection(section) {
 }
 
 showSection('dashboard-section')
+
+logOutBtn.addEventListener('click', async () => {
+    try{
+        let res = fetchWithAuth('http://localhost:3000/api/users/logout', {
+            method: "POST"
+        })
+        console.log(res)
+        if(!res.ok) {
+         throw new Error("Logout response failed");
+        }
+        localStorage.clear()
+        window.href = "../login"
+        console.log('logout')
+    } catch(err) {
+        console.error(err.message)
+    }
+    
+})

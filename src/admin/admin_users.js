@@ -1,3 +1,5 @@
+import { fetchWithAuth } from '../login.js'
+
 const token = localStorage.getItem('token')
 const usersTable = document.querySelector('.usersTable')
 const userNextBtn = document.getElementById('user-next-btn')
@@ -14,9 +16,7 @@ let previousPage;
 
 async function getUsers(currentPage, limit) {
     try {
-        const res = await fetch(`http://localhost:3000/api/users?page=${currentPage}&limit=${limit}`, {
-            headers: { 'Authorization': `Bearer ${token}` }
-        })
+        const res = await fetchWithAuth(`http://localhost:3000/api/users?page=${currentPage}&limit=${limit}`)
         if (!res.ok) throw new Error('Error with all users')
         const data = await res.json()
     console.log(data)
@@ -199,9 +199,8 @@ document.addEventListener('click', async (e) => {
 
 async function deleteUser(id) {
         try {
-        const res = await fetch(`http://localhost:3000/api/users/${id}`, {
-            method: "DELETE",
-            headers: { 'Authorization': `Bearer ${token}` }
+        const res = await fetchWithAuth(`http://localhost:3000/api/users/${id}`, {
+            method: "DELETE"
         })
         if (!res.ok) throw new Error('Error deleting users')
         const data = await res.json()
@@ -213,9 +212,8 @@ async function deleteUser(id) {
 
 async function suspendUser(id) {
         try {
-            const res = await fetch(`http://localhost:3000/api/users/suspend/${id}`, {
-                method: "PATCH",
-                headers: { 'Authorization': `Bearer ${token}` }
+            const res = await fetchWithAuth(`http://localhost:3000/api/users/suspend/${id}`, {
+                method: "PATCH"
             })
         if (!res.ok) throw new Error('Error suspending users')
         const data = await res.json()

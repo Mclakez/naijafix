@@ -1,5 +1,5 @@
 
-
+import { fetchWithAuth } from '../login.js'
 const token = localStorage.getItem('token')
 const officersTable = document.querySelector('.officersTable')
 const officerNextBtn = document.getElementById('officer-next-btn')
@@ -18,9 +18,7 @@ let previousPage;
 
 async function getOfficers(currentPage, limit) {
     try {
-        const res = await fetch(`http://localhost:3000/api/users/officers?page=${currentPage}&limit=${limit}`, {
-            headers: { 'Authorization': `Bearer ${token}` }
-        })
+        const res = await fetchWithAuth(`http://localhost:3000/api/users/officers?page=${currentPage}&limit=${limit}`)
 
         console.log(res)
         if (!res.ok) throw new Error('Error with all officers')
@@ -222,9 +220,8 @@ addOfficerBtn.addEventListener('click', async (e) => {
 
 async function deleteOfficer(id) {
         try {
-        const res = await fetch(`http://localhost:3000/api/users/${id}`, {
-            method: "DELETE",
-            headers: { 'Authorization': `Bearer ${token}` }
+        const res = await fetchWithAuth(`http://localhost:3000/api/users/${id}`, {
+            method: "DELETE"
         })
         if (!res.ok) throw new Error('Error deleting officer')
         const data = await res.json()
@@ -236,9 +233,8 @@ async function deleteOfficer(id) {
 
 async function suspendOfficer(id) {
         try {
-            const res = await fetch(`http://localhost:3000/api/users/suspend/${id}`, {
-                method: "PATCH",
-                headers: { 'Authorization': `Bearer ${token}` }
+            const res = await fetchWithAuth(`http://localhost:3000/api/users/suspend/${id}`, {
+                method: "PATCH"
             })
         if (!res.ok) throw new Error('Error suspending officer')
         const data = await res.json()
@@ -293,7 +289,7 @@ form.addEventListener('submit', async (e) => {
     try {
         const res = await fetch('http://localhost:3000/api/users/officers', {
             method: 'POST',
-            headers: { 'Authorization': `Bearer ${token}`,
+            headers: {
             'Content-Type': 'application/json'
         },
 

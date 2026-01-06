@@ -1,4 +1,5 @@
 const token = localStorage.getItem('token')
+import { fetchWithAuth } from '../login.js'
 const username = localStorage.getItem('user')
 const issuesTable = document.querySelector('.issuesTable')
 let currentPage = 1
@@ -50,9 +51,7 @@ numberButtonContainer.addEventListener('click',async (e) => {
 
 async function getReports(name,currentPage, limit) {
     try {
-        const res = await fetch(`http://localhost:3000/api/issues/officer/${name}?page=${currentPage}&limit=${limit}`, {
-            headers: { 'Authorization': `Bearer ${token}` }
-        })
+        const res = await fetchWithAuth(`http://localhost:3000/api/issues/officer/${name}?page=${currentPage}&limit=${limit}`)
         if (!res.ok) throw new Error('Error with all issues')
         const data = await res.json()
         
@@ -174,9 +173,7 @@ document.addEventListener('click',async (e) => {
 
 export async function getIssueDetails(id) {
   try{
-        const res = await fetch(`http://localhost:3000/api/issues/${id}`, {
-            headers: { 'Authorization': `Bearer ${token}` }
-        })
+        const res = await fetchWithAuth(`http://localhost:3000/api/issues/${id}`)
         if (!res.ok) throw new Error('Failed to load issue details')
         const issue = await res.json()
         const imgUrl = issue.issueImage ? `/uploads/${encodeURIComponent(issue.issueImage)}` : './images/placeholder.jpg'

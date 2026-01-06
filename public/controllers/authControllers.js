@@ -8,6 +8,7 @@ import jwt from 'jsonwebtoken'
 
 export async function signup(req, res) {
     const { username, email, password } = req.body
+    console.log(username,email)
     
     try {
         const existing = await User.findOne({username})
@@ -18,7 +19,7 @@ export async function signup(req, res) {
         const hashed = await bcrypt.hash(password, 10)
         const role = "user"
     const department = null
-
+        
         const newUser = await User.create({
             username,
             email,
@@ -26,9 +27,10 @@ export async function signup(req, res) {
             role,
             department: role === "officer" ? department : null
         })
+        res.json({user : newUser.username})
 
     } catch (err) {
-        res.status(500).json({error: err.message})
+        res.status(500).json({error: err.message + "From the backend"})
     }
 }
 
@@ -65,12 +67,12 @@ export async function refreshToken(req, res) {
     try {
         const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET)
         const isValidToken = await RefreshToken.findOne({token: refreshToken})
-        if(!isValid) {
+        if(!isValidToken) {
             return res.status(401).json({error : 'Invalid refresh token'})
         }
 
         const accessToken = jwt.sign(
-                { id: user._id},
+                { id: decoded.id},
                 process.env.ACCESS_TOKEN_SECRET,
                 { expiresIn: "15m"}
             )

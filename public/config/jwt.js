@@ -41,5 +41,5 @@ export async function generateToken(req,res,user) {
 
 export async function verifyToken(token) {
     const ACCESS_SECRET = process.env.ACCESS_TOKEN_SECRET
-    return jwt.verify(token, SECRET)
+    return jwt.verify(token, ACCESS_SECRET)
 }

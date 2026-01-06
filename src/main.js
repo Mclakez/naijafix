@@ -1,3 +1,4 @@
+import { fetchWithAuth } from './login'
 const addBtn = document.getElementById("add-btn")
 const menuBtn = document.getElementById("menu-btn")
 const menu = document.getElementById("menu")
@@ -44,6 +45,7 @@ imageInput.addEventListener("change", function() {
     }
 })
 
+
 addBtn.addEventListener("click", () => {
     if(reportSection.classList.contains('hidden')) {
         reportSection.classList.remove("hidden")
@@ -56,9 +58,11 @@ menuBtn.addEventListener("click", () => {
     menu.classList.remove('hidden')
 })
 
+
 closeBtn.addEventListener("click", () => {
     menu.classList.add('hidden')
 })
+
 
 document.addEventListener("click", (e) => {
     let backBtn = e.target.closest(".back-btn")
@@ -75,7 +79,21 @@ document.addEventListener("click", (e) => {
 })
 
 
-logOutBtn.addEventListener('click', () => {
-    localStorage.removeItem('suspension')
-    localStorage.removeItem('token')
+logOutBtn.addEventListener('click', async () => {
+    try{
+        console.log('button works')
+        let res = fetchWithAuth('http://localhost:3000/api/users/logout', {
+            method: "POST"
+        })
+        if(!res.ok) {
+         throw new Error("Logout response failed");
+        }
+        localStorage.clear()
+        sessionStorage.clear()
+        window.location.href = "/login"
+        console.log('logout')
+    } catch(err) {
+        console.error(err.message)
+    }
+    
 })

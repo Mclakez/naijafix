@@ -1,5 +1,3 @@
-let accessToken = null
-
 const form = document.getElementById('login-form')
 if (form){
     form.addEventListener('submit', async (e) => {
@@ -29,8 +27,7 @@ if (form){
         localStorage.setItem('id', data.user.id)
         localStorage.setItem('user', data.user.username)
         const role = data.user.role
-        accessToken = data.accessToken
-        
+        sessionStorage.setItem('accessToken', data.accessToken) 
 
         if(role === "officer") {
             window.location.href = './officer/officer_home.html'
@@ -46,6 +43,7 @@ if (form){
 })
 }
 export async function fetchWithAuth(url, options = {} ){
+    let accessToken = sessionStorage.getItem('accessToken')
     const authOptions = {
         ...options,
         headers: {
@@ -57,9 +55,10 @@ export async function fetchWithAuth(url, options = {} ){
 }
 
     let res = await fetch(url, authOptions)
+    console.log(res)
 
     if(res.status === 401) {
-        await refreshAccessToken()
+        accessToken = await refreshAccessToken()
         authOptions.headers['Authorization'] = `Bearer ${accessToken}`
         res = await fetch(url, authOptions)
     }
@@ -77,6 +76,6 @@ async function refreshAccessToken() {
         window.location.href = './login'
     }
     let data = await res.json()
-    accessToken = data.accessToken
-    return accessToken
+    sessionStorage.setItem('accessToken', data.accessToken) 
+    return data.accessToken
 }

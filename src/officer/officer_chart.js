@@ -1,4 +1,5 @@
 const token = localStorage.getItem('token')
+import { fetchWithAuth } from '../login.js'
 const username = localStorage.getItem('user')
 const monthlyStats = {
             pending: Array(12).fill(0),
@@ -166,9 +167,7 @@ async function getLineChart() {
 async function getMonthlyStats(username) {
     try {
       
-        const res = await fetch(`http://localhost:3000/api/issues/officer/${username}`, {
-            headers: { 'Authorization': `Bearer ${token}` }
-        })
+        const res = await fetch(`http://localhost:3000/api/issues/officer/${username}`)
         
 
         if (!res.ok) throw new Error('Error with all issues')

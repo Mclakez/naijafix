@@ -1,3 +1,4 @@
+import { fetchWithAuth } from '../login.js'
 const token = localStorage.getItem('token')
 const issuesTable = document.querySelector('.issuesTable')
 const usersTable = document.querySelector('.usersTable')
@@ -51,9 +52,7 @@ numberButtonContainer.addEventListener('click',async (e) => {
 
 async function getReports(currentPage, limit) {
     try {
-        const res = await fetch(`http://localhost:3000/api/issues?page=${currentPage}&limit=${limit}`, {
-            headers: { 'Authorization': `Bearer ${token}` }
-        })
+        const res = await fetchWithAuth(`http://localhost:3000/api/issues?page=${currentPage}&limit=${limit}`)
         if (!res.ok) throw new Error('Error with all issues')
         const data = await res.json()
         
@@ -175,9 +174,7 @@ document.addEventListener('click',async (e) => {
 
 export async function getIssueDetails(id) {
   try{
-        const res = await fetch(`http://localhost:3000/api/issues/${id}`, {
-            headers: { 'Authorization': `Bearer ${token}` }
-        })
+        const res = await fetchWithAuth(`http://localhost:3000/api/issues/${id}`)
         if (!res.ok) throw new Error('Failed to load issue details')
         const issue = await res.json()
         const imgUrl = issue.issueImage ? `/uploads/${encodeURIComponent(issue.issueImage)}` : './images/placeholder.jpg'
@@ -352,9 +349,8 @@ document.addEventListener('click', (e) => {
 
 async function deleteIssue(id) {
   try {
-          const res = await fetch(`http://localhost:3000/api/issues/delete/${id}`, {
-              method: 'DELETE',
-              headers: { 'Authorization': `Bearer ${token}` }
+          const res = await fetchWithAuth(`http://localhost:3000/api/issues/delete/${id}`, {
+              method: 'DELETE'
           })
   
           if (!res.ok) {  
@@ -403,9 +399,7 @@ function formatDate(date) {
 
 async function getAllOfficers() {
   try {
-    const res = await fetch(`http://localhost:3000/api/users/officers`, {
-            headers: { 'Authorization': `Bearer ${token}` }
-        })
+    const res = await fetchWithAuth(`http://localhost:3000/api/users/officers`)
         
         if (!res.ok) {
           const errorData = await res.json()
@@ -423,9 +417,9 @@ async function getAllOfficers() {
 
 async function sendOfficerUpdate(id, text) {
   try {
-    const res = await fetch(`http://localhost:3000/api/issues/officers/${id}`, {
+    const res = await fetchWithAuth(`http://localhost:3000/api/issues/officers/${id}`, {
       method: "PATCH",
-      headers: { 'Authorization': `Bearer ${token}`,
+      headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({

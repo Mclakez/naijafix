@@ -1,5 +1,6 @@
 import { User } from '../models/Users.js'
 import { Issue } from '../models/Issues.js'
+import { RefreshToken } from '../models/RefreshToken.js'
 import bcrypt from 'bcrypt'
 
 
@@ -187,4 +188,20 @@ export async function addOfficer(req, res) {
     } catch (err) {
         res.status(500).json({error: err.message})
     }
+}
+
+export async function logOutUser(req, res) {
+
+    try {
+        let refreshToken = req.cookies.refreshToken
+        if (refreshToken) {
+            let deletedToken =  RefreshToken.deleteOne({token: refreshToken})
+        }
+        res.clearCookie('refreshToken')
+        res.json({success: true})
+        console.log(deletedToken, 'deleted')
+    } catch (error) {
+        res.status(500).json({error: 'Logout failed'})
+    }
+    
 }
