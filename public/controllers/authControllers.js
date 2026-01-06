@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt'
 import { getDB } from '../config/db.js'
 import { generateToken } from '../config/jwt.js'
 import { User } from '../models/Users.js'
+import { RefreshToken } from '../models/RefreshToken.js'
 
 export async function signup(req, res) {
     const { username, email, password } = req.body
@@ -24,18 +25,6 @@ export async function signup(req, res) {
             role,
             department: role === "officer" ? department : null
         })
-            
-            
-            
-            
-            const token = await generateToken(newUser)
-            res.json({user: {
-                id: newUser._id,
-                username: newUser.username,
-                role: newUser.role
-            }, token})
-
-        
 
     } catch (err) {
         res.status(500).json({error: err.message})
@@ -58,9 +47,34 @@ export async function login(req, res) {
             if(!match) {
                 return res.status(400).json({error: 'Invalid Password'})
             }
-            const token = await generateToken(user)
-            res.json({ user: {id: user._id, username: user.username, role: user.role, suspension: user.suspension}, token})
+            const accessToken = await generateToken(user)
+            res.json({ user: {id: user._id, username: user.username, role: user.role, suspension: user.suspension}, accessToken})
     } catch(err) {
         res.status(500).json({error: err.message})
     } 
+}
+
+export async function refreshToken(req, res) {
+    const refreshToken = req.cookies.refreshToken
+    if(!refreshToken) {
+        return res.status(401).json({error : 'No refresh token'})
+    }
+
+    try {
+        const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET)
+        const isValidToken = await RefreshToken.findOne({token: refreshToken})
+        if(!valid) {
+            return res.status(401).json({error : 'Invalid refresh token'})
+        }
+
+        const accessToken = jwt.sign(
+                { id: user._id},
+                process.env.ACCESS_TOKEN_SECRET,
+                { expiresIn: "15m"}
+            )
+
+            res.json({accessToken})
+    } catch(err){
+        res.status(401).json({error: 'Invalid refresh token'})
+    }
 }

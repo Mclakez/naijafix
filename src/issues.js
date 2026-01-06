@@ -1,3 +1,5 @@
+import { fetchWithAuth } from './login.js'
+
 const mainContainer = document.getElementById('main-container')
 const myReportsBtn = document.getElementById('my-report-btn')
 const allReportsBtn = document.getElementById('all-report-btn')
@@ -9,9 +11,7 @@ console.log(suspensionState,"Issues getting")
 
 async function getAllIssues() {
     try {
-        const res = await fetch('http://localhost:3000/api/issues', {
-            headers: { 'Authorization': `Bearer ${token}` }
-        })
+        const res = await fetchWithAuth('http://localhost:3000/api/issues')
         if (!res.ok) throw new Error('Error with all issues')
         const issues = await res.json()
 
@@ -65,9 +65,7 @@ getAllIssues()
 
 async function getMyIssues() {
     try {
-        const res = await fetch('http://localhost:3000/api/issues/my', {
-            headers: { 'Authorization': `Bearer ${token}` }
-        })
+        const res = await fetchWthAuth('http://localhost:3000/api/issues/my')
         if (!res.ok) throw new Error('Error with my issues')
         mainContainer.innerHTML = ""
         const issues = await res.json()
@@ -155,9 +153,7 @@ document.addEventListener('click', async (e) => {
 
 export async function getIssueDetails(id) {
   try{
-        const res = await fetch(`http://localhost:3000/api/issues/${id}`, {
-            headers: { 'Authorization': `Bearer ${token}` }
-        })
+        const res = await fetchWithUrl(`http://localhost:3000/api/issues/${id}`)
         if (!res.ok) throw new Error('Failed to load issue details')
         const issue = await res.json()
         const imgUrl = issue.issueImage ? `/uploads/${encodeURIComponent(issue.issueImage)}` : './images/placeholder.jpg'

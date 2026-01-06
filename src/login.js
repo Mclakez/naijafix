@@ -1,3 +1,5 @@
+let accessToken = null
+
 document.getElementById('login-form').addEventListener('submit', async (e) => {
     e.preventDefault()
 
@@ -8,7 +10,8 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
         const res = await fetch('http://localhost:3000/api/auth/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password })
+            body: JSON.stringify({ username, password }),
+            credentials: 'include'
         })
 
         if (!res.ok) {
@@ -17,15 +20,14 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
 }
 
 
-        const data = await res.json()
-        console.log(data)       
-        localStorage.setItem('token', data.token)
+        const data = await res.json()       
+        
         localStorage.setItem('suspension', data.user.suspension)
         localStorage.setItem('id', data.user.id)
         localStorage.setItem('user', data.user.username)
         const role = data.user.role
+        accessToken = data.accessToken
         
-        localStorage.setItem('userObj', JSON.stringify(data.user))
 
         if(role === "officer") {
             window.location.href = './officer/officer_home.html'
@@ -39,3 +41,39 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
         alert(error.message)
     }
 })
+
+export async function fetchWithAuth(url, options = {} ){
+    const authOptions = {
+        ...options,
+        headers: {
+        ...options.header,
+        'Authorization': `Bearer ${accessToken}`
+    },
+    credentials: 'include'
+
+}
+
+    let res = await fetch(url, authOptions)
+
+    if(res.status === 401) {
+        await refreshAccessToken()
+        authOptions.headers['Authorization'] = `Bearer ${accessToken}`
+        res = await fetch(url, authOptions)
+    }
+
+    return res
+}
+
+async function refreshAccessToken() {
+    let res = await fetch('/api/auth/refresh', {
+        credentials: 'include'
+    } )
+
+    if(res.status === 401) {
+        accessToken = null
+        window.location.href = '/login'
+    }
+    let data = await res.json()
+    accessToken = data.accessToken
+    return accessToken
+}

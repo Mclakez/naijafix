@@ -1,3 +1,4 @@
+import { fetchWithAuth } from './login.js'
 const token = localStorage.getItem("token")
 const form = document.getElementById('comment-form')
 const commentPopUp = document.getElementById('comment-popup')
@@ -36,12 +37,11 @@ form.addEventListener('submit', async (e) => {
     e.preventDefault()
 
         const formData = new FormData(form)
-        const data = Object.fromEntries(formData.entries())
+        // const data = Object.fromEntries(formData.entries())
 
     try {
-        const res = await fetch(`http://localhost:3000/api/issues/${issueID}/comment`, {
+        const res = await fetchWithAuth(`http://localhost:3000/api/issues/${issueID}/comment`, {
             method: 'POST',
-            headers: { 'Authorization': `Bearer ${token}` },
             body: formData
         })
 

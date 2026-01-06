@@ -1,4 +1,5 @@
 import { loadIssues } from "./issues.js"
+import { fetchWithAuth } from './login.js'
 
 const token = localStorage.getItem("token")
 const form = document.getElementById('report-form')
@@ -16,9 +17,8 @@ form.addEventListener('submit', async (e) => {
         
 
     try {
-        const res = await fetch('http://localhost:3000/api/issues', {
+        const res = await fetchWithAuth('http://localhost:3000/api/issues', {
             method: 'POST',
-            headers: { 'Authorization': `Bearer ${token}` },
             body: formData
         })
 
