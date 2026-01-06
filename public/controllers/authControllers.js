@@ -58,13 +58,14 @@ export async function login(req, res) {
 export async function refreshToken(req, res) {
     const refreshToken = req.cookies.refreshToken
     if(!refreshToken) {
+        console.log('The issue is no refresh token')
         return res.status(401).json({error : 'No refresh token'})
     }
 
     try {
         const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET)
         const isValidToken = await RefreshToken.findOne({token: refreshToken})
-        if(!valid) {
+        if(!isValid) {
             return res.status(401).json({error : 'Invalid refresh token'})
         }
 

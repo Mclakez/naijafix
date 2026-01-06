@@ -65,7 +65,7 @@ getAllIssues()
 
 async function getMyIssues() {
     try {
-        const res = await fetchWthAuth('http://localhost:3000/api/issues/my')
+        const res = await fetchWithAuth('http://localhost:3000/api/issues/my')
         if (!res.ok) throw new Error('Error with my issues')
         mainContainer.innerHTML = ""
         const issues = await res.json()
@@ -153,7 +153,7 @@ document.addEventListener('click', async (e) => {
 
 export async function getIssueDetails(id) {
   try{
-        const res = await fetchWithUrl(`http://localhost:3000/api/issues/${id}`)
+        const res = await fetchWithAuth(`http://localhost:3000/api/issues/${id}`)
         if (!res.ok) throw new Error('Failed to load issue details')
         const issue = await res.json()
         const imgUrl = issue.issueImage ? `/uploads/${encodeURIComponent(issue.issueImage)}` : './images/placeholder.jpg'

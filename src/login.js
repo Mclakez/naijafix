@@ -74,7 +74,7 @@ async function refreshAccessToken() {
 
     if(res.status === 401) {
         accessToken = null
-        window.location.href = '/login'
+        window.location.href = './login'
     }
     let data = await res.json()
     accessToken = data.accessToken

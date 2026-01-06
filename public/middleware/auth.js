@@ -3,6 +3,7 @@ import { verifyToken } from '../config/jwt.js'
 export async function requireAuth(req, res, next) {
     const authHeader = req.headers.authorization
     if(!authHeader) {
+        console.log('The issue is from require auth')
        return res.status(401).json({error: 'No token provided'})
     }
 
