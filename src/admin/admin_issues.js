@@ -1,5 +1,6 @@
 import { fetchWithAuth } from '../login.js'
-const token = localStorage.getItem('token')
+let username = localStorage.getItem('user')
+const adminName = document.querySelector('.admin-name')
 const issuesTable = document.querySelector('.issuesTable')
 const usersTable = document.querySelector('.usersTable')
 let currentPage = 1
@@ -52,6 +53,7 @@ numberButtonContainer.addEventListener('click',async (e) => {
 
 async function getReports(currentPage, limit) {
     try {
+      adminName.textContent = username
         const res = await fetchWithAuth(`http://localhost:3000/api/issues?page=${currentPage}&limit=${limit}`)
         if (!res.ok) throw new Error('Error with all issues')
         const data = await res.json()

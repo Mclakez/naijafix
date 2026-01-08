@@ -5,8 +5,6 @@ export const handleValidation = async (req, res, next) => {
     if (!errors) {
         return res.status(400).json({ errors: errors.array() })
     }
-    console.log(
-        'E reach handle too'
-    )
+
     next()
 }

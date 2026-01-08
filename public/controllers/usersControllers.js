@@ -191,17 +191,27 @@ export async function addOfficer(req, res) {
 }
 
 export async function logOutUser(req, res) {
-
-    try {
-        let refreshToken = req.cookies.refreshToken
-        if (refreshToken) {
-            let deletedToken =  RefreshToken.deleteOne({token: refreshToken})
-        }
-        res.clearCookie('refreshToken')
-        res.json({success: true})
-        console.log(deletedToken, 'deleted')
-    } catch (error) {
-        res.status(500).json({error: 'Logout failed'})
-    }
+    const refreshToken = req.cookies.refreshToken
     
+    try {
+        // Always clear the cookie, even if DB deletion fails
+        res.clearCookie('refreshToken')
+        
+        // Try to delete from database (non-critical if it fails)
+        if (refreshToken) {
+            try {
+                await RefreshToken.deleteOne({token: refreshToken})
+            } catch (dbError) {
+                // Log but don't fail the logout
+                console.error('Failed to delete token from DB:', dbError)
+            }
+        }
+        
+        // Send success response
+        return res.status(200).json({success: true})
+        
+    } catch (error) {
+        console.error('Logout error:', error)
+        return res.status(500).json({error: 'Logout failed'})
+    }
 }

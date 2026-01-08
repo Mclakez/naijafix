@@ -1,4 +1,4 @@
-import { fetchWithAuth } from './login'
+import { fetchWithAuth } from './login.js'
 const addBtn = document.getElementById("add-btn")
 const menuBtn = document.getElementById("menu-btn")
 const menu = document.getElementById("menu")
@@ -82,7 +82,7 @@ document.addEventListener("click", (e) => {
 logOutBtn.addEventListener('click', async () => {
     try{
         console.log('button works')
-        let res = fetchWithAuth('http://localhost:3000/api/users/logout', {
+        let res = await fetchWithAuth('http://localhost:3000/api/users/logout', {
             method: "POST"
         })
         if(!res.ok) {
@@ -90,7 +90,7 @@ logOutBtn.addEventListener('click', async () => {
         }
         localStorage.clear()
         sessionStorage.clear()
-        window.location.href = "/login"
+        window.location.href = "./index.html"
         console.log('logout')
     } catch(err) {
         console.error(err.message)

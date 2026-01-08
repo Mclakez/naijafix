@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authenticating...</title>
+</head>
+<body>
+    <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+        <p>Logging you in...</p>
+    </div>
+    
+    <script>
+        // Get token from URL
+        const params = new URLSearchParams(window.location.search)
+        const token = params.get('token')
+        const username = params.get('username')
+        const role = params.get('role')
+        const id = params.get('id')
+        
+        if (token && username && role && id) {
+            // Store in localStorage/sessionStorage
+            localStorage.setItem('user', username)
+            localStorage.setItem('id', id)
+            localStorage.setItem('suspension', 'active')
+            sessionStorage.setItem('accessToken', token)
+            
+            // Redirect based on role
+            if (role === 'officer') {
+                window.location.href = '/officer/officer_home.html'
+            } else if (role === 'admin') {
+                window.location.href = '/admin/admin_home.html'
+            } else {
+                window.location.href = '/issues.html'
+            }
+        } else {
+            window.location.href = '/login.html?error=auth_failed'
+        }
+    </script>
+</body>
+</html>

@@ -6,9 +6,6 @@ export async function lastSeenOnline(req, res, next) {
                         await User.findByIdAndUpdate(req.user.id,
                             {lastSeen: new Date()}
                         )
-                        console.log("Updated LAST sEEN")
-                        console.log(req.user.id)
-                        console.log(req.user)
                 }
                 
 

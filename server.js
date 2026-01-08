@@ -1,14 +1,17 @@
 import dotenv from "dotenv"
 dotenv.config()
 import express from 'express'
+import passport from 'passport'
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { configurePassport } from "./public/config/passport.js"
 import { authRouter } from "./public/routes/authRoutes.js"
 import { usersRouter } from "./public/routes/usersRoutes.js"
 import { issuesRouter } from "./public/routes/issuesRoutes.js"
 import { inItDb } from './public/config/db.js'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
+
 
 const PORT = 3000
 const __filename = fileURLToPath(import.meta.url);
@@ -23,6 +26,10 @@ app.use(
       credentials: true
    })
 )
+
+app.use(passport.initialize())
+configurePassport()
+
 app.use(express.static(path.join(__dirname, "src")))
     
    await inItDb();
