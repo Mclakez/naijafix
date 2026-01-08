@@ -82,7 +82,8 @@ async function getReports(currentPage, limit) {
             statbgColor = "bg-green-800"
         }
             let row = document.createElement('div')
-            row.className = `w-full grid grid-cols-[50px_1fr_1fr_150px_150px_150px] gap-4 text-black px-2 py-4 bg-transparent items-center border-b border-gray-400`
+            row.className = `w-full grid grid-cols-[50px_1fr_1fr_150px_150px_150px] gap-4 text-black px-2 py-4 bg-transparent items-center border-b border-gray-400
+            `
 
             row.innerHTML = `
                 <p>${issue.issueId}</p>
@@ -229,10 +230,10 @@ export async function getIssueDetails(id) {
             <div class="flex gap-2 items-center my-6">
 
                 <div class="relative">
-                  <div class="py-2 px-3 rounded bg-gray-200 flex items-center gap-2 min-w-[200px]"><span class="officer-text">${issue.officer || "Select officer"}</span><img src="/images/ChevronDown.svg" class="select-officer-btn"></div>
-                  <ul class="officers-list-container absolute w-full bg-gray-300 top-full mt-2 rounded flex flex-col items-center max-h-[250px] overflow-y-auto overflow-x-auto py-2 gap-2 hidden"></ul>
+                  <div class="py-2 px-3 rounded bg-gray-200 flex items-center gap-2 min-w-[200px]"><span class="officer-text">${issue.officer || "Select officer"}</span><img src="/images/ChevronDown.svg" class="select-officer-btn cursor-pointer"></div>
+                  <ul class="officers-list-container absolute w-full bg-gray-300 top-full mt-2 rounded flex flex-col items-center max-h-[250px] overflow-y-auto overflow-x-auto py-2 gap-2 transition hidden"></ul>
                 </div>
-                <button class="bg-red-500 py-2 px-3 rounded flex items-center text-white gap-2 delete-btn" data-id="${issue._id}"><img src="/images/TrashOutline.svg"><span>Delete issue</span></button>
+                <button class="bg-red-500 py-2 px-3 rounded flex items-center text-white gap-2 delete-btn hover:brightness-110 cursor-pointer transition" data-id="${issue._id}"><img src="/images/TrashOutline.svg"><span>Delete issue</span></button>
            
              </div>
             </article>
@@ -324,7 +325,7 @@ document.addEventListener('click',async (e) => {
       let officers = await getAllOfficers()
     officers.forEach(officer => {
       let officerListElement = document.createElement('li')
-      officerListElement.className = `text-left px-2 w-full officer-list-element`
+      officerListElement.className = `text-left px-2 w-full officer-list-element cursor-pointer hover:brightness-110`
       officerListElement.innerHTML = `
       ${officer.username}
       `
@@ -337,7 +338,7 @@ document.addEventListener('click',async (e) => {
   }
 })
 
-document.addEventListener('click', (e) => {
+document.addEventListener('click', async (e) => {
   let officerListElement = e.target.closest('.officer-list-element')
   if(officerListElement) {
          let id = viewDetailsCard.dataset.id
@@ -345,7 +346,8 @@ document.addEventListener('click', (e) => {
          officerListContainer.classList.add("hidden")
          let officerText = viewDetailsCard.querySelector('.officer-text')
          officerText.textContent = officerListElement.textContent
-         sendOfficerUpdate(id, officerListElement.textContent.trim())
+         await sendOfficerUpdate(id, officerListElement.textContent.trim())
+         await getReports(currentPage, limit)
   }
 })
 
@@ -361,7 +363,7 @@ async function deleteIssue(id) {
   
           const data = await res.json()
           viewDetailsCard.style.display = "none"
-          getReports(currentPage, limit)
+          await getReports(currentPage, limit)
           
       } catch (error) {
           alert(error.message)

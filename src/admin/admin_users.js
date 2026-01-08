@@ -52,11 +52,11 @@ async function getUsers(currentPage, limit) {
                         <img src="../images/icon-menu.svg" class="w-5">
                         <span>Action</span>
                         </button>
-                        <div class="bg-white rounded absolute top-[calc(100%+0.5rem)] right-0 px-3 min-w-[300px] shadow-lg border border-green-800 action-container hidden">
+                        <div class="bg-white rounded absolute top-[calc(100%+0.5rem)] right-0 px-3 min-w-[300px] shadow-lg border border-green-800 action-container transition hidden">
                             <div class="flex  items-center justify-end my-2"><img src="/images/icon-menu-close.svg" class="w-4 users-cancel-btn cursor-pointer"></div>
                             <div class="flex justify-center items-center gap-2 mb-2">
-                                <button class="flex items-center px-3 py-2 ${suspendedBtnColor} rounded cursor-pointer user-suspend-btn gap-2" data-id="${user._id}" ><img src="/images/ClockOutline.svg" class="w-4" ><span class="text-sm">${suspendedText}</span></button>
-                                <button class="flex items-center px-3 py-2 bg-red-500 rounded cursor-pointer user-delete-btn gap-2" data-id="${user._id}"><img src="/images/TrashOutline.svg" class="w-4"><span class="text-sm text-white">Delete</span></button>
+                                <button class="flex items-center px-3 py-2 ${suspendedBtnColor} rounded cursor-pointer user-suspend-btn gap-2 hover:brightness-110 transition" data-id="${user._id}" ><img src="/images/ClockOutline.svg" class="w-4" ><span class="text-sm">${suspendedText}</span></button>
+                                <button class="flex items-center px-3 py-2 bg-red-500 rounded cursor-pointer user-delete-btn gap-2 hover:brightness-110 transition" data-id="${user._id}"><img src="/images/TrashOutline.svg" class="w-4"><span class="text-sm text-white">Delete</span></button>
                             </div>
                         </div>
                 </div>

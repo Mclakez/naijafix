@@ -93,7 +93,7 @@ async function getReports(name,currentPage, limit) {
                     </div>
                 </div> 
                 <div>
-                    <button class="view-btn flex items-center gap-2 border border-green-800 rounded px-3 py-2 " data-id="${issue._id}">
+                    <button class="view-btn flex items-center gap-2 border border-green-800 rounded px-3 py-2 cursor-pointer" data-id="${issue._id}">
                         <img src="../images/icon-menu.svg" class="w-5">
                         <span>View Details</span>
                     </button>
@@ -218,7 +218,7 @@ export async function getIssueDetails(id) {
         viewDetailsCard.dataset.id = `${issue._id}`
         viewDetailsCard.innerHTML = `
             <div class="max-w-7xl mx-auto flex justify-between justify-end items-center px-4 py-6 text-white">
-              <img src="/images/icon-menu-close.svg" class="w-2 details-cancel-btn">
+              <img src="/images/icon-menu-close.svg" class="w-2 details-cancel-btn cursor-pointer">
             </div>
           
 
@@ -240,7 +240,7 @@ export async function getIssueDetails(id) {
             <div class="flex gap-2 items-center my-6">
 
                 <div class="relative">
-                  <div class="py-2 px-3 rounded bg-gray-200 flex items-center gap-2 min-w-[200px]"><span class="status-text">${issue.status}</span><img src="/images/ChevronDown.svg" class="select-status-btn"></div>
+                  <div class="py-2 px-3 rounded bg-gray-200 flex items-center gap-2 min-w-[200px]"><span class="status-text">${issue.status}</span><img src="/images/ChevronDown.svg" class="select-status-btn cursor-pointer"></div>
                   <ul class="status-list-container absolute w-full bg-gray-300 top-full mt-2 rounded flex flex-col items-center max-h-[250px] overflow-y-auto overflow-x-auto py-2 gap-2 hidden">
                   <li class="text-left px-2 w-full status-list-element cursor-pointer">Pending</li>
                   <li class="text-left px-2 w-full status-list-element cursor-pointer">Acknowledged</li>

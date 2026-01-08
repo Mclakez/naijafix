@@ -19,6 +19,16 @@ export async function configurePassport() {
                         return done(null, user)
                     }
 
+                    const existingEmailUser = await User.findOne({ 
+                        email: profile.emails[0].value 
+                    })
+
+                    if (existingEmailUser) {
+                        existingEmailUser.googleId = profile.id
+                        await existingEmailUser.save()
+                        return done(null, existingEmailUser)
+                    }
+
                     const newUser = await User.create({
                         googleId: profile.id,
                         username: profile.displayName,
