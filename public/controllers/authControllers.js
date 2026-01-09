@@ -1,6 +1,4 @@
 import bcrypt from 'bcrypt'
-// import db from '../config/db.js'
-import { getDB } from '../config/db.js'
 import { generateToken } from '../config/jwt.js'
 import { User } from '../models/Users.js'
 import { RefreshToken } from '../models/RefreshToken.js'

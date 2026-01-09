@@ -38,34 +38,49 @@ async function getOfficers(currentPage, limit) {
             const suspendedBtnColor = officer.suspension === "suspended" ? "bg-gray-400" : "bg-naija-yellow"
             const formattedDate = formatDate(officer.lastSeen)
             let row = document.createElement('div')
-            row.className = `w-full grid grid-cols-[1fr_1fr_150px_150px_150px_150px] gap-4 text-black px-2 py-4 bg-transparent items-center border-b border-gray-400`
+            
+
+            row.className = `w-full text-black border-b border-gray-400
+                            md:grid md:grid-cols-[1fr_1fr_150px_150px_150px_150px] md:gap-4 md:px-2 md:py-4 md:items-center
+                            flex flex-col gap-3 p-4 bg-white md:bg-transparent`
 
             row.innerHTML = `
-                <p class="overflow-x-auto">${officer.username}</p>
-                <p class="overflow-x-auto">${officer.email}</p>
                 
-                <div>
-                    <div class="text-sm bg-naija-yellow rounded w-fit px-3 py-2 font-semibold ">
-                    ${officer.totalIssues}
-                    </div>
-                </div> 
-
-                <div>
-                    <div class="text-sm bg-naija-yellow rounded w-fit px-3 py-2 font-semibold ">
-                    ${officer.issuesResolved}
-                    </div>
-                </div> 
-
-                <p>${formattedDate}</p>
+                <div class="flex justify-between md:block overflow-x-auto">
+                    <span class="font-semibold md:hidden">Username:</span>
+                    <p>${officer.username}</p>
+                </div>
                 
-                <div class="relative">
-                    <button class="officer-action-btn flex items-center gap-2 border border-green-800 rounded px-3 py-2 cursor-pointer" data-id="${officer._id}">
+                <div class="flex justify-between md:block">
+                    <span class="font-semibold md:hidden">Email:</span>
+                    <p class="overflow-x-auto text-right md:text-left">${officer.email}</p>
+                </div>
+                
+                <div class="flex justify-between md:block">
+                    <span class="font-semibold md:hidden">Total issues:</span>
+                    <p class="overflow-x-auto text-right md:text-left">${officer.totalIssues}</p>
+                </div>
+                
+                <div class="flex justify-between md:block">
+                    <span class="font-semibold md:hidden">Resolved issues:</span>
+                    <p class="overflow-x-auto text-right md:text-left">${officer.issuesResolved}</p>
+                </div>
+                
+                <div class="flex justify-between items-center md:block">
+                    <span class="font-semibold md:hidden">Last online:</span>
+                    <div class="overflow-x-auto text-right md:text-left">
+                       ${formattedDate}
+                    </div>
+                </div>
+                
+                <div class="md:block relative">
+                    <button class="officer-action-btn flex items-center justify-center gap-2 border border-green-800 rounded px-3 py-2 w-full md:w-auto" data-id="${officer._id}">
                         <img src="../images/icon-menu.svg" class="w-5">
                         <span>Action</span>
                     </button>
-                    <div class="bg-white rounded absolute top-[calc(100%+0.5rem)] right-0 px-3 min-w-[300px] shadow-lg border border-green-800 action-container transition hidden">
+                    <div class="bg-white rounded absolute top-[calc(100%+0.5rem)] right-0 px-3 min-w-[250px] shadow-lg border border-green-800 action-container transition hidden">
                             <div class="flex  items-center justify-end my-2"><img src="/images/icon-menu-close.svg" class="w-4 officers-cancel-btn cursor-pointer"></div>
-                            <div class="flex justify-center items-center gap-2 mb-2">
+                            <div class="flex justify-end items-center gap-2 mb-2">
                                 <button class="flex items-center px-3 py-2 ${suspendedBtnColor} rounded cursor-pointer officer-suspend-btn gap-2 hover:brightness-110 cursor-pointer transition" data-id="${officer._id}" ><img src="/images/ClockOutline.svg" class="w-4" ><span class="text-sm">${suspendedText}</span></button>
                                 <button class="flex items-center px-3 py-2 bg-red-500 rounded cursor-pointer officer-delete-btn gap-2 hover:brightness-110 cursor-pointer transition" data-id="${officer._id}"><img src="/images/TrashOutline.svg" class="w-4"><span class="text-sm text-white">Delete</span></button>
                             </div>
@@ -287,7 +302,7 @@ form.addEventListener('submit', async (e) => {
         
 
     try {
-        const res = await fetch('http://localhost:3000/api/users/officers', {
+        const res = await fetchWithAuth('http://localhost:3000/api/users/officers', {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json'

@@ -1,4 +1,4 @@
-import { getDB } from '../config/db.js'
+
 import { Issue } from '../models/Issues.js'
 import { Counter } from '../models/Counter.js'
 import { User } from '../models/Users.js'
@@ -82,8 +82,6 @@ export async function getAllIssues(req, res) {
             res.json(issues)
         }
 
-        // const issues = await Issue.find().populate('createdBy', 'username')
-        //     res.json(issues)
     } catch (err) {
         res.status(500).json({error: err.message})
     }
@@ -210,7 +208,6 @@ export async function getOfficerIssues(req, res) {
 export async function updateIssueStatus(req, res) {
     let {id} = req.params
     let {status} = req.body
-    console.log(id, status)
     
 
     try {
@@ -229,31 +226,6 @@ export async function updateIssueStatus(req, res) {
         res.status(500).json({error: 'Issue not found'})
     }
 }
-
-
-// export async function updateIssuesStatus(req, res) {
-//     let db = await getDB()
-//     let {id} = req.params
-//     let {status} = req.body
-//     const proofImage = req.file ? req.file.filename: null
-    
-//     const validStatuses = ["acknowledged", "in-progress", "resolved"]
-   
-//     if(!validStatuses.includes(status)) return res.status(400).json({error: "Invalid status"})
-//     if (status === "resolved" && !proofImage) return res.status(400).json({error: "Proof image is required when status is 'resolved'"})
-    
-//     try {
-//         await db.run(`UPDATE issues
-//              SET status = COALESCE(?, status),
-//                  proofImage = COALESCE(?, status)
-//               WHERE id = ?`, [status, proofImage, id])
-//         const updated = await db.get(`SELECT * FROM issues WHERE id = ?`, [id])
-//         res.json(updated)
-//     } catch (err) {
-//         res.status(500).json({error: err.message})
-//     }
-// }
-
 
 export async function addFixPhoto(req, res) {
     const { id } = req.params

@@ -10,7 +10,6 @@ export async function checkSuspension(req, res, next) {
                 user.suspension = "active"
                 user.suspendedUntil = null
                 await user.save()
-                console.log("Testing for status")
             }
         }
         next()

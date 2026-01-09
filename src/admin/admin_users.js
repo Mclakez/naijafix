@@ -35,28 +35,44 @@ async function getUsers(currentPage, limit) {
             const suspendedText = user.suspension === "suspended" ? "Unsuspend" : "Suspend"
             const suspendedBtnColor = user.suspension === "suspended" ? "bg-gray-400" : "bg-naija-yellow"
             let row = document.createElement('div')
-            row.className = `w-full grid grid-cols-[100px_1fr_1fr_150px_150px] gap-4 text-black px-2 py-4 bg-transparent items-center border-b border-gray-400`
+
+            row.className = `w-full text-black border-b border-gray-400
+                            md:grid md:grid-cols-[100px_1fr_1fr_150px_150px] md:gap-4 md:px-2 md:py-4 md:items-center
+                            flex flex-col gap-3 p-4 bg-white md:bg-transparent`
 
             row.innerHTML = `
-                <p>${serialNumber}</p>
-                <p class="overflow-x-auto">${user.username}</p>
-                <p class="overflow-x-auto">${user.email}</p>
+
+            <div class="flex justify-between md:block">
+                    <span class="font-semibold md:hidden">Serial No:</span>
+                    <p class="overflow-x-auto text-right md:text-left">${serialNumber}</p>
+                </div>
                 
-                <div>
-                    <div class="text-sm bg-naija-yellow rounded w-fit px-3 py-2 font-semibold ">
-                    ${user.totalIssues}
-                    </div>
-                </div> 
-                <div class="relative">
-                    <button class="user-action-btn flex items-center gap-2 border border-green-800 rounded px-3 py-2 w-full" data-id="${user._id}">
+                <div class="flex justify-between md:block overflow-x-auto">
+                    <span class="font-semibold md:hidden">Username:</span>
+                    <p class="overflow-x-auto text-right md:text-left">${user.username}</p>
+                </div>
+                
+                <div class="flex justify-between md:block">
+                    <span class="font-semibold md:hidden">Email:</span>
+                    <p class="overflow-x-auto text-right md:text-left">${user.email}</p>
+                </div>
+                
+                <div class="flex justify-between md:block">
+                    <span class="font-semibold md:hidden">Issues reported:</span>
+                    <p class="overflow-x-auto text-right md:text-left">${user.totalIssues}</p>
+                </div>
+                
+                
+                <div class="md:block relative">
+                    <button class="user-action-btn flex items-center justify-center gap-2 border border-green-800 rounded px-3 py-2 w-full md:w-auto" data-id="${user._id}">
                         <img src="../images/icon-menu.svg" class="w-5">
                         <span>Action</span>
-                        </button>
-                        <div class="bg-white rounded absolute top-[calc(100%+0.5rem)] right-0 px-3 min-w-[300px] shadow-lg border border-green-800 action-container transition hidden">
+                    </button>
+                    <div class="bg-white rounded absolute top-[calc(100%+0.5rem)] right-0 px-3 min-w-[250px] shadow-lg border border-green-800 action-container transition hidden">
                             <div class="flex  items-center justify-end my-2"><img src="/images/icon-menu-close.svg" class="w-4 users-cancel-btn cursor-pointer"></div>
-                            <div class="flex justify-center items-center gap-2 mb-2">
-                                <button class="flex items-center px-3 py-2 ${suspendedBtnColor} rounded cursor-pointer user-suspend-btn gap-2 hover:brightness-110 transition" data-id="${user._id}" ><img src="/images/ClockOutline.svg" class="w-4" ><span class="text-sm">${suspendedText}</span></button>
-                                <button class="flex items-center px-3 py-2 bg-red-500 rounded cursor-pointer user-delete-btn gap-2 hover:brightness-110 transition" data-id="${user._id}"><img src="/images/TrashOutline.svg" class="w-4"><span class="text-sm text-white">Delete</span></button>
+                            <div class="flex justify-end items-center gap-2 mb-2">
+                                <button class="flex items-center px-3 py-2 ${suspendedBtnColor} rounded cursor-pointer user-suspend-btn gap-2 hover:brightness-110 cursor-pointer transition" data-id="${user._id}" ><img src="/images/ClockOutline.svg" class="w-4" ><span class="text-sm">${suspendedText}</span></button>
+                                <button class="flex items-center px-3 py-2 bg-red-500 rounded cursor-pointer user-delete-btn gap-2 hover:brightness-110 cursor-pointer transition" data-id="${user._id}"><img src="/images/TrashOutline.svg" class="w-4"><span class="text-sm text-white">Delete</span></button>
                             </div>
                         </div>
                 </div>

@@ -20,19 +20,19 @@ const pageAround = 2
 let previousPage;
 // let allOfficers = []
    
-nextBtn.addEventListener('click', () => {
+nextBtn.addEventListener('click', async () => {
     if(currentPage < totalPages) {
         currentPage++
-    getReports(currentPage, limit)
+    await getReports(username, currentPage, limit)
     }
    
    
 })
 
-prevBtn.addEventListener('click', () => {
+prevBtn.addEventListener('click', async () => {
     if(currentPage > 1) {
         currentPage--
-    getReports(currentPage, limit)
+    await getReports(username, currentPage, limit)
     }
     
      
@@ -43,7 +43,7 @@ numberButtonContainer.addEventListener('click',async (e) => {
         
         if(pageBtn) {
     currentPage = Number(pageBtn.textContent)
-    getReports(currentPage, limit)
+    await getReports(username, currentPage, limit)
         }
 })
 
@@ -81,19 +81,38 @@ async function getReports(name,currentPage, limit) {
             statbgColor = "bg-green-800"
         }
             let row = document.createElement('div')
-            row.className = `w-full grid grid-cols-[50px_1fr_1fr_150px_150px] gap-4 text-black px-2 py-4 bg-transparent items-center border-b border-gray-400`
+
+            row.className = `w-full text-black border-b border-gray-400
+                            md:grid md:grid-cols-[50px_1fr_1fr_150px_150px] md:gap-4 md:px-2 md:py-4 md:items-center
+                            flex flex-col gap-3 p-4 bg-white md:bg-transparent`
 
             row.innerHTML = `
-                <p>${issue.issueId}</p>
-                <p class="overflow-x-auto">${issue.createdBy?.username || issue.createdBy}</p>
-                <p class="overflow-x-auto">${issue.title}</p>
-                <div>
-                    <div class="text-sm ${statbgColor} rounded w-fit px-3 py-2 font-semibold ">
-                    ${issue.status}
+                
+                <div class="flex justify-between md:block">
+                    <span class="font-semibold md:hidden">ID:</span>
+                    <p>${issue.issueId}</p>
+                </div>
+                
+                <div class="flex justify-between md:block">
+                    <span class="font-semibold md:hidden">Username:</span>
+                    <p class="overflow-x-auto text-right md:text-left">${issue.createdBy?.username || issue.createdBy}</p>
+                </div>
+                
+                <div class="flex justify-between md:block">
+                    <span class="font-semibold md:hidden">Title:</span>
+                    <p class="overflow-x-auto text-right md:text-left">${issue.title}</p>
+                </div>
+                
+                
+                <div class="flex justify-between items-center md:block">
+                    <span class="font-semibold md:hidden">Status:</span>
+                    <div class="text-sm ${statbgColor} rounded w-fit px-3 py-2 font-semibold">
+                        ${issue.status}
                     </div>
-                </div> 
-                <div>
-                    <button class="view-btn flex items-center gap-2 border border-green-800 rounded px-3 py-2 cursor-pointer" data-id="${issue._id}">
+                </div>
+                
+                <div class="md:block">
+                    <button class="view-btn flex items-center justify-center gap-2 border border-green-800 rounded px-3 py-2 w-full md:w-auto cursor-pointer" data-id="${issue._id}">
                         <img src="../images/icon-menu.svg" class="w-5">
                         <span>View Details</span>
                     </button>
@@ -342,7 +361,7 @@ document.addEventListener('click',async (e) => {
   }
 })
 
-document.addEventListener('click', (e) => {
+document.addEventListener('click', async (e) => {
   let statusListElement = e.target.closest('.status-list-element')
   if(statusListElement) {
          let id = viewDetailsCard.dataset.id
@@ -350,7 +369,7 @@ document.addEventListener('click', (e) => {
          statusListContainer.classList.add("hidden")
          let statusText = viewDetailsCard.querySelector('.status-text')
          statusText.textContent = statusListElement.textContent
-         sendStatusUpdate(id, statusListElement.textContent.trim())
+         await sendStatusUpdate(id, statusListElement.textContent.trim())
   }
 })
 
@@ -388,9 +407,9 @@ function formatDate(date) {
 
 async function sendStatusUpdate(id, text) {
   try {
-    const res = await fetch(`http://localhost:3000/api/issues/status/${id}`, {
+    const res = await fetchWithAuth(`http://localhost:3000/api/issues/status/${id}`, {
       method: "PATCH",
-      headers: { 'Authorization': `Bearer ${token}`,
+      headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
@@ -403,8 +422,7 @@ async function sendStatusUpdate(id, text) {
       throw new Error(`Failed to update status: ${res.status}`)
     }
     let data = await res.json()
-    console.log(res)
-    console.log("Json:", data)
+    await getReports(username, currentPage, limit)
   } catch(err) {
     console.error('Full error:', err)
     alert(err.message)
@@ -435,11 +453,8 @@ document.addEventListener('submit', async (e) => {
     formData.append('fixImage', imageInput.files[0])
     
     try {
-      const res = await fetch(`http://localhost:3000/api/issues/fix/${issueId}`, {
+      const res = await fetchWithAuth(`http://localhost:3000/api/issues/fix/${issueId}`, {
         method: 'PATCH',
-        headers: { 
-          'Authorization': `Bearer ${token}`
-        },
         body: formData
       })
       
@@ -450,9 +465,8 @@ document.addEventListener('submit', async (e) => {
       }
       
       const data = await res.json()
-      console.log('Fix image uploaded successfully:', data)
-      
       await getIssueDetails(issueId)
+      await getReports(username, currentPage, limit)
       
     } catch (err) {
       console.error('Upload error:', err)

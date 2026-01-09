@@ -1,7 +1,6 @@
 import mongoose from 'mongoose'
 
 const refreshTokenSchema = new mongoose.Schema({
-  // Link to user
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
@@ -9,20 +8,17 @@ const refreshTokenSchema = new mongoose.Schema({
     index: true // Fast lookups by userId
   },
   
-  // The actual token
   token: {
     type: String,
     required: true,
     unique: true // Each token must be unique
   },
   
-  // Expiration
   expiresAt: {
     type: Date,
-    required: true,
+    required: true
   },
   
-  // Track usage
   createdAt: { type: Date, default: Date.now },
   lastUsed: { type: Date, default: Date.now }
 });

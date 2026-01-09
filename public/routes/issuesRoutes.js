@@ -23,4 +23,4 @@ issuesRouter.get('/officer/:name', requireAuth, lastSeenOnline, checkSuspension,
 issuesRouter.delete('/delete/:id', requireAuth, deleteIssue)
 issuesRouter.post('/:id/comment', requireAuth, checkSuspension, upload.none(), postComment)
 issuesRouter.patch('/officers/:id', updateIssueOfficer)
- issuesRouter.patch('/fix/:id', requireAuth, requireOfficer, lastSeenOnline, upload.single('fixImage'), addFixPhoto)
+ issuesRouter.patch('/fix/:id', requireAuth, lastSeenOnline, upload.single('fixImage'), addFixPhoto)

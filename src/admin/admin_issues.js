@@ -82,21 +82,41 @@ async function getReports(currentPage, limit) {
             statbgColor = "bg-green-800"
         }
             let row = document.createElement('div')
-            row.className = `w-full grid grid-cols-[50px_1fr_1fr_150px_150px_150px] gap-4 text-black px-2 py-4 bg-transparent items-center border-b border-gray-400
-            `
+            row.className = `w-full text-black border-b border-gray-400
+                            md:grid md:grid-cols-[50px_1fr_1fr_150px_150px_150px] md:gap-4 md:px-2 md:py-4 md:items-center
+                            flex flex-col gap-3 p-4 bg-white md:bg-transparent`
 
             row.innerHTML = `
-                <p>${issue.issueId}</p>
-                <p class="overflow-x-auto">${issue.createdBy?.username || issue.createdBy}</p>
-                <p class="overflow-x-auto">${issue.title}</p>
-                <p class="overflow-x-auto">${issue.officer}</p>
-                <div>
-                    <div class="text-sm ${statbgColor} rounded w-fit px-3 py-2 font-semibold ">
-                    ${issue.status}
+                
+                <div class="flex justify-between md:block">
+                    <span class="font-semibold md:hidden">ID:</span>
+                    <p>${issue.issueId}</p>
+                </div>
+                
+                <div class="flex justify-between md:block">
+                    <span class="font-semibold md:hidden">Username:</span>
+                    <p class="overflow-x-auto text-right md:text-left">${issue.createdBy?.username || issue.createdBy}</p>
+                </div>
+                
+                <div class="flex justify-between md:block">
+                    <span class="font-semibold md:hidden">Title:</span>
+                    <p class="overflow-x-auto text-right md:text-left">${issue.title}</p>
+                </div>
+                
+                <div class="flex justify-between md:block">
+                    <span class="font-semibold md:hidden">Officer:</span>
+                    <p class="overflow-x-auto text-right md:text-left">${issue.officer}</p>
+                </div>
+                
+                <div class="flex justify-between items-center md:block">
+                    <span class="font-semibold md:hidden">Status:</span>
+                    <div class="text-sm ${statbgColor} rounded w-fit px-3 py-2 font-semibold">
+                        ${issue.status}
                     </div>
-                </div> 
-                <div>
-                    <button class="view-btn flex items-center gap-2 border border-green-800 rounded px-3 py-2 " data-id="${issue._id}">
+                </div>
+                
+                <div class="md:block">
+                    <button class="view-btn flex items-center justify-center gap-2 border border-green-800 rounded px-3 py-2 w-full md:w-auto" data-id="${issue._id}">
                         <img src="../images/icon-menu.svg" class="w-5">
                         <span>View Details</span>
                     </button>

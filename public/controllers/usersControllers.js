@@ -194,20 +194,15 @@ export async function logOutUser(req, res) {
     const refreshToken = req.cookies.refreshToken
     
     try {
-        // Always clear the cookie, even if DB deletion fails
         res.clearCookie('refreshToken')
-        
-        // Try to delete from database (non-critical if it fails)
         if (refreshToken) {
             try {
                 await RefreshToken.deleteOne({token: refreshToken})
             } catch (dbError) {
-                // Log but don't fail the logout
                 console.error('Failed to delete token from DB:', dbError)
             }
         }
         
-        // Send success response
         return res.status(200).json({success: true})
         
     } catch (error) {

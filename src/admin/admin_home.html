@@ -15,9 +15,20 @@
     <title>Admin Dashboard</title>
 </head>
 <body>
+    <button id="mobile-menu-btn" class="md:hidden fixed top-4 left-4 z-50 bg-green-800 text-white p-3 rounded-lg shadow-lg">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+    </button>
+
+    
+    <div id="sidebar-overlay" class="hidden md:hidden fixed inset-0 bg-black/80 z-40 opacity-"></div>
     <div class="flex h-screen w-full overflow-y-hidden">
         
-        <aside class="bg-green-800 flex flex-col w-56 px-2 pr-4 h-screen py-6" >
+        <aside id="sidebar" class="bg-green-800 flex flex-col w-56 px-2 pr-4 h-screen py-6 
+                           fixed md:static z-50 
+                           -translate-x-full md:translate-x-0 
+                           transition-transform duration-300 ease-in-out" >
             <img src="../images/nfix3.png" alt="logo" srcset="" class="w-25">
             <nav class="flex-1 flex flex-col">
                 <ul class="flex flex-col gap-2 py-15 h-full">
@@ -60,9 +71,9 @@ Officers</li>
 
     <main class="flex-1 overflow-y-auto p-6 py-15">
         <div id="dashboard-section" class=" grid gap-14">
-            <p>Dashboard</p>
+            <p class="mt-8 md:mt-0">Dashboard</p>
             <h1 class="font-bold text-xl ">Welcome <span class="admin-name">Marvel</span></h1>
-            <section class="grid [grid-template-columns:repeat(auto-fit,_minmax(100px,_1fr))] gap-4 gap-y-6">
+            <section class="grid grid-cols-2 md:[grid-template-columns:repeat(auto-fit,_minmax(100px,_1fr))] gap-4 gap-y-6">
                 <article class="bg-naija-yellow text-black flex flex-col gap-3 py-6 px-4 rounded  ">
                     <span class="text-base">Pending Reports</span>
                     <h2 class="text-5xl font-bold pending-report">80</h2>
@@ -97,10 +108,10 @@ Officers</li>
 
         <div id="issues-section">
             <div class="flex items-center justify-start mb-2">
-                <span>Issues</span>
+                <span class="mt-8 md:mt-0">Issues</span>
                 
             </div>
-            <div class="w-full grid grid-cols-[100px_1fr_1fr_150px_150px_150px] gap-4 bg-green-800  text-white p-2">
+            <div class="hidden md:grid w-full grid-cols-[50px_1fr_1fr_150px_150px_150px] gap-4 bg-green-800 text-white p-2">
                 <p>ID</p>
                 <p>Username</p>
                 <p>Title</p>
@@ -144,16 +155,16 @@ Officers</li>
                 <button class="border border-green-800 px-6 py-3 text-lg" id="next-btn">&#x203A;</button>                
             </article>
 
-            <div id="view-details-card" class="fixed hidden top-0 right-0 bottom-0 overflow-y-auto w-1/2 z-100 bg-white">
+            <div id="view-details-card" class="fixed hidden top-0 right-0 bottom-0 overflow-y-auto w-full md:w-1/2 z-100 bg-white">
 
             </div>
         </div>
 
         <div id="users-section">
             <div class="flex items-center justify-start mb-2">
-                <span>Users</span>
+                <span class="mt-8 md:mt-0">Users</span>
             </div>
-            <div class="w-full grid grid-cols-[100px_1fr_1fr_150px_150px] gap-4 bg-green-800  text-white p-2">
+            <div class=" hidden w-full md:grid grid-cols-[100px_1fr_1fr_150px_150px] gap-4 bg-green-800  text-white p-2">
                 <p>ID</p>
                 <p>Username</p>
                 <p>Email</p>
@@ -178,7 +189,7 @@ Officers</li>
 
         <div id="officers-section">
             <div class="flex items-center justify-between mb-2">
-                <span>Officers</span>
+                <span class="mt-8 md:mt-0">Officers</span>
                 <div class="relative">
                     <button class="add-officer-btn flex gap-2 items-center justify-center py-3 px-4 pr-5 bg-green-800 rounded-full text-white"><img src="../images/add_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24 (1).svg">Add Officer</button>
                     <form class="bg-white shadow-lg absolute top-[calc(100%+0.5rem)] right-0 w-72 px-3 py-2 pb-4 flex flex-col gap-2 rounded z-100 hidden">
@@ -208,7 +219,7 @@ Officers</li>
                     </form>
                 </div>
             </div>
-            <div class="w-full grid grid-cols-[1fr_1fr_150px_150px_150px_150px] gap-4 bg-green-800  text-white p-2">
+            <div class=" hidden w-full md:grid grid-cols-[1fr_1fr_150px_150px_150px_150px] gap-4 bg-green-800  text-white p-2">
                 <p>Username</p>
                 <p>Email</p>
                 <p>Issues assigned</p>
