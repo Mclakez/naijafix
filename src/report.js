@@ -17,7 +17,7 @@ form.addEventListener('submit', async (e) => {
         
 
     try {
-        const res = await fetchWithAuth('http://localhost:3000/api/issues', {
+        const res = await fetchWithAuth('/api/issues', {
             method: 'POST',
             body: formData
         })

@@ -167,7 +167,7 @@ async function getLineChart() {
 async function getMonthlyStats(username) {
     try {
       
-        const res = await fetchWithAuth(`http://localhost:3000/api/issues/officer/${username}`)
+        const res = await fetchWithAuth(`/api/issues/officer/${username}`)
         
 
         if (!res.ok) throw new Error('Error with all issues')

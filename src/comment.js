@@ -40,7 +40,7 @@ form.addEventListener('submit', async (e) => {
         // const data = Object.fromEntries(formData.entries())
 
     try {
-        const res = await fetchWithAuth(`http://localhost:3000/api/issues/${issueID}/comment`, {
+        const res = await fetchWithAuth(`/api/issues/${issueID}/comment`, {
             method: 'POST',
             body: formData
         })

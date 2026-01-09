@@ -22,7 +22,7 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(
    cors({
-      origin: 'http://localhost:3000',
+      origin: true,
       credentials: true
    })
 )
@@ -39,4 +39,12 @@ app.use(express.static(path.join(__dirname, "src")))
     app.use("/api/issues", issuesRouter)
     app.use("/api/users", usersRouter)
 
-    app.listen(PORT, () => console.log(`Server is running at http://localhost:${PORT}`));
+    app.get(/^(?!\/api).*/, (req, res) => {
+      res.sendFile(path.join(__dirname, 'src', 'index.html'))
+    })
+
+    app.listen(PORT, () => {
+      console.log(`Server is running at ${PORT}`)
+      console.log(`Environment: ${process.env.NODE_ENV || 'development'}`)
+   });
+   

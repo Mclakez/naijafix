@@ -52,7 +52,7 @@ sidebarOverlay?.addEventListener('click', () => {
 
 logOutBtn.addEventListener('click', async () => {
     try{
-        let res = await fetchWithAuth('http://localhost:3000/api/users/logout', {
+        let res = await fetchWithAuth('/api/users/logout', {
             method: "POST"
         })
         console.log(res)

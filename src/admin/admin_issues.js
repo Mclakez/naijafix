@@ -54,7 +54,7 @@ numberButtonContainer.addEventListener('click',async (e) => {
 async function getReports(currentPage, limit) {
     try {
       adminName.textContent = username
-        const res = await fetchWithAuth(`http://localhost:3000/api/issues?page=${currentPage}&limit=${limit}`)
+        const res = await fetchWithAuth(`/api/issues?page=${currentPage}&limit=${limit}`)
         if (!res.ok) throw new Error('Error with all issues')
         const data = await res.json()
         
@@ -197,7 +197,7 @@ document.addEventListener('click',async (e) => {
 
 export async function getIssueDetails(id) {
   try{
-        const res = await fetchWithAuth(`http://localhost:3000/api/issues/${id}`)
+        const res = await fetchWithAuth(`/api/issues/${id}`)
         if (!res.ok) throw new Error('Failed to load issue details')
         const issue = await res.json()
         const imgUrl = issue.issueImage ? `/uploads/${encodeURIComponent(issue.issueImage)}` : './images/placeholder.jpg'
@@ -373,7 +373,7 @@ document.addEventListener('click', async (e) => {
 
 async function deleteIssue(id) {
   try {
-          const res = await fetchWithAuth(`http://localhost:3000/api/issues/delete/${id}`, {
+          const res = await fetchWithAuth(`/api/issues/delete/${id}`, {
               method: 'DELETE'
           })
   
@@ -423,7 +423,7 @@ function formatDate(date) {
 
 async function getAllOfficers() {
   try {
-    const res = await fetchWithAuth(`http://localhost:3000/api/users/officers`)
+    const res = await fetchWithAuth(`/api/users/officers`)
         
         if (!res.ok) {
           const errorData = await res.json()
@@ -441,7 +441,7 @@ async function getAllOfficers() {
 
 async function sendOfficerUpdate(id, text) {
   try {
-    const res = await fetchWithAuth(`http://localhost:3000/api/issues/officers/${id}`, {
+    const res = await fetchWithAuth(`/api/issues/officers/${id}`, {
       method: "PATCH",
       headers: {
       'Content-Type': 'application/json'

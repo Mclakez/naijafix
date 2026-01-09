@@ -82,7 +82,7 @@ document.addEventListener("click", (e) => {
 logOutBtn.addEventListener('click', async () => {
     try{
         console.log('button works')
-        let res = await fetchWithAuth('http://localhost:3000/api/users/logout', {
+        let res = await fetchWithAuth('/api/users/logout', {
             method: "POST"
         })
         if(!res.ok) {

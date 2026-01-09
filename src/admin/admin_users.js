@@ -16,7 +16,7 @@ let previousPage;
 
 async function getUsers(currentPage, limit) {
     try {
-        const res = await fetchWithAuth(`http://localhost:3000/api/users?page=${currentPage}&limit=${limit}`)
+        const res = await fetchWithAuth(`/api/users?page=${currentPage}&limit=${limit}`)
         if (!res.ok) throw new Error('Error with all users')
         const data = await res.json()
     console.log(data)
@@ -215,7 +215,7 @@ document.addEventListener('click', async (e) => {
 
 async function deleteUser(id) {
         try {
-        const res = await fetchWithAuth(`http://localhost:3000/api/users/${id}`, {
+        const res = await fetchWithAuth(`/api/users/${id}`, {
             method: "DELETE"
         })
         if (!res.ok) throw new Error('Error deleting users')
@@ -228,7 +228,7 @@ async function deleteUser(id) {
 
 async function suspendUser(id) {
         try {
-            const res = await fetchWithAuth(`http://localhost:3000/api/users/suspend/${id}`, {
+            const res = await fetchWithAuth(`/api/users/suspend/${id}`, {
                 method: "PATCH"
             })
         if (!res.ok) throw new Error('Error suspending users')

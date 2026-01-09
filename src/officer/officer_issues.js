@@ -52,7 +52,7 @@ numberButtonContainer.addEventListener('click',async (e) => {
 async function getReports(name,currentPage, limit) {
     try {
        officerName.textContent = username
-        const res = await fetchWithAuth(`http://localhost:3000/api/issues/officer/${name}?page=${currentPage}&limit=${limit}`)
+        const res = await fetchWithAuth(`/api/issues/officer/${name}?page=${currentPage}&limit=${limit}`)
         if (!res.ok) throw new Error('Error with all issues')
         const data = await res.json()
         
@@ -193,7 +193,7 @@ document.addEventListener('click',async (e) => {
 
 export async function getIssueDetails(id) {
   try{
-        const res = await fetchWithAuth(`http://localhost:3000/api/issues/${id}`)
+        const res = await fetchWithAuth(`/api/issues/${id}`)
         if (!res.ok) throw new Error('Failed to load issue details')
         const issue = await res.json()
         const imgUrl = issue.issueImage ? `/uploads/${encodeURIComponent(issue.issueImage)}` : './images/placeholder.jpg'
@@ -407,7 +407,7 @@ function formatDate(date) {
 
 async function sendStatusUpdate(id, text) {
   try {
-    const res = await fetchWithAuth(`http://localhost:3000/api/issues/status/${id}`, {
+    const res = await fetchWithAuth(`/api/issues/status/${id}`, {
       method: "PATCH",
       headers: {
       'Content-Type': 'application/json'
@@ -429,12 +429,6 @@ async function sendStatusUpdate(id, text) {
   }
 }
 
-// const form = document.getElementById('report-form')
-// const imageInput = document.getElementById('imageInput')
-// const successMessage = document.getElementById('message')
-// const previewImage = document.getElementById('previewImage')
-// const uploadIcon = document.getElementById('uploadIcon')
-
 
 document.addEventListener('submit', async (e) => {     
 
@@ -453,7 +447,7 @@ document.addEventListener('submit', async (e) => {
     formData.append('fixImage', imageInput.files[0])
     
     try {
-      const res = await fetchWithAuth(`http://localhost:3000/api/issues/fix/${issueId}`, {
+      const res = await fetchWithAuth(`/api/issues/fix/${issueId}`, {
         method: 'PATCH',
         body: formData
       })

@@ -18,7 +18,7 @@ let previousPage;
 
 async function getOfficers(currentPage, limit) {
     try {
-        const res = await fetchWithAuth(`http://localhost:3000/api/users/officers?page=${currentPage}&limit=${limit}`)
+        const res = await fetchWithAuth(`/api/users/officers?page=${currentPage}&limit=${limit}`)
 
         console.log(res)
         if (!res.ok) throw new Error('Error with all officers')
@@ -235,7 +235,7 @@ addOfficerBtn.addEventListener('click', async (e) => {
 
 async function deleteOfficer(id) {
         try {
-        const res = await fetchWithAuth(`http://localhost:3000/api/users/${id}`, {
+        const res = await fetchWithAuth(`/api/users/${id}`, {
             method: "DELETE"
         })
         if (!res.ok) throw new Error('Error deleting officer')
@@ -248,7 +248,7 @@ async function deleteOfficer(id) {
 
 async function suspendOfficer(id) {
         try {
-            const res = await fetchWithAuth(`http://localhost:3000/api/users/suspend/${id}`, {
+            const res = await fetchWithAuth(`/api/users/suspend/${id}`, {
                 method: "PATCH"
             })
         if (!res.ok) throw new Error('Error suspending officer')
@@ -302,7 +302,7 @@ form.addEventListener('submit', async (e) => {
         
 
     try {
-        const res = await fetchWithAuth('http://localhost:3000/api/users/officers', {
+        const res = await fetchWithAuth('/api/users/officers', {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json'
