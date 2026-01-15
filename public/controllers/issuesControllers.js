@@ -2,6 +2,7 @@
 import { Issue } from '../models/Issues.js'
 import { Counter } from '../models/Counter.js'
 import { User } from '../models/Users.js'
+import { cloudinary } from "..config/cloudinary.js";
 
 async function getIssueId() {
     const counter = await Counter.findByIdAndUpdate("issues",
@@ -14,7 +15,8 @@ async function getIssueId() {
 
 export async function postIssue(req, res) {
     const {title, description, location} = req.body
-    const issueImage = req.file ? req.file.filename : null
+    const issueImageId = req.file ? req.file.filename : null
+    const issueImage = req.file ? req.file.path : null
     const user = await req.user;
     const citizenId = user.id;
     const issueId = await getIssueId()
@@ -26,7 +28,8 @@ export async function postIssue(req, res) {
             description,
             location,
             createdBy: citizenId,
-            issueImage
+            issueImage,
+            issueImageId
         })
         res.json(newIssue)
     } catch (err) {
@@ -37,6 +40,10 @@ export async function postIssue(req, res) {
 export async function deleteIssue(req, res) {
     try {
         let { id } = req.params
+        const issue = await Issue.findById(id)
+        if(issue.issueImageId) {
+            await cloudinary.uploader.destroy(issue.issueImageId);
+        }
         const deletedIssue = await Issue.findByIdAndDelete(id)
         if(!deletedIssue) {
             return res.status(500).json("No issue found")

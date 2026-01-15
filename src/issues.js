@@ -29,7 +29,7 @@ async function getAllIssues() {
         }
             let card = document.createElement('article')
             card.className = `bg-white rounded-xl shadow-md overflow-hidden h-full`
-            card.innerHTML = `<div class="bg-cover h-50" style="background-image: url('/uploads/${encodeURIComponent(issue.issueImage)}')">
+            card.innerHTML = `<div class="bg-cover h-50" style="background-image: url('${issue.issueImage}')">
 
         </div>
         <div class="px-3 grid gap-2 py-4">
@@ -84,7 +84,7 @@ async function getMyIssues() {
         }
             let card = document.createElement('article')
             card.className = `bg-white rounded-xl shadow-md overflow-hidden h-full `
-            card.innerHTML = `<div class="bg-cover h-50" style="background-image: url('/uploads/${encodeURIComponent(issue.issueImage || "placeholder.jpg")}')">
+            card.innerHTML = `<div class="bg-cover h-50" style="background-image: url('${(issue.issueImage || "placeholder.jpg")}')">
 
         </div>
         <div class="px-3 grid gap-2 py-4">
@@ -156,8 +156,8 @@ export async function getIssueDetails(id) {
         const res = await fetchWithAuth(`/api/issues/${id}`)
         if (!res.ok) throw new Error('Failed to load issue details')
         const issue = await res.json()
-        const imgUrl = issue.issueImage ? `/uploads/${encodeURIComponent(issue.issueImage)}` : './images/placeholder.jpg'
-        const proofImage = issue.fixImage ? `/uploads/${encodeURIComponent(issue.fixImage)}` : null
+        const imgUrl = issue.issueImage ? `${issue.issueImage}` : './images/placeholder.jpg'
+        const proofImage = issue.fixImage ? `${issue.fixImage}` : null
         let statbgColor;
         if(issue.status === 'Pending') {
           statbgColor = "bg-naija-yellow"

@@ -47,6 +47,10 @@ const userSchema = new mongoose.Schema({
     lastSeen: {
         type: Date,
         default: Date.now
+    },
+    userImage: {
+        type: String,
+        default: null
     }
 })
 

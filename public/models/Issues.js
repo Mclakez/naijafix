@@ -29,6 +29,10 @@ const issueSchema = new mongoose.Schema({
         type: String,
         default: null
     },
+    issueImageId: {
+        type: String,
+        default: null
+    },
     fixImage: {
         type: String,
         default: null

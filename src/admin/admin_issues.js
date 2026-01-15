@@ -200,7 +200,7 @@ export async function getIssueDetails(id) {
         const res = await fetchWithAuth(`/api/issues/${id}`)
         if (!res.ok) throw new Error('Failed to load issue details')
         const issue = await res.json()
-        const imgUrl = issue.issueImage ? `/uploads/${encodeURIComponent(issue.issueImage)}` : './images/placeholder.jpg'
+        const imgUrl = issue.issueImage ? `${issue.issueImage}` : './images/placeholder.jpg'
         const proofImage = issue.fixImage ? `/uploads/${encodeURIComponent(issue.fixImage)}` : null
         let statbgColor;
           if(issue.status === 'Pending') {
