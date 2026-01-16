@@ -1,9 +1,13 @@
 document.getElementById('signup-form').addEventListener('submit', async (e) => {
     e.preventDefault()
+    if (!validateForm()) {
+                return; // Stop if validation fails
+            }
+    const username = document.getElementById('username').value.trim()
+    const password = document.getElementById('password').value.trim()
+    const email = document.getElementById('email').value.trim()
 
-    const username = document.getElementById('username').value
-    const password = document.getElementById('password').value
-    const email = document.getElementById('email').value
+    setButtonLoading(true);
 
     try {
         const res = await fetch('/api/auth/signup', {
@@ -19,6 +23,7 @@ document.getElementById('signup-form').addEventListener('submit', async (e) => {
         window.location.href = './index.html'
     } catch (error) {
         showToast(error, true)
+        setButtonLoading(false);
     }
 })
 
@@ -36,3 +41,88 @@ function showToast(message, isError = false) {
         toast.classList.add('translate-y-20', 'opacity-0');
     }, 3000);
 }
+
+function showError(inputId, message) {
+            const input = document.getElementById(inputId);
+            const errorElement = document.getElementById(`${inputId}-error`);
+            
+            input.classList.add('input-error');
+            errorElement.textContent = message;
+            errorElement.classList.add('show');
+        }
+
+        function clearError(inputId) {
+            const input = document.getElementById(inputId);
+            const errorElement = document.getElementById(`${inputId}-error`);
+            
+            input.classList.remove('input-error');
+            errorElement.classList.remove('show');
+        }
+
+function validateForm() {
+            let isValid = true;
+            
+            // Clear all previous errors
+            clearError('username');
+            clearError('email');
+            clearError('password');
+            
+            // Get input values
+            const username = document.getElementById('username').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            
+            // Validate username
+            if (username === '') {
+                showError('username', 'Username is required');
+                isValid = false;
+            } else if (username.length < 3) {
+                showError('username', 'Username must be at least 3 characters');
+                isValid = false;
+            }
+            
+            // Validate email
+            if (email === '') {
+                showError('email', 'Email is required');
+                isValid = false;
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                showError('email', 'Please enter a valid email address');
+                isValid = false;
+            }
+            
+            // Validate password
+            if (password === '') {
+                showError('password', 'Password is required');
+                isValid = false;
+            } else if (password.length < 6) {
+                showError('password', 'Password must be at least 6 characters');
+                isValid = false;
+            }
+            
+            return isValid;
+        }
+
+
+        function setButtonLoading(isLoading) {
+            const btn = document.getElementById('submit-btn');
+            const btnText = document.getElementById('btn-text');
+            const spinner = document.getElementById('btn-spinner');
+            
+            if (isLoading) {
+                btn.disabled = true;
+                btn.classList.add('opacity-75', 'cursor-not-allowed');
+                btnText.textContent = 'Creating...';
+                spinner.classList.remove('hidden');
+            } else {
+                btn.disabled = false;
+                btn.classList.remove('opacity-75', 'cursor-not-allowed');
+                btnText.textContent = 'Register';
+                spinner.classList.add('hidden');
+            }
+        }
+
+        ['username', 'email', 'password'].forEach(id => {
+            document.getElementById(id).addEventListener('input', () => {
+                clearError(id);
+            });
+        });
