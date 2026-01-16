@@ -9,7 +9,7 @@ const officerNumberButtonContainer = document.getElementById('officerNumberButto
 const addOfficerBtn = document.querySelector('.add-officer-btn')
 const form = document.querySelector('form')
 let currentPage = 1
-const limit = 10
+const limit = 1
 
 let pages = []
 let rangeWithDots = []

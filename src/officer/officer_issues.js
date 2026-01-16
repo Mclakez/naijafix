@@ -9,6 +9,11 @@ const prevBtn = document.getElementById('prev-btn')
 let totalPages;
 const numberButtonContainer = document.getElementById('numberButtonContainer')
 const viewDetailsCard = document.getElementById('view-details-card')
+const pendingText = document.querySelector('.pending-report')
+const acknowledgedText = document.querySelector('.acknowledged-report')
+const inProgressText = document.querySelector('.in-progress-report')
+const resolvedText = document.querySelector('.resolved-report')
+
 let pages = []
 let rangeWithDots = []
 const pageAround = 2
@@ -59,6 +64,10 @@ async function getReports(name,currentPage, limit) {
         pages = []
         rangeWithDots = []
         
+        pendingText.textContent = issues.filter(issue => issue.status === 'Pending').length
+         acknowledgedText.textContent = issues.filter(issue => issue.status === 'Acknowledged').length
+          inProgressText.textContent = issues.filter(issue => issue.status === 'In-progress').length
+        resolvedText.textContent = issues.filter(issue => issue.status === 'Resolved').length
         await renderPagination(currentPage, totalPages)
         issues.forEach(issue => {
           let statbgColor;

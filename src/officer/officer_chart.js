@@ -1,9 +1,4 @@
 const token = localStorage.getItem('token')
-const pendingText = document.querySelector('.pending-report')
-const acknowledgedText = document.querySelector('.acknowledged-report')
-const inProgressText = document.querySelector('.in-progress-report')
-const resolvedText = document.querySelector('.resolved-report')
-
 import { fetchWithAuth } from '../login.js'
 const username = localStorage.getItem('user')
 const monthlyStats = {
@@ -177,10 +172,6 @@ async function getMonthlyStats(username) {
 
         if (!res.ok) throw new Error('Error with all issues')
         const issues = await res.json()
-        pendingText.textContent = issues.filter(issue => issue.status === 'Pending').length
-         acknowledgedText.textContent = issues.filter(issue => issue.status === 'Acknowledged').length
-          inProgressText.textContent = issues.filter(issue => issue.status === 'In-progress').length
-        resolvedText.textContent = issues.filter(issue => issue.status === 'Resolved').length
         
         issues.forEach(issue => {
             let status = issue.status.toLowerCase()

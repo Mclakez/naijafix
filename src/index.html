@@ -4,81 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./output.css" rel="stylesheet">
-    <script src="./login.js" type="module" defer></script>
-    <title>Login | Naijafix</title>
+    <script src="./login.js" type="module"></script>
+    <title>Login page</title>
 </head>
-<body class="bg-gray-50">
-    <div class="min-h-screen flex flex-col items-center">
-        <img src="./images/nfix1.png" alt="Naijafix Logo" class="w-25 mt-8 mb-12 mx-auto">
+<body>
+    <div>
+        <img src="./images/nfix1.png" alt="logo" srcset="" class="w-25 mt-8 mb-16 mx-auto">
 
-        <main class="w-full max-w-md px-4">
-            <article class="text-center grid gap-2 mb-8">
-                <img src="./images/nfix4.png" alt="Naijafix Icon" class="w-16 mx-auto">
-                <h1 class="text-3xl font-bold text-gray-800">Welcome Back</h1>
-                <p class="text-gray-500">Log in to manage your account</p>
-            </article>
+        <main class="grid gap-8 px-4 place-items-center">
 
-            <article class="grid gap-6">
-                <a href="/api/auth/google" class="rounded-3xl w-full border border-gray-400 h-14 flex justify-center items-center gap-3 hover:bg-gray-100 transition-colors duration-200">
-                    <img src="./images/icons8-google-48.png" alt="Google" class="w-6">
-                    <span class="text-lg font-medium">Continue with Google</span>
-                </a>
+            <article class="grid place-items-center gap-2">
+            <img src="./images/nfix4.png" alt="short-logo" srcset="" class="w-20 mt-8">
+            <h1 class="text-3xl font-bold">Welcome to Naijafix</h1>
+        </article>
 
-                <div class="relative flex items-center justify-center">
-                    <div class="border-t border-gray-300 w-full"></div>
-                    <span class="bg-gray-50 px-4 text-gray-500 text-sm absolute">or</span>
+        <article class="grid gap-6">
+            
+            <a href="/api/auth/google" class="rounded-3xl w-full border border-gray-400 h-15 outline-none font-medium relative flex justify-center items-center">
+                <img src="./images/icons8-google-48.png" alt="short-logo" srcset="" class="w-8 absolute top-1/2 -translate-y-1/2 left-2">
+                <p class="text-xl">Continue with Google</p>
+            </a>
+
+            <p class="text-center text-base">or</p>
+
+            <form class="grid gap-6" id="login-form">
+                <div >
+                    <label for="username" class="text-xl font-medium">Username</label>
+                    <input id="username" class="rounded-lg w-full border border-gray-400 h-15 px-3 py-3 placeholder:text-lg text-lg outline-none" placeholder="Enter username">
                 </div>
 
-                <form class="grid gap-5" id="login-form">
-                    <div class="grid gap-2">
-                        <label for="username" class="text-lg font-medium text-gray-700">Username</label>
-                        <input 
-                            id="username" 
-                            type="text" 
-                            required
-                            class="rounded-lg w-full border border-gray-400 h-14 px-4 text-lg outline-none focus:border-green-800 focus:ring-1 focus:ring-green-800 transition-all" 
-                            placeholder="Enter username"
-                        >
-                    </div>
+                <div >
+                    <label for="password" class="text-xl font-medium">Password</label>
+                    <input id="password" class="rounded-lg w-full border border-gray-400 h-15 px-3 py-3 placeholder:text-lg text-lg outline-none" placeholder="Enter password">
+                </div>
 
-                    <div class="grid gap-2">
-                        <label for="password" class="text-lg font-medium text-gray-700">Password</label>
-                        <div class="relative">
-                            <input 
-                                id="password" 
-                                type="password" 
-                                required
-                                class="rounded-lg w-full border border-gray-400 h-14 px-4 pr-12 text-lg outline-none focus:border-green-800 focus:ring-1 focus:ring-green-800 transition-all" 
-                                placeholder="Enter password"
-                            >
-                            
-                            <button type="button" id="togglePassword" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-green-800 focus:outline-none">
-                                <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                </svg>
-                                <svg id="eyeSlashIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 hidden">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-
-                    <button 
-                        type="submit" 
-                        class="bg-green-800 hover:bg-green-900 flex justify-center py-4 rounded-lg text-white font-bold text-lg w-full transition-colors mt-2"
-                    >
-                        Login
-                    </button>
-                </form>
-            </article>
-
-            <p class="text-base text-center mt-8 text-gray-600">
-                Not a user yet? <a class="text-blue-600 font-bold hover:underline" href="./signup.html">Create an account</a>
-            </p>
+                <button class="bg-green-800 flex justify-center py-3 rounded text-white font-medium w-full" type="submit">Login</button>
+            </form>
+        </article>
+        <p class="text-base text-center">Not a user yet? <a class="text-blue-500" href="./signup.html">Create an account</a></p>
         </main>
     </div>
-
-    <div id="toast" class="fixed bottom-5 right-5 transform translate-y-20 opacity-0 transition-all duration-500 px-6 py-3 rounded-lg text-white font-medium shadow-2xl z-50"></div>
 </body>
 </html>

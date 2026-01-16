@@ -5,8 +5,15 @@ import { checkSuspension } from '../middleware/checkSuspension.js'
 import { lastSeenOnline } from '../middleware/lastSeenOnline.js'
 import { upload } from "../config/multer.js";
 import { issuesValidator } from "../validators/issuesValidator.js";
+
+
 export const issuesRouter = express.Router()
 
+
+// issuesRouter.use((req, res, next) => {
+//     console.log(`issuesRouter -> ${new Date().toISOString()} ${req.method} ${req.originalUrl} | Authorization: ${req.headers.authorization || 'NONE'}`)
+//     next()
+// })
 issuesRouter.post('/', requireAuth, upload.single('issueImage'), checkSuspension, issuesValidator, postIssue)
 issuesRouter.get('/', requireAuth, lastSeenOnline, getAllIssues)
 issuesRouter.get('/my', requireAuth, lastSeenOnline, getMyIssues)
