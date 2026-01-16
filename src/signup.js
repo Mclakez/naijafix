@@ -11,13 +11,28 @@ document.getElementById('signup-form').addEventListener('submit', async (e) => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, email, password })
         })
-        if (!res.ok) throw new Error('Signup failed')
-            alert('Account created')
+        if (!res.ok) throw new Error('Signup failed. Please try again!')
+            showToast("Account created sucessfully")
         const data = await res.json()
         console.log(data);
         
         window.location.href = './index.html'
     } catch (error) {
-        alert(error.message)
+        showToast(error, true)
     }
 })
+
+function showToast(message, isError = false) {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    
+    
+    toast.classList.remove('bg-red-500', 'bg-green-500');
+    toast.classList.add(isError ? 'bg-red-500' : 'bg-green-500');
+
+    toast.classList.remove('translate-y-20', 'opacity-0');
+
+    setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0');
+    }, 3000);
+}
