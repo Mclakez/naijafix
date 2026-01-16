@@ -2,7 +2,7 @@
 import { Issue } from '../models/Issues.js'
 import { Counter } from '../models/Counter.js'
 import { User } from '../models/Users.js'
-import { cloudinary } from "..config/cloudinary.js";
+import { cloudinary } from "../config/cloudinary.js";
 
 async function getIssueId() {
     const counter = await Counter.findByIdAndUpdate("issues",

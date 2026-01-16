@@ -29,7 +29,7 @@ import {CloudinaryStorage} from "multer-storage-cloudinary"
 const storage = new CloudinaryStorage({
     cloudinary,
     params: {
-        folder: "naijafix"
+        folder: "naijafix",
         allowed_formats: ["jpg", "png", "jpeg"],
         transformation: [
             {width: 800, height: 800, crop: "limit"}

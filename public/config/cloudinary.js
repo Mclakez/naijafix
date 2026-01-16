@@ -9,7 +9,7 @@ import { v2 as cloudinary } from 'cloudinary';
         api_secret:  process.env.CLOUDINARY_SECRET
     });
 
-    export default cloudinary;
+    export { cloudinary };
     
     
     // // Optimize delivery by resizing and applying auto-format and auto-quality
