@@ -7,7 +7,7 @@ const userPrevBtn = document.getElementById('user-prev-btn')
 let totalPages;
 const userNumberButtonContainer = document.getElementById('userNumberButtonContainer')
 let currentPage = 1
-const limit = 1
+const limit = 10
 
 let pages = []
 let rangeWithDots = []
