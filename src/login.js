@@ -23,7 +23,6 @@ if (form){
             body: JSON.stringify({ username, password }),
             credentials: 'include'
         })
-        console.log(res)
 
         if (!res.ok) {
             const errorData = await res.json();
@@ -146,8 +145,8 @@ function validateForm() {
             if (password === '') {
                 showError('password', 'Password is required');
                 isValid = false;
-            } else if (password.length < 6) {
-                showError('password', 'Password must be at least 6 characters');
+            } else if (password.length < 4) {
+                showError('password', 'Password must be at least 4 characters');
                 isValid = false;
             }
             
