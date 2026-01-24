@@ -1,7 +1,12 @@
+const eyeOpen = document.getElementById('eyeOpen')
+const eyeClose = document.getElementById('eyeClose')
+const toggleBtn = document.getElementById('toggle')
+const passwordInput = document.getElementById('password')
+
 document.getElementById('signup-form').addEventListener('submit', async (e) => {
     e.preventDefault()
     if (!validateForm()) {
-                return; // Stop if validation fails
+                return;
             }
     const username = document.getElementById('username').value.trim()
     const password = document.getElementById('password').value.trim()
@@ -18,11 +23,10 @@ document.getElementById('signup-form').addEventListener('submit', async (e) => {
         if (!res.ok) throw new Error('Signup failed. Please try again!')
             showToast("Account created sucessfully")
         const data = await res.json()
-        console.log(data);
         
         window.location.href = './index.html'
     } catch (error) {
-        showToast(error, true)
+        showToast(error.message, true)
         setButtonLoading(false);
     }
 })
@@ -30,8 +34,6 @@ document.getElementById('signup-form').addEventListener('submit', async (e) => {
 function showToast(message, isError = false) {
     const toast = document.getElementById('toast');
     toast.textContent = message;
-    
-    
     toast.classList.remove('bg-red-500', 'bg-green-500');
     toast.classList.add(isError ? 'bg-red-500' : 'bg-green-500');
 
@@ -126,3 +128,13 @@ function validateForm() {
                 clearError(id);
             });
         });
+
+
+
+        toggle.addEventListener('click', () => {
+            let isPassword = passwordInput.type === "password"
+
+            passwordInput.type = isPassword ? "text" : "password"
+            eyeOpen.classList.toggle('hidden', !isPassword)
+            eyeClose.classList.toggle('hidden', isPassword)
+        })

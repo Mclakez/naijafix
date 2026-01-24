@@ -13,7 +13,7 @@ form.addEventListener('submit', async (e) => {
     e.preventDefault()
 
         const formData = new FormData(form)
-        
+        setButtonLoading(true);
         
 
     try {
@@ -51,6 +51,7 @@ form.addEventListener('submit', async (e) => {
        
         
     } catch (error) {
+        setButtonLoading(false);
         successMessage.textContent = `${error.message}`
         successMessage.classList.add('bg-red-500')
         successMessage.style.display = 'block'
@@ -77,3 +78,20 @@ imageInput.addEventListener('change', (e) => {
     }
 })
 
+function setButtonLoading(isLoading) {
+            const btn = document.getElementById('submit-report-btn');
+            const btnText = document.getElementById('report-btn-text');
+            const spinner = document.getElementById('report-btn-spinner');
+            
+            if (isLoading) {
+                btn.disabled = true;
+                btn.classList.add('opacity-75', 'cursor-not-allowed');
+                btnText.textContent = 'Submitting...';
+                spinner.classList.remove('hidden');
+            } else {
+                btn.disabled = false;
+                btn.classList.remove('opacity-75', 'cursor-not-allowed');
+                btnText.textContent = 'Submit Report';
+                spinner.classList.add('hidden');
+            }
+        }

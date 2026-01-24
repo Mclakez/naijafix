@@ -37,7 +37,19 @@ form.addEventListener('submit', async (e) => {
     e.preventDefault()
 
         const formData = new FormData(form)
+        let comment = document.querySelector('#comment').value.trim()
+        if(comment === '') {
+            commentPopUp.textContent = 'Comment cannot be empty' 
+            commentPopUp.classList.add('bg-red-500')
+        commentPopUp.style.display = 'block'
+        setTimeout(() => {
+            commentPopUp.style.display = 'none'
+            
+        }, 5000)
+        return
+          }
         // const data = Object.fromEntries(formData.entries())
+        setButtonLoading(true);
 
     try {
         const res = await fetchWithAuth(`/api/issues/${issueID}/comment`, {
@@ -62,6 +74,7 @@ form.addEventListener('submit', async (e) => {
         }, 3000)
         
     } catch (error) {
+       setButtonLoading(false);
         commentPopUp.textContent = `${error.message}`
         commentPopUp.classList.add('bg-red-500')
         commentPopUp.style.display = 'block'
@@ -71,3 +84,22 @@ form.addEventListener('submit', async (e) => {
         }, 5000)
     }
 })
+
+
+function setButtonLoading(isLoading) {
+            const btn = document.getElementById('submit-comment-btn');
+            const btnText = document.getElementById('comment-btn-text');
+            const spinner = document.getElementById('comment-btn-spinner');
+            
+            if (isLoading) {
+                btn.disabled = true;
+                btn.classList.add('opacity-75', 'cursor-not-allowed');
+                btnText.textContent = 'Commenting...';
+                spinner.classList.remove('hidden');
+            } else {
+                btn.disabled = false;
+                btn.classList.remove('opacity-75', 'cursor-not-allowed');
+                btnText.textContent = 'Submit Comment';
+                spinner.classList.add('hidden');
+            }
+        }
