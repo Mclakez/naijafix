@@ -31,16 +31,40 @@ document.getElementById('signup-form').addEventListener('submit', async (e) => {
     }
 })
 
+// function showToast(message, isError = false) {
+//     const toast = document.getElementById('toast');
+//     toast.textContent = message;
+//     toast.classList.remove('bg-red-500', 'bg-green-500');
+//     toast.classList.add(isError ? 'bg-red-500' : 'bg-green-500');
+
+//     toast.classList.remove('translate-y-20', 'opacity-0');
+
+//     setTimeout(() => {
+//         toast.classList.add('translate-y-20', 'opacity-0');
+//     }, 3000);
+// }
+
 function showToast(message, isError = false) {
     const toast = document.getElementById('toast');
     toast.textContent = message;
+    
+    // Clear any existing timeout
+    if (toast.hideTimeout) {
+        clearTimeout(toast.hideTimeout);
+    }
+    
+    // Set background color
     toast.classList.remove('bg-red-500', 'bg-green-500');
     toast.classList.add(isError ? 'bg-red-500' : 'bg-green-500');
-
-    toast.classList.remove('translate-y-20', 'opacity-0');
-
-    setTimeout(() => {
-        toast.classList.add('translate-y-20', 'opacity-0');
+    
+    // Show toast
+    toast.classList.remove('opacity-0', 'translate-y-2', 'pointer-events-none');
+    toast.classList.add('pointer-events-auto');
+    
+    // Hide after 3 seconds
+    toast.hideTimeout = setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2', 'pointer-events-none');
+        toast.classList.remove('pointer-events-auto');
     }, 3000);
 }
 

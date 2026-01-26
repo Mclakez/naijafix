@@ -3,11 +3,10 @@ import { fetchWithAuth } from './login.js'
 const mainContainer = document.getElementById('main-container')
 const myReportsBtn = document.getElementById('my-report-btn')
 const allReportsBtn = document.getElementById('all-report-btn')
-const token = localStorage.getItem('token')
 const detailsSection = document.getElementById('details-section')
 const commentSection = document.getElementById('comment-section')
 const suspensionState = localStorage.getItem('suspension')
-console.log(suspensionState,"Issues getting")
+
 
 async function getAllIssues() {
     try {

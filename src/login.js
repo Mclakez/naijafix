@@ -51,25 +51,69 @@ if (form){
     }
 })
 }
+// export async function fetchWithAuth(url, options = {} ){
+//     let accessToken = sessionStorage.getItem('accessToken')
+//     const authOptions = {
+//         ...options,
+//         headers: {
+//         ...options.headers,
+//         'Authorization': `Bearer ${accessToken}`
+//     },
+//     credentials: 'include'
+
+// }
+
+//     let res = await fetch(url, authOptions)
+//     console.log(res)
+
+//     if(res.status === 401) {
+//         accessToken = await refreshAccessToken()
+//         authOptions.headers['Authorization'] = `Bearer ${accessToken}`
+//         res = await fetch(url, authOptions)
+//     }
+
+//     return res
+// }
+
 export async function fetchWithAuth(url, options = {} ){
     let accessToken = sessionStorage.getItem('accessToken')
+    
+    // If no access token, try to refresh first
+    if (!accessToken) {
+        console.log('No access token found, attempting refresh...')
+        try {
+            accessToken = await refreshAccessToken()
+        } catch (err) {
+            console.error('Failed to refresh token:', err)
+            window.location.href = '/index.html'
+            return
+        }
+    }
+    
     const authOptions = {
         ...options,
         headers: {
-        ...options.headers,
-        'Authorization': `Bearer ${accessToken}`
-    },
-    credentials: 'include'
-
-}
+            ...options.headers,
+            'Authorization': `Bearer ${accessToken}`
+        },
+        credentials: 'include'
+    }
 
     let res = await fetch(url, authOptions)
-    console.log(res)
+    console.log('Response status:', res.status, 'for URL:', url)
 
+    // If 401, try to refresh token once
     if(res.status === 401) {
-        accessToken = await refreshAccessToken()
-        authOptions.headers['Authorization'] = `Bearer ${accessToken}`
-        res = await fetch(url, authOptions)
+        console.log('Got 401, attempting token refresh...')
+        try {
+            accessToken = await refreshAccessToken()
+            authOptions.headers['Authorization'] = `Bearer ${accessToken}`
+            res = await fetch(url, authOptions)
+            console.log('Retry response status:', res.status)
+        } catch (err) {
+            console.error('Token refresh failed:', err)
+            window.location.href = '/index.html'
+        }
     }
 
     return res
@@ -82,7 +126,7 @@ async function refreshAccessToken() {
 
     if(res.status === 401) {
         accessToken = null
-        window.location.href = './login'
+        window.location.href = './index.html'
     }
     let data = await res.json()
     sessionStorage.setItem('accessToken', data.accessToken) 
@@ -90,16 +134,40 @@ async function refreshAccessToken() {
 }
 
 
+// function showToast(message, isError = false) {
+//     const toast = document.getElementById('toast');
+//     toast.textContent = message;
+//     toast.classList.remove('bg-red-500', 'bg-green-500');
+//     toast.classList.add(isError ? 'bg-red-500' : 'bg-green-500');
+
+//     toast.classList.remove('translate-y-20', 'opacity-0');
+
+//     setTimeout(() => {
+//         toast.classList.add('translate-y-20', 'opacity-0');
+//     }, 3000);
+// }
+
 function showToast(message, isError = false) {
     const toast = document.getElementById('toast');
     toast.textContent = message;
+    
+    // Clear any existing timeout
+    if (toast.hideTimeout) {
+        clearTimeout(toast.hideTimeout);
+    }
+    
+    // Set background color
     toast.classList.remove('bg-red-500', 'bg-green-500');
     toast.classList.add(isError ? 'bg-red-500' : 'bg-green-500');
-
-    toast.classList.remove('translate-y-20', 'opacity-0');
-
-    setTimeout(() => {
-        toast.classList.add('translate-y-20', 'opacity-0');
+    
+    // Show toast
+    toast.classList.remove('opacity-0', 'translate-y-2', 'pointer-events-none');
+    toast.classList.add('pointer-events-auto');
+    
+    // Hide after 3 seconds
+    toast.hideTimeout = setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2', 'pointer-events-none');
+        toast.classList.remove('pointer-events-auto');
     }, 3000);
 }
 
