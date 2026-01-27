@@ -26,4 +26,6 @@ document.getElementById('signup-form').addEventListener('submit', async (e) => {
         
         window.location.href = './index.html'
     } catch (error) {
-            showToast(error.message, true)  }
+        alert(error.message)
+    }
+})
