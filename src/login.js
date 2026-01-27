@@ -1,20 +1,10 @@
-const eyeOpen = document.getElementById('eyeOpen')
-const eyeClose = document.getElementById('eyeClose')
-const toggleBtn = document.getElementById('toggle')
-const passwordInput = document.getElementById('password')
-
 const form = document.getElementById('login-form')
 if (form){
     form.addEventListener('submit', async (e) => {
     e.preventDefault()
-    if (!validateForm()) {
-                return;
-            }
 
-    const username = document.getElementById('username').value.trim()
-    const password = document.getElementById('password').value.trim()
-
-    setButtonLoading(true);
+    const username = document.getElementById('username').value
+    const password = document.getElementById('password').value
 
     try {
         const res = await fetch('/api/auth/login', {
@@ -23,11 +13,13 @@ if (form){
             body: JSON.stringify({ username, password }),
             credentials: 'include'
         })
+        console.log(res)
 
         if (!res.ok) {
             const errorData = await res.json();
-            throw new Error('Login failed');
+            throw new Error(errorData.error || 'Login failed');
 }
+
 
         const data = await res.json()       
         
@@ -46,74 +38,29 @@ if (form){
         }
         
     } catch (error) {
-         showToast(error.message, true)
-         setButtonLoading(false);
+        alert(error.message)
     }
 })
 }
-// export async function fetchWithAuth(url, options = {} ){
-//     let accessToken = sessionStorage.getItem('accessToken')
-//     const authOptions = {
-//         ...options,
-//         headers: {
-//         ...options.headers,
-//         'Authorization': `Bearer ${accessToken}`
-//     },
-//     credentials: 'include'
-
-// }
-
-//     let res = await fetch(url, authOptions)
-//     console.log(res)
-
-//     if(res.status === 401) {
-//         accessToken = await refreshAccessToken()
-//         authOptions.headers['Authorization'] = `Bearer ${accessToken}`
-//         res = await fetch(url, authOptions)
-//     }
-
-//     return res
-// }
-
 export async function fetchWithAuth(url, options = {} ){
     let accessToken = sessionStorage.getItem('accessToken')
-    
-    // If no access token, try to refresh first
-    if (!accessToken) {
-        console.log('No access token found, attempting refresh...')
-        try {
-            accessToken = await refreshAccessToken()
-        } catch (err) {
-            console.error('Failed to refresh token:', err)
-            window.location.href = '/index.html'
-            return
-        }
-    }
-    
     const authOptions = {
         ...options,
         headers: {
-            ...options.headers,
-            'Authorization': `Bearer ${accessToken}`
-        },
-        credentials: 'include'
-    }
+        ...options.headers,
+        'Authorization': `Bearer ${accessToken}`
+    },
+    credentials: 'include'
+
+}
 
     let res = await fetch(url, authOptions)
-    console.log('Response status:', res.status, 'for URL:', url)
+    console.log(res)
 
-    // If 401, try to refresh token once
     if(res.status === 401) {
-        console.log('Got 401, attempting token refresh...')
-        try {
-            accessToken = await refreshAccessToken()
-            authOptions.headers['Authorization'] = `Bearer ${accessToken}`
-            res = await fetch(url, authOptions)
-            console.log('Retry response status:', res.status)
-        } catch (err) {
-            console.error('Token refresh failed:', err)
-            window.location.href = '/index.html'
-        }
+        accessToken = await refreshAccessToken()
+        authOptions.headers['Authorization'] = `Bearer ${accessToken}`
+        res = await fetch(url, authOptions)
     }
 
     return res
@@ -126,132 +73,9 @@ async function refreshAccessToken() {
 
     if(res.status === 401) {
         accessToken = null
-        window.location.href = './index.html'
+        window.location.href = './login'
     }
     let data = await res.json()
     sessionStorage.setItem('accessToken', data.accessToken) 
     return data.accessToken
 }
-
-
-// function showToast(message, isError = false) {
-//     const toast = document.getElementById('toast');
-//     toast.textContent = message;
-//     toast.classList.remove('bg-red-500', 'bg-green-500');
-//     toast.classList.add(isError ? 'bg-red-500' : 'bg-green-500');
-
-//     toast.classList.remove('translate-y-20', 'opacity-0');
-
-//     setTimeout(() => {
-//         toast.classList.add('translate-y-20', 'opacity-0');
-//     }, 3000);
-// }
-
-function showToast(message, isError = false) {
-    const toast = document.getElementById('toast');
-    toast.textContent = message;
-    
-    // Clear any existing timeout
-    if (toast.hideTimeout) {
-        clearTimeout(toast.hideTimeout);
-    }
-    
-    // Set background color
-    toast.classList.remove('bg-red-500', 'bg-green-500');
-    toast.classList.add(isError ? 'bg-red-500' : 'bg-green-500');
-    
-    // Show toast
-    toast.classList.remove('opacity-0', 'translate-y-2', 'pointer-events-none');
-    toast.classList.add('pointer-events-auto');
-    
-    // Hide after 3 seconds
-    toast.hideTimeout = setTimeout(() => {
-        toast.classList.add('opacity-0', 'translate-y-2', 'pointer-events-none');
-        toast.classList.remove('pointer-events-auto');
-    }, 3000);
-}
-
-function showError(inputId, message) {
-            const input = document.getElementById(inputId);
-            const errorElement = document.getElementById(`${inputId}-error`);
-            
-            input.classList.add('input-error');
-            errorElement.textContent = message;
-            errorElement.classList.add('show');
-        }
-
-        function clearError(inputId) {
-            const input = document.getElementById(inputId);
-            const errorElement = document.getElementById(`${inputId}-error`);
-            
-            input.classList.remove('input-error');
-            errorElement.classList.remove('show');
-        }
-
-function validateForm() {
-            let isValid = true;
-            
-            // Clear all previous errors
-            clearError('username');
-            clearError('password');
-            
-            // Get input values
-            const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value;
-            
-            // Validate username
-            if (username === '') {
-                showError('username', 'Username is required');
-                isValid = false;
-            } else if (username.length < 3) {
-                showError('username', 'Username must be at least 3 characters');
-                isValid = false;
-            }
-            
-            
-            // Validate password
-            if (password === '') {
-                showError('password', 'Password is required');
-                isValid = false;
-            } else if (password.length < 4) {
-                showError('password', 'Password must be at least 4 characters');
-                isValid = false;
-            }
-            
-            return isValid;
-        }
-
-
-        function setButtonLoading(isLoading) {
-            const btn = document.getElementById('login-btn');
-            const btnText = document.getElementById('btn-text');
-            const spinner = document.getElementById('btn-spinner');
-            
-            if (isLoading) {
-                btn.disabled = true;
-                btn.classList.add('opacity-75', 'cursor-not-allowed');
-                btnText.textContent = 'Logging in...';
-                spinner.classList.remove('hidden');
-            } else {
-                btn.disabled = false;
-                btn.classList.remove('opacity-75', 'cursor-not-allowed');
-                btnText.textContent = 'Login';
-                spinner.classList.add('hidden');
-            }
-        }
-
-        ['username', 'password'].forEach(id => {
-            document.getElementById(id).addEventListener('input', () => {
-                clearError(id);
-            });
-        });
-
-
-
-        toggle.addEventListener('click', () => {
-            let isPassword = passwordInput.type === "password"
-
-            passwordInput.type = isPassword ? "text" : "password"
-            eyeOpen.classList.toggle('hidden', !isPassword)
-            eyeClose.classList.toggle('hidden', isPassword)
-        })
