@@ -1,10 +1,21 @@
 const form = document.getElementById('login-form')
+
+const eyeOpen = document.getElementById('eyeOpen')
+const eyeClose = document.getElementById('eyeClose')
+const toggleBtn = document.getElementById('toggle')
+const passwordInput = document.getElementById('password')
+
+
 if (form){
     form.addEventListener('submit', async (e) => {
     e.preventDefault()
+    if (!validateForm()) {
+                return;
+            }
 
-    const username = document.getElementById('username').value
+    const username = document.getElementById('username').value.trim()
     const password = document.getElementById('password').value
+    setButtonLoading(true)
 
     try {
         const res = await fetch('/api/auth/login', {
@@ -17,7 +28,7 @@ if (form){
 
         if (!res.ok) {
             const errorData = await res.json();
-            throw new Error(errorData.error || 'Login failed');
+            throw new Error('Login failed');
 }
 
 
@@ -38,7 +49,8 @@ if (form){
         }
         
     } catch (error) {
-        alert(error.message)
+       showToast(error.message, true)
+        setButtonLoading(false);
     }
 })
 }
@@ -79,3 +91,112 @@ async function refreshAccessToken() {
     sessionStorage.setItem('accessToken', data.accessToken) 
     return data.accessToken
 }
+
+function showToast(message, isError = false) {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    
+    // Clear any existing timeout
+    if (toast.hideTimeout) {
+        clearTimeout(toast.hideTimeout);
+    }
+    
+    // Set background color
+    toast.classList.remove('bg-red-500', 'bg-green-500');
+    toast.classList.add(isError ? 'bg-red-500' : 'bg-green-500');
+    
+    // Show toast
+    toast.classList.remove('opacity-0', 'translate-y-2', 'pointer-events-none');
+    toast.classList.add('pointer-events-auto');
+    
+    // Hide after 3 seconds
+    toast.hideTimeout = setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2', 'pointer-events-none');
+        toast.classList.remove('pointer-events-auto');
+    }, 3000);
+}
+
+function showError(inputId, message) {
+            const input = document.getElementById(inputId);
+            const errorElement = document.getElementById(`${inputId}-error`);
+            
+            input.classList.add('input-error');
+            errorElement.textContent = message;
+            errorElement.classList.add('show');
+        }
+
+        function clearError(inputId) {
+            const input = document.getElementById(inputId);
+            const errorElement = document.getElementById(`${inputId}-error`);
+            
+            input.classList.remove('input-error');
+            errorElement.classList.remove('show');
+        }
+
+function validateForm() {
+            let isValid = true;
+            
+            // Clear all previous errors
+            clearError('username');
+            clearError('password');
+            
+            // Get input values
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            
+            // Validate username
+            if (username === '') {
+                showError('username', 'Username is required');
+                isValid = false;
+            } else if (username.length < 3) {
+                showError('username', 'Username must be at least 3 characters');
+                isValid = false;
+            }
+            
+            
+            // Validate password
+            if (password === '') {
+                showError('password', 'Password is required');
+                isValid = false;
+            } else if (password.length < 4) {
+                showError('password', 'Password must be at least 4 characters');
+                isValid = false;
+            }
+            
+            return isValid;
+        }
+
+
+        function setButtonLoading(isLoading) {
+            const btn = document.getElementById('login-btn');
+            const btnText = document.getElementById('btn-text');
+            const spinner = document.getElementById('btn-spinner');
+            
+            if (isLoading) {
+                btn.disabled = true;
+                btn.classList.add('opacity-75', 'cursor-not-allowed');
+                btnText.textContent = 'Logging in...';
+                spinner.classList.remove('hidden');
+            } else {
+                btn.disabled = false;
+                btn.classList.remove('opacity-75', 'cursor-not-allowed');
+                btnText.textContent = 'Login';
+                spinner.classList.add('hidden');
+            }
+        }
+
+        ['username', 'password'].forEach(id => {
+            document.getElementById(id).addEventListener('input', () => {
+                clearError(id);
+            });
+        });
+
+
+
+        toggle.addEventListener('click', () => {
+            let isPassword = passwordInput.type === "password"
+
+            passwordInput.type = isPassword ? "text" : "password"
+            eyeOpen.classList.toggle('hidden', !isPassword)
+            eyeClose.classList.toggle('hidden', isPassword)
+        })
