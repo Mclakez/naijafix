@@ -13,7 +13,7 @@ if (form){
                 return;
             }
 
-    const username = document.getElementById('username').value.trim()
+    const username = document.getElementById('username').value
     const password = document.getElementById('password').value
     setButtonLoading(true)
 
