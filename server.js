@@ -30,7 +30,7 @@ app.use(
 app.use(passport.initialize())
 configurePassport()
 
-app.use(express.static(path.join(__dirname, "src")))
+app.use(express.static(path.join(__dirname, "src"))) 
     
    await inItDb();
 

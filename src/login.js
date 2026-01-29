@@ -7,6 +7,20 @@ const passwordInput = document.getElementById('password')
 
 
 if (form){
+
+     ['username', 'password'].forEach(id => {
+            document.getElementById(id).addEventListener('input', () => {
+                clearError(id);
+            });
+        });
+
+    toggle.addEventListener('click', () => {
+            let isPassword = passwordInput.type === "password"
+
+            passwordInput.type = isPassword ? "text" : "password"
+            eyeOpen.classList.toggle('hidden', !isPassword)
+            eyeClose.classList.toggle('hidden', isPassword)
+        })
     form.addEventListener('submit', async (e) => {
     e.preventDefault()
     if (!validateForm()) {
@@ -51,6 +65,10 @@ if (form){
     } catch (error) {
        showToast(error.message, true)
         setButtonLoading(false);
+    } finally {
+        setButtonLoading(false)
+        
+       
     }
 })
 }
@@ -158,8 +176,8 @@ function validateForm() {
             if (password === '') {
                 showError('password', 'Password is required');
                 isValid = false;
-            } else if (password.length < 4) {
-                showError('password', 'Password must be at least 4 characters');
+            } else if (password.length < 6) {
+                showError('password', 'Password must be at least 6 characters');
                 isValid = false;
             }
             
@@ -185,18 +203,7 @@ function validateForm() {
             }
         }
 
-        ['username', 'password'].forEach(id => {
-            document.getElementById(id).addEventListener('input', () => {
-                clearError(id);
-            });
-        });
+        
 
 
-
-        toggle.addEventListener('click', () => {
-            let isPassword = passwordInput.type === "password"
-
-            passwordInput.type = isPassword ? "text" : "password"
-            eyeOpen.classList.toggle('hidden', !isPassword)
-            eyeClose.classList.toggle('hidden', isPassword)
-        })
+        
