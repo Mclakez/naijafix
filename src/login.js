@@ -38,10 +38,11 @@ if (form){
             body: JSON.stringify({ username, password }),
             credentials: 'include'
         })
-        console.log(res)
+        
 
         if (!res.ok) {
             const errorData = await res.json();
+            console.log(errorData.message)
             throw new Error('Login failed');
 }
 
@@ -85,7 +86,6 @@ export async function fetchWithAuth(url, options = {} ){
 }
 
     let res = await fetch(url, authOptions)
-    console.log(res)
 
     if(res.status === 401) {
         accessToken = await refreshAccessToken()

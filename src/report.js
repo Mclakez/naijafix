@@ -1,7 +1,6 @@
 import { loadIssues } from "./issues.js"
 import { fetchWithAuth } from './login.js'
 
-const token = localStorage.getItem("token")
 const form = document.getElementById('report-form')
 const imageInput = document.getElementById('imageInput')
 const successMessage = document.getElementById('message')
@@ -42,6 +41,7 @@ form.addEventListener('submit', async (e) => {
             previewImage.classList.add('hidden')
             uploadIcon.classList.remove('hidden')
             form.reset()
+            setButtonLoading(false)
             
         setTimeout(() => {
             successMessage.style.display = 'none'

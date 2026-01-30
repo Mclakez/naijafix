@@ -27,7 +27,8 @@ if (form) {
             
             if (!res.ok) {
                 const errorData = await res.json();
-                throw new Error(errorData.message || 'Signup failed. Please try again!');
+                console.log(errorData.message)
+                throw new Error('Signup failed. Please try again!');
             }
 
             const data = await res.json();

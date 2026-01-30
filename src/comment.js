@@ -70,7 +70,7 @@ form.addEventListener('submit', async (e) => {
         setTimeout(() => {
             commentPopUp.style.display = 'none'
             form.reset()
-            
+            setButtonLoading(false)
         }, 3000)
         
     } catch (error) {
