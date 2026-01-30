@@ -244,6 +244,7 @@ async function getMonthlyStats() {
 
         if (!res.ok) throw new Error('Error with all issues')
         const issues = await res.json()
+        await updateStatCards(issues)
         
         issues.forEach(issue => {
             let status = issue.status.toLowerCase()
@@ -260,4 +261,17 @@ async function getMonthlyStats() {
     }
 }
 
+
+async function updateStatCards(allIssues) {
+    const pendingText = document.querySelector('.pending-report')
+    const acknowledgedText = document.querySelector('.acknowledged-report')
+    const inProgressText = document.querySelector('.in-progress-report')
+    const resolvedText = document.querySelector('.resolved-report')
+    
+    pendingText.textContent = allIssues.filter(issue => issue.status === 'Pending').length
+    acknowledgedText.textContent = allIssues.filter(issue => issue.status === 'Acknowledged').length
+    inProgressText.textContent = allIssues.filter(issue => issue.status === 'In-progress').length
+    resolvedText.textContent = allIssues.filter(issue => issue.status === 'Resolved').length
+    
+}
 

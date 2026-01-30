@@ -7,7 +7,7 @@ const passwordInput = document.getElementById('password');
 if (form) {
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        f
+
         if (!validateForm()) {
             return;
         }

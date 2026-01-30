@@ -23,8 +23,7 @@ form.addEventListener('submit', async (e) => {
         })
 
         if (!res.ok) {
-           
-            
+            console.log(res.error)
             throw new Error('Report submission failed')
         }
 

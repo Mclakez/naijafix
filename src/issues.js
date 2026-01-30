@@ -228,7 +228,7 @@ export async function getIssueDetails(id) {
 
         ${proofHtml}
 
-        <img src="./images/nfix1.png" alt="logo" srcset="" class="w-40 mt-8">
+        <img src="./images/nfix1.png" alt="logo" srcset="" class="w-40 mt-8 mb-8">
       </div>
 
         

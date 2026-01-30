@@ -10,10 +10,7 @@ const prevBtn = document.getElementById('prev-btn')
 let totalPages;
 const numberButtonContainer = document.getElementById('numberButtonContainer')
 const viewDetailsCard = document.getElementById('view-details-card')
-const pendingText = document.querySelector('.pending-report')
-const acknowledgedText = document.querySelector('.acknowledged-report')
-const inProgressText = document.querySelector('.in-progress-report')
-const resolvedText = document.querySelector('.resolved-report')
+
 
 
 let pages = []
@@ -65,10 +62,6 @@ async function getReports(currentPage, limit) {
         numberButtonContainer.innerHTML = ""
         pages = []
         rangeWithDots = []
-         pendingText.textContent = issues.filter(issue => issue.status === 'Pending').length
-         acknowledgedText.textContent = issues.filter(issue => issue.status === 'Acknowledged').length
-          inProgressText.textContent = issues.filter(issue => issue.status === 'In-progress').length
-        resolvedText.textContent = issues.filter(issue => issue.status === 'Resolved').length
         await renderPagination(currentPage, totalPages)
         issues.forEach(issue => {
           let statbgColor;
@@ -250,8 +243,8 @@ export async function getIssueDetails(id) {
             <div class="flex gap-2 items-center my-6">
 
                 <div class="relative">
-                  <div class="py-2 px-3 rounded bg-gray-200 flex items-center gap-2 min-w-[200px]"><span class="officer-text">${issue.officer || "Select officer"}</span><img src="/images/ChevronDown.svg" class="select-officer-btn cursor-pointer"></div>
-                  <ul class="officers-list-container absolute w-full bg-gray-300 top-full mt-2 rounded flex flex-col items-center max-h-[250px] overflow-y-auto overflow-x-auto py-2 gap-2 transition hidden"></ul>
+                  <div class="py-2 px-3 rounded bg-gray-200 flex justify-between items-center gap-2 w-fit md:min-w-[200px]"><span class="officer-text">${issue.officer || "Select officer"}</span><img src="/images/ChevronDown.svg" class="select-officer-btn cursor-pointer"></div>
+                  <ul class="officers-list-container absolute w-full bg-gray-300 top-full mt-2 rounded flex-col items-center max-h-[250px] overflow-y-auto overflow-x-auto py-2 gap-2 transition hidden"></ul>
                 </div>
                 <button class="bg-red-500 py-2 px-3 rounded flex items-center text-white gap-2 delete-btn hover:brightness-110 cursor-pointer transition" data-id="${issue._id}"><img src="/images/TrashOutline.svg"><span>Delete issue</span></button>
            

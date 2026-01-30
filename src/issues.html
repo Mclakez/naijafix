@@ -52,7 +52,7 @@
       
       </main>
       <button class="fixed bottom-20 right-6 xl:right-[calc((100vw-80rem)/2+1rem)] bg-black h-16 w-16 rounded-full grid place-items-center" id="add-btn">
-       <span class="text-white text-5xl leading-none mb-2 overflow-hidden">+</span>
+       <span class="text-white text-5xl leading-none md:mb-2 overflow-hidden">+</span>
       </button>
 
     </div>
@@ -62,7 +62,7 @@
         <div class=" max-w-7xl flex justify-between items-center px-4 py-6 text-white mx-auto">
           <button class="back-btn cursor-pointer" >&larr;</button>
         <h4 class="text-white font-semibold">Report issue</h4>
-        <div id="message" class="bg-green-500 text-center py-3 rounded text-white font-semibold absolute bottom-0  w-[calc(100%-2rem)] left-1/2 -translate-x-1/2 translate-y-[102%] z-100 max-w-4xl hidden">Report has been succesfully submitted</div>
+        <div id="message" class="bg-green-500 text-center py-3 rounded text-white font-semibold fixed top-6  w-[calc(100%-2rem)] left-1/2 -translate-x-1/2 z-100 max-w-4xl hidden">Report has been succesfully submitted</div>
         </div>
       </div>
 
@@ -87,12 +87,22 @@
       <label for="uploadBox" class="text-xl font-semibold">Image of the Report</label>
        <div id="uploadBox" class="relative rounded-xl w-full h-50 md:h-100 bg-gray-300 border-2 border-dashed border-gray-400 flex items-center justify-center cursor-pointer overflow-hidden hover:border-green-500 transition-colors">
         <input name="issueImage" id="imageInput" type="file" accept="image/*"  hidden>
-        <i class="fa-solid fa-image text-5xl" id="uploadIcon"></i>
+        <img src="./images/file-add.svg" class="text-5xl" id="uploadIcon">
         <img id="previewImage" alt="Preview" class="absolute inset-0 mx-auto my-auto object-fit hidden rounded">
       </div>
      </div>
 
-      <button type="submit" class="bg-green-800 flex justify-center py-3 rounded w-full text-white font-semibold">Submit Report</button>
+      <button 
+    id="submit-report-btn"
+    class="bg-green-800 flex justify-center items-center gap-2 py-3 rounded text-white font-medium w-full" 
+    type="submit"
+>
+    <span id="report-btn-text">Submit Report</span>
+    <svg id="report-btn-spinner" class="hidden animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+    </svg>
+</button>
     </form>
     </section>
 
@@ -105,20 +115,30 @@
         <div class="flex justify-between items-center px-4 py-6 text-white max-w-7xl mx-auto">
           <button class="back-btn text-xl cursor-pointer">&larr;</button>
         <h4 class="text-white font-semibold">Comment</h4>
-        <div class="bg-green-500 text-center py-3 rounded text-white font-semibold absolute bottom-0  w-[calc(100%-2rem)] left-1/2 -translate-x-1/2 translate-y-[102%] z-100 max-w-4xl hidden" id="comment-popup">Comment has been succesfully submitted</div>
+        <div class="bg-green-500 text-center py-3 rounded text-white font-semibold fixed top-6  w-[calc(100%-2rem)] left-1/2 -translate-x-1/2  z-100 max-w-4xl hidden" id="comment-popup">Comment has been succesfully submitted</div>
         </div>
       </div>
 
       <div class="mx-auto max-w-4xl">
-        <form id="comment-form" class="px-4 " >
+        <form id="comment-form" class="px-4 ">
         <div >
         <label for="comment" class="text-xl font-semibold">Comment</label>
         <textarea id="comment" name="comment" class="rounded-lg w-full border border-gray-400 px-3 py-3 placeholder:text-lg text-lg outline-none" placeholder="Enter comment" rows="6"></textarea>
       </div>
 
-       <button class="bg-green-800 flex justify-center py-3 rounded w-full text-white font-semibold mt-8" type="submit">Submit</button>
+       <button 
+    id="comment-report-btn"
+    class="bg-green-800 flex justify-center items-center gap-2 py-3 rounded text-white font-medium w-full" 
+    type="submit"
+>
+    <span id="comment-btn-text">Comment</span>
+    <svg id="comment-btn-spinner" class="hidden animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+    </svg>
+</button>
         </form>
-       <img src="./images/nfix1.png" alt="logo" srcset="" class="w-40 mt-16 ml-4">
+       <img src="./images/nfix1.png" alt="logo" srcset="" class="w-40 mt-16 ml-4 mb-8">
     
       </div>
     </section>
