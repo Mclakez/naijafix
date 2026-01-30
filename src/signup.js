@@ -125,11 +125,11 @@ function showToast(message, isError = false) {
     toast.classList.remove('bg-red-500', 'bg-green-500');
     toast.classList.add(isError ? 'bg-red-500' : 'bg-green-500');
     
-    toast.classList.remove('opacity-0', 'translate-y-2', 'pointer-events-none');
+    toast.classList.remove('opacity-0', '-translate-y-16', 'pointer-events-none');
     toast.classList.add('pointer-events-auto');
     
     toast.hideTimeout = setTimeout(() => {
-        toast.classList.add('opacity-0', 'translate-y-2', 'pointer-events-none');
+        toast.classList.add('opacity-0', '-translate-y-16', 'pointer-events-none');
         toast.classList.remove('pointer-events-auto');
     }, 3000);
 }
