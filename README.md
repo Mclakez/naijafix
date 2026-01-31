@@ -4,6 +4,9 @@ NaijaFix is a community-driven reporting platform that empowers citizens to repo
 
 From bad roads and broken streetlights to waste issues and public hazards, NaijaFix helps bridge the gap between citizens and responsible authorities.
 
+Project Link
+https://naijafix-4pvj.onrender.com/
+
 
 ---
 
