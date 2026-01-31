@@ -150,7 +150,7 @@ This project uses a .npmrc file with legacy-peer-deps=true enabled. This is requ
 
 
 # Clone the repository
-git clone https://github.com/your-username/naijafix.git
+git clone https://github.com/Mclakez/naijafix.git
 
 # Install backend dependencies
 cd backend
