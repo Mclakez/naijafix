@@ -28,7 +28,7 @@ if (form){
             }
 
     const username = document.getElementById('username').value
-    const password = document.getElementById('password').value
+    const password = document.getElementById('password').value.trim()
     setButtonLoading(true)
 
     try {
@@ -160,7 +160,7 @@ function validateForm() {
             
             // Get input values
             const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value;
+            const password = document.getElementById('password').value.trim();
             
             // Validate username
             if (username === '') {
