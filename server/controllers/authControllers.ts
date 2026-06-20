@@ -1,10 +1,13 @@
+import { Request, Response} from "express"
 import bcrypt from 'bcrypt'
 import { generateToken } from '../config/jwt.js'
 import { User } from '../models/Users.js'
 import { RefreshToken } from '../models/RefreshToken.js'
 import jwt from 'jsonwebtoken'
+import { Document } from 'mongoose'
+import { UserProps, UserSchemaProps } from '../types/index.js'
 
-export async function signup(req, res) {
+export async function signup(req: Request, res: Response) {
     const { username, email, password } = req.body
     console.log(username,email)
     
@@ -22,40 +25,41 @@ export async function signup(req, res) {
             username,
             email,
             password: hashed,
-            role,
-            department: role === "officer" ? department : null
+            role
         })
         res.json({user : newUser.username})
 
     } catch (err) {
-        res.status(500).json({error: err.message + "From the backend"})
+        const error = err as Error
+        res.status(500).json({error: error.message + "From the backend"})
     }
 }
 
-export async function login(req, res) {
+export async function login(req: Request, res: Response) {
     const { username, password } = req.body
     
     
     try {
-        const user = await User.findOne({username})
+        const user = await User.findOne({username}) as (Document & UserSchemaProps)
             if (!user) {
                return res.status(400).json({error: 'Invalid username'})
             }
             
 
-            const match = await bcrypt.compare(password, user.password)
+            const match = await bcrypt.compare(password, user.password || "")
             
             if(!match) {
                 return res.status(400).json({error: 'Invalid Password'})
             }
             const accessToken = await generateToken(req,res,user)
             res.json({ user: {id: user._id, username: user.username, role: user.role, suspension: user.suspension}, accessToken})
-    } catch(err) {
-        res.status(500).json({error: err.message})
+    } catch (err) {
+        const error = err as Error
+        res.status(500).json({error: error.message})
     } 
 }
 
-export async function refreshToken(req, res) {
+export async function refreshToken(req:Request, res: Response) {
     const refreshToken = req.cookies.refreshToken
     if(!refreshToken) {
         console.log('The issue is no refresh token')
@@ -63,7 +67,7 @@ export async function refreshToken(req, res) {
     }
 
     try {
-        const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET)
+        const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET!)
         const isValidToken = await RefreshToken.findOne({token: refreshToken})
         if(!isValidToken) {
             return res.status(401).json({error : 'Invalid refresh token'})
@@ -71,7 +75,7 @@ export async function refreshToken(req, res) {
 
         const accessToken = jwt.sign(
                 { id: decoded.id},
-                process.env.ACCESS_TOKEN_SECRET,
+                process.env.ACCESS_TOKEN_SECRET!,
                 { expiresIn: "15m"}
             )
 

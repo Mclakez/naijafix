@@ -1,3 +1,6 @@
+import { Document } from "mongoose"
+import { Request, Response} from "express"
+
 export type UserSchemaProps = {
   username: string
   googleId?: string
@@ -12,4 +15,6 @@ export type UserSchemaProps = {
   userImage: string | null
 }
 
-type User
+export type UserProps = {
+  user: Document & UserSchemaProps|null
+}
