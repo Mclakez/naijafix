@@ -67,7 +67,7 @@ export async function refreshToken(req:Request, res: Response) {
     }
 
     try {
-        const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET!)
+        const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET!) as {id: string}
         const isValidToken = await RefreshToken.findOne({token: refreshToken})
         if(!isValidToken) {
             return res.status(401).json({error : 'Invalid refresh token'})
