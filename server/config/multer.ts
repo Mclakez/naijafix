@@ -34,6 +34,6 @@ const storage = new CloudinaryStorage({
         transformation: [
             {width: 800, height: 800, crop: "limit"}
         ]
-    },
+    } as any,
 })
 export const upload = multer({ storage})

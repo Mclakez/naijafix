@@ -7,8 +7,8 @@ export async function configurePassport() {
     passport.use(
         new GoogleStrategy(
             {
-                clientID: process.env.GOOGLE_CLIENT_ID,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+                clientID: process.env.GOOGLE_CLIENT_ID!,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
             callbackURL: process.env.GOOGLE_CALLBACK_URL
             },
             async (accessToken, refreshToken, profile, done) => {
@@ -20,7 +20,7 @@ export async function configurePassport() {
                     }
 
                     const existingEmailUser = await User.findOne({ 
-                        email: profile.emails[0].value 
+                        email: profile.emails?.[0]?.value
                     })
 
                     if (existingEmailUser) {
@@ -32,14 +32,14 @@ export async function configurePassport() {
                     const newUser = await User.create({
                         googleId: profile.id,
                         username: profile.displayName,
-                        email: profile.emails[0].value,
+                        email: profile.emails?.[0].value,
                         role: 'user',
                         department: null
                     })
 
                     return done(null, newUser)
                 } catch (error) {
-                    return done(error, null)
+                    return done(error, false)
                 }
             }
         )

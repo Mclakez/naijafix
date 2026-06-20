@@ -1,10 +1,12 @@
 import { Request, Response} from "express"
 import jwt from 'jsonwebtoken'
 import { RefreshToken } from '../models/RefreshToken.js'
+import { Document } from "mongoose"
+import { UserSchemaProps } from "../types/index.js"
 
 
 
-export async function generateToken(req: Request,res: Response ,user) {
+export async function generateToken(req: Request,res: Response ,user:Document & UserSchemaProps ) {
     const ACCESS_SECRET: string = process.env.ACCESS_TOKEN_SECRET!
     const REFRESH_SECRET: string = process.env.REFRESH_TOKEN_SECRET!
     let days = 1
@@ -40,7 +42,7 @@ export async function generateToken(req: Request,res: Response ,user) {
     
 }
 
-export async function verifyToken(token) {
+export async function verifyToken(token: string) {
     const ACCESS_SECRET: string = process.env.ACCESS_TOKEN_SECRET!
     return jwt.verify(token, ACCESS_SECRET)
 }
