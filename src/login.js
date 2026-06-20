@@ -21,6 +21,7 @@ if (form){
             eyeOpen.classList.toggle('hidden', !isPassword)
             eyeClose.classList.toggle('hidden', isPassword)
         })
+        
     form.addEventListener('submit', async (e) => {
     e.preventDefault()
     if (!validateForm()) {

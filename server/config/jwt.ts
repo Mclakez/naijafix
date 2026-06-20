@@ -1,11 +1,12 @@
+import { Request, Response} from "express"
 import jwt from 'jsonwebtoken'
 import { RefreshToken } from '../models/RefreshToken.js'
 
 
 
-export async function generateToken(req,res,user) {
-    const ACCESS_SECRET = process.env.ACCESS_TOKEN_SECRET
-    const REFRESH_SECRET = process.env.REFRESH_TOKEN_SECRET
+export async function generateToken(req: Request,res: Response ,user) {
+    const ACCESS_SECRET: string = process.env.ACCESS_TOKEN_SECRET!
+    const REFRESH_SECRET: string = process.env.REFRESH_TOKEN_SECRET!
     let days = 1
     let expiryDate = new Date()
     expiryDate.setDate(expiryDate.getDate() + days)
@@ -40,6 +41,6 @@ export async function generateToken(req,res,user) {
 }
 
 export async function verifyToken(token) {
-    const ACCESS_SECRET = process.env.ACCESS_TOKEN_SECRET
+    const ACCESS_SECRET: string = process.env.ACCESS_TOKEN_SECRET!
     return jwt.verify(token, ACCESS_SECRET)
 }

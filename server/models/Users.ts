@@ -1,6 +1,8 @@
 import mongoose from "mongoose"
+import type { UserSchemaProps } from "../types/index.js";
 
-const userSchema = new mongoose.Schema({
+
+const userSchema = new mongoose.Schema<UserSchemaProps>({
     username: {
         type: String,
         required: true,
@@ -18,7 +20,7 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: function() {
+        required: function(): boolean {
             return !this.googleId; 
      }
     },
@@ -54,4 +56,4 @@ const userSchema = new mongoose.Schema({
     }
 })
 
-export const User = mongoose.model("User", userSchema)
+export const User = mongoose.model<UserSchemaProps>("User", userSchema)
