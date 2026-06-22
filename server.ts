@@ -30,17 +30,17 @@ app.use(
 app.use(passport.initialize())
 configurePassport()
 
-app.use(express.static(path.join(__dirname, "src"))) 
+app.use(express.static(path.join(__dirname,"..", "src"))) 
     
    await inItDb();
 
-    app.use("/uploads", express.static(path.join(__dirname, "uploads")))
+    app.use("/uploads", express.static(path.join(__dirname,"..", "uploads")))
     app.use("/api/auth", authRouter);
     app.use("/api/issues", issuesRouter)
     app.use("/api/users", usersRouter)
 
     app.get(/^(?!\/api).*/, (req, res) => {
-      res.sendFile(path.join(__dirname, 'src', 'index.html'))
+      res.sendFile(path.join(__dirname,"..", 'src', 'index.html'))
     })
 
     app.listen(PORT, () => {
