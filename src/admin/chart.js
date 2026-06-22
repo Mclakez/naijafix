@@ -16,223 +16,168 @@ document.addEventListener('DOMContentLoaded', async () => {
    await getPieChart()
 })
 
- async function getPieChart() {
+async function getPieChart() {
   const canvas = document.getElementById('pieChart')
-    const ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext('2d');
 
-    new Chart(ctx, {
-      type: 'doughnut',
-      data: {
-        labels: ['Pending', 'Acknowledged', 'In-progress', 'Resolved'],
-        datasets: [
-          {
-            data: [
-              monthlyStats.pending.reduce((a, b) => a + b, 0),
-              monthlyStats.acknowledged.reduce((a, b) => a + b, 0),
-              monthlyStats["in-progress"].reduce((a, b) => a + b, 0),
-              monthlyStats.resolved.reduce((a, b) => a + b, 0)
-            ],
-            backgroundColor: [
-              'yellow',
-              'blue',
-              'red',
-              'green'
-
-            ],
-            borderWidth: 0
+  new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Pending', 'Acknowledged', 'In-progress', 'Resolved'],
+      datasets: [{
+        data: [
+          monthlyStats.pending.reduce((a, b) => a + b, 0),
+          monthlyStats.acknowledged.reduce((a, b) => a + b, 0),
+          monthlyStats["in-progress"].reduce((a, b) => a + b, 0),
+          monthlyStats.resolved.reduce((a, b) => a + b, 0)
+        ],
+        backgroundColor: ['#eab308', '#3b82f6', '#f97316', '#16a34a'],
+        borderWidth: 0,
+        hoverOffset: 8,
+        spacing: 4,
+        borderRadius: 6
+      }]
+    },
+    options: {
+      cutout: '70%',
+      plugins: {
+        legend: {
+          display: true,
+          position: 'bottom',
+          labels: {
+            usePointStyle: true,
+            pointStyle: 'circle',
+            padding: 16,
+            color: '#374151',
+            font: { size: 12 }
           }
-        ]
-      },
-
-      options: {
-        cutout: '60%',
-        plugins: {
-          legend: {
-            display:false,
-            postion: 'bottom'
+        },
+        tooltip: {
+          backgroundColor: '#1f2937',
+          titleColor: '#f9fafb',
+          bodyColor: '#d1d5db',
+          padding: 10,
+          cornerRadius: 8,
+          callbacks: {
+            label: (item) => ` ${item.label}: ${item.raw}`
           }
         }
       }
-    })
+    }
+  })
+}
 
- }
-
-// async function getLineChart() {
-    
-//     const canvas = document.getElementById('multiLineChart')
-//     const ctx = canvas.getContext('2d');
-    
-//     new Chart(ctx, {
-//   type: 'line',
-//   data: {
-//     labels: ["Jan", "Feb", "Mar", "Apr", "May", "June", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], // X-axis
-//     datasets: [
-//       {
-//         label: 'Pending',
-//         data: monthlyStats.pending,
-//         borderColor: 'yellow',
-//         backgroundColor: 'rgba(0,0,255,0.1)',
-//         tension: 0
-//       },
-//       {
-//         label: 'Acknowledged',
-//         data: monthlyStats.acknowledged,
-//         borderColor: 'blue',
-//         backgroundColor: 'rgba(0,255,0,0.1)',
-//         tension: 0
-//       },
-//       {
-//         label: 'In-progress',
-//         data: monthlyStats["in-progress"],
-//         borderColor: 'red',
-//         backgroundColor: 'rgba(0,255,0,0.1)',
-//         tension: 0
-//       },
-//       {
-//         label: 'Resolved',
-//         data: monthlyStats.resolved,
-//         borderColor: 'green',
-//         backgroundColor: 'rgba(0,255,0,0.1)',
-//         tension: 0
-//       }
-//     ]
-//   },
-//   options: {
-//     responsive: true,
-//     maintainAspectRatio: false,
-//     plugins: {
-//     //   title: {
-//     //     display: true,
-//     //     text: 'NaijaFix Dashboard - Issues Overview',
-//     //     font: { size: 18 }
-//     //   },
-//       legend: {
-//         position: 'top',
-//         display: false
-//       }
-//     },
-//     scales: {
-//       y: {
-//         beginAtZero: true,
-//         title: {
-//           display: true,
-//           text: 'Number of Issues'
-//         }
-//       },
-//       x: {
-//         title: {
-//           display: true,
-//           text: 'Month'
-//         }
-//       }
-//     }
-//   }
-// });
-// }
 
 async function getLineChart() {
-    const canvas = document.getElementById('multiLineChart')
-    const ctx = canvas.getContext('2d');
-    
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-            datasets: [
-                {
-                    label: 'Pending',
-                    data: monthlyStats.pending,
-                    borderColor: '#facc15', // Yellow
-                    backgroundColor: 'transparent',
-                    borderWidth: 2,
-                    tension: 0.4, // Smooth curves like in the image
-                    pointRadius: 0, // Hide dots
-                    pointHoverRadius: 4 // Show dots on hover
-                },
-                {
-                    label: 'Acknowledged',
-                    data: monthlyStats.acknowledged,
-                    borderColor: '#3b82f6', // Blue
-                    backgroundColor: 'transparent',
-                    borderWidth: 2,
-                    tension: 0.4,
-                    pointRadius: 0,
-                    pointHoverRadius: 4
-                },
-                {
-                    label: 'In-progress',
-                    data: monthlyStats["in-progress"],
-                    borderColor: '#f97316', // Orange
-                    backgroundColor: 'transparent',
-                    borderWidth: 2,
-                    tension: 0.4,
-                    pointRadius: 0,
-                    pointHoverRadius: 4
-                },
-                {
-                    label: 'Resolved',
-                    data: monthlyStats.resolved,
-                    borderColor: '#14b8a6', // Teal/Cyan
-                    backgroundColor: 'transparent',
-                    borderWidth: 2,
-                    tension: 0.4,
-                    pointRadius: 0,
-                    pointHoverRadius: 4
-                }
-            ]
+  const canvas = document.getElementById('multiLineChart')
+  const ctx = canvas.getContext('2d');
+
+  // Gradient fills
+  const makeGradient = (color) => {
+    const gradient = ctx.createLinearGradient(0, 0, 0, 300)
+    gradient.addColorStop(0, color)
+    gradient.addColorStop(1, 'rgba(255,255,255,0)')
+    return gradient
+  }
+
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+      datasets: [
+        {
+          label: 'Pending',
+          data: monthlyStats.pending,
+          borderColor: '#eab308',
+          backgroundColor: makeGradient('rgba(234,179,8,0.15)'),
+          borderWidth: 2,
+          tension: 0.4,
+          fill: true,
+          pointRadius: 0,
+          pointHoverRadius: 5,
+          pointHoverBackgroundColor: '#eab308'
         },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    display: false // Hide legend since you have the cards above
-                },
-                tooltip: {
-                    mode: 'index',
-                    intersect: false,
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    grid: {
-                        color: '#e5e7eb', // Light gray grid lines
-                        drawBorder: false
-                    },
-                    border: {
-                        display: false
-                    },
-                    ticks: {
-                        color: '#6b7280', // Gray text
-                        font: {
-                            size: 12
-                        },
-                        stepSize: 5 // Increments of 5
-                    }
-                },
-                x: {
-                    grid: {
-                        display: false // Hide vertical grid lines
-                    },
-                    border: {
-                        display: false
-                    },
-                    ticks: {
-                        color: '#6b7280',
-                        font: {
-                            size: 12
-                        }
-                    }
-                }
-            },
-            interaction: {
-                mode: 'nearest',
-                axis: 'x',
-                intersect: false
-            }
+        {
+          label: 'Acknowledged',
+          data: monthlyStats.acknowledged,
+          borderColor: '#3b82f6',
+          backgroundColor: makeGradient('rgba(59,130,246,0.15)'),
+          borderWidth: 2,
+          tension: 0.4,
+          fill: true,
+          pointRadius: 0,
+          pointHoverRadius: 5,
+          pointHoverBackgroundColor: '#3b82f6'
+        },
+        {
+          label: 'In-progress',
+          data: monthlyStats["in-progress"],
+          borderColor: '#f97316',
+          backgroundColor: makeGradient('rgba(249,115,22,0.15)'),
+          borderWidth: 2,
+          tension: 0.4,
+          fill: true,
+          pointRadius: 0,
+          pointHoverRadius: 5,
+          pointHoverBackgroundColor: '#f97316'
+        },
+        {
+          label: 'Resolved',
+          data: monthlyStats.resolved,
+          borderColor: '#16a34a',
+          backgroundColor: makeGradient('rgba(22,163,74,0.15)'),
+          borderWidth: 2,
+          tension: 0.4,
+          fill: true,
+          pointRadius: 0,
+          pointHoverRadius: 5,
+          pointHoverBackgroundColor: '#16a34a'
         }
-    });
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: true,
+          position: 'top',
+          align: 'end',
+          labels: {
+            usePointStyle: true,
+            pointStyle: 'circle',
+            padding: 20,
+            color: '#374151',
+            font: { size: 12 }
+          }
+        },
+        tooltip: {
+          mode: 'index',
+          intersect: false,
+          backgroundColor: '#1f2937',
+          titleColor: '#f9fafb',
+          bodyColor: '#d1d5db',
+          padding: 12,
+          cornerRadius: 8,
+          usePointStyle: true
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          grid: { color: '#f3f4f6', drawBorder: false },
+          border: { display: false },
+          ticks: { color: '#9ca3af', font: { size: 11 } }
+        },
+        x: {
+          grid: { display: false },
+          border: { display: false },
+          ticks: { color: '#9ca3af', font: { size: 11 } }
+        }
+      },
+      interaction: { mode: 'nearest', axis: 'x', intersect: false }
+    }
+  })
 }
 
 
