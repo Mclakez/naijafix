@@ -1,6 +1,7 @@
 import { verifyToken } from '../config/jwt.js'
+import { Request, Response,  NextFunction } from 'express'
 
-export async function requireAuth(req, res, next) {
+export async function requireAuth(req: Request, res: Response, next: NextFunction) {
     const authHeader = req.headers.authorization
     if(!authHeader) {
         console.log('The issue is from require auth')
@@ -9,21 +10,12 @@ export async function requireAuth(req, res, next) {
 
     const token = authHeader.split(" ")[1]
     try {
-       const decoded = await verifyToken(token)
+       const decoded = await verifyToken(token) as {id: string}
        req.user = decoded
        next()
 
     } catch(err) {
         return res.status(401).json({error: "Invalid or expired token"})
     }
-}
-
-export async function requireOfficer(req, res, next) {
-    const user = await req.user
-    const role = user.role
-    if(role !== 'officer') {
-        return res.status(403).json({error: "Officer role required"})
-    }
-    next()
 }
 

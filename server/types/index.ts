@@ -1,5 +1,6 @@
 import { Document } from "mongoose"
-import { Request, Response} from "express"
+import { Request, Response } from "express"
+
 
 export type UserSchemaProps = {
   username: string

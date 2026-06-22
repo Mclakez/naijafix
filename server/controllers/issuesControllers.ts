@@ -3,6 +3,7 @@ import { Issue } from '../models/Issues.js'
 import { Counter } from '../models/Counter.js'
 import { User } from '../models/Users.js'
 import { cloudinary } from "../config/cloudinary.js";
+import { Request, Response } from 'express';
 
 async function getIssueId() {
     const counter = await Counter.findByIdAndUpdate("issues",
@@ -13,11 +14,14 @@ async function getIssueId() {
     return counter.seq
 }
 
-export async function postIssue(req, res) {
+export async function postIssue(req: Request, res: Response) {
     const {title, description, location} = req.body
     const issueImageId = req.file ? req.file.filename : null
     const issueImage = req.file ? req.file.path : null
-    const user = await req.user;
+    const user = req.user as { id: string } | undefined;
+  if (!user || !user.id) {
+      return res.status(401).json({ error: "Unauthorized access" });
+  }
     const citizenId = user.id;
     const issueId = await getIssueId()
     
@@ -33,14 +37,18 @@ export async function postIssue(req, res) {
         })
         res.json(newIssue)
     } catch (err) {
-        res.status(500).json({error: err.message})
+        const error = err as  Error
+        res.status(500).json({error: error.message})
     }
 }
 
-export async function deleteIssue(req, res) {
+export async function deleteIssue(req: Request, res:  Response) {
     try {
         let { id } = req.params
-        const issue = await Issue.findById(id)
+      const issue = await Issue.findById(id)
+      
+      if (!issue) return res.status(401).json({ error: "Issue not found" })
+      
         if(issue.issueImageId) {
             await cloudinary.uploader.destroy(issue.issueImageId);
         }
@@ -53,24 +61,27 @@ export async function deleteIssue(req, res) {
             deletedIssue
         })
     } catch (err) {
-        res.status(500).json({error: err.message})
+      const error = err as  Error
+        res.status(500).json({error: error.message})
     }
 }
 
-export async function getMyIssues(req, res) {
-    const user = await req.user;
+export async function getMyIssues(req: Request, res:Response) {
+  const user = req.user as {id: string};
+  if(!user) return res.status(401).json({ error: "Unauthorized access" });
     const citizenId = user.id;
     try {
         const issues = await Issue.find({createdBy: citizenId})
         res.json(issues)
     } catch (err) {
-        res.status(500).json({error: err.message})
+        const error = err as  Error
+        res.status(500).json({error: error.message})
     }
 }
 
-export async function getAllIssues(req, res) {
-    const page = parseInt(req.query.page)
-    const limit = parseInt(req.query.limit)
+export async function getAllIssues(req: Request, res:Response) {
+    const page = parseInt(String(req.query.page))
+    const limit = parseInt(String(req.query.limit))
     const totalItems = await Issue.countDocuments()
     const currentpage = page
     
@@ -90,11 +101,12 @@ export async function getAllIssues(req, res) {
         }
 
     } catch (err) {
-        res.status(500).json({error: err.message})
+        const error = err as  Error
+        res.status(500).json({error: error.message})
     }
 }
 
-export async function getDetails(req, res) {
+export async function getDetails(req: Request, res:Response) {
     
     try {
         let { id } = req.params
@@ -107,13 +119,17 @@ export async function getDetails(req, res) {
         }
         return res.status(200).json(issue)
     } catch (err) {
-        res.status(500).json({error: err.message})
+        const error = err as  Error
+        res.status(500).json({error: error.message})
     }
 }
 
-export async function postComment(req, res) {
+export async function postComment(req: Request, res:Response) {
         const { comment } = req.body
-        const user = await req.user;
+        const user = req.user as { id: string };
+        if (!user || !user.id) {
+            return res.status(401).json({ error: "Unauthorized access" });
+        }
         const citizenId = user.id;
         const { id } = req.params
 
@@ -127,11 +143,12 @@ export async function postComment(req, res) {
         await issue.save()
         res.status(200).json(issue)
     } catch (err) {
-        res.status(500).json({error: err.message + "true"})
+        const error = err as  Error
+        res.status(500).json({error: error.message + "true"})
     }
 }
 
-export async function updateIssueOfficer(req, res) {
+export async function updateIssueOfficer(req: Request, res:Response) {
     let {id} = req.params
     let {officer} = req.body
     
@@ -148,20 +165,20 @@ export async function updateIssueOfficer(req, res) {
     }
 
     res.status(200).json(updatedIssue)
-    } catch(error) {
+    } catch (err) {
+        const error = err as  Error
         res.status(500).json({error: 'Issue not found'})
     }
 }
 
 
 
-export async function getOfficerIssues(req, res) {
+export async function getOfficerIssues(req: Request, res:Response) {
             let {name} = req.params
-            const page = parseInt(req.query.page)
-            const limit = parseInt(req.query.limit)
+            const page = parseInt(String(req.query.page))
+            const limit = parseInt(String(req.query.limit))
             const totalItems = await Issue.countDocuments({officer : name})
             const currentpage = page
-            console.log(name)
     
     try {
     if(page && limit) {
@@ -205,14 +222,15 @@ export async function getOfficerIssues(req, res) {
             res.status(200).json(officerIssues)
         }
     } catch(err) {
-        console.error('Error in gettimg officer issues:', err)
-        res.status(500).json({ error: err.message })
+      console.error('Error in gettimg officer issues:', err)
+        const error = err as  Error
+        res.status(500).json({ error: error.message })
     }
 
 
 }
 
-export async function updateIssueStatus(req, res) {
+export async function updateIssueStatus(req: Request, res:Response) {
     let {id} = req.params
     let {status} = req.body
     
@@ -229,12 +247,13 @@ export async function updateIssueStatus(req, res) {
     }
 
     res.status(200).json(updatedIssue)
-    } catch(error) {
+    } catch (err) {
+        const error = err as  Error
         res.status(500).json({error: 'Issue not found'})
     }
 }
 
-export async function addFixPhoto(req, res) {
+export async function addFixPhoto(req: Request, res:Response) {
     const { id } = req.params
     const fixImage = req.file ? req.file.filename : null
     
@@ -246,6 +265,7 @@ export async function addFixPhoto(req, res) {
         )
         res.json(updatedIssue)
     } catch (err) {
-        res.status(500).json({error: err.message})
+        const error = err as  Error
+        res.status(500).json({error: error.message})
     }
 }

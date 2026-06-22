@@ -1,6 +1,6 @@
 import express from 'express'
 import { postIssue, getMyIssues, getAllIssues, getDetails, addFixPhoto, postComment, deleteIssue, updateIssueOfficer, getOfficerIssues, updateIssueStatus} from '../controllers/issuesControllers.js'
-import { requireAuth, requireOfficer } from '../middleware/auth.js'
+import { requireAuth} from '../middleware/auth.js'
 import { checkSuspension } from '../middleware/checkSuspension.js'
 import { lastSeenOnline } from '../middleware/lastSeenOnline.js'
 import { upload } from "../config/multer.js";

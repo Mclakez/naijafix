@@ -1,5 +1,5 @@
 import passport from 'passport'
-import { Strategy as GoogleStrategy } from 'passport-google-oauth20'
+import { Strategy as GoogleStrategy,Profile, VerifyCallback  } from 'passport-google-oauth20'
 import { User } from '../models/Users.js'
 
 
@@ -11,7 +11,7 @@ export async function configurePassport() {
             clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
             callbackURL: process.env.GOOGLE_CALLBACK_URL
             },
-            async (accessToken, refreshToken, profile, done) => {
+            async (accessToken: string, refreshToken: string, profile: Profile, done: VerifyCallback) => {
                 try {
                     let user = await User.findOne({googleId: profile.id})
 

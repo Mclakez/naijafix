@@ -2,11 +2,12 @@ import { User } from '../models/Users.js'
 import { Issue } from '../models/Issues.js'
 import { RefreshToken } from '../models/RefreshToken.js'
 import bcrypt from 'bcrypt'
+import { Request, Response  } from 'express'
 
 
-export async function getAllUsers(req, res) {
-    const page = parseInt(req.query.page)
-    const limit = parseInt(req.query.limit)
+export async function getAllUsers(req: Request, res: Response) {
+    const page = parseInt(String(req.query.page))
+    const limit = parseInt(String(req.query.limit))
     const totalItems = await User.countDocuments({role: "user"})
     const currentpage = page
     
@@ -55,13 +56,14 @@ export async function getAllUsers(req, res) {
 
 
     } catch (err) {
-        res.status(500).json({error: err.message})
+        const error = err as  Error
+        res.status(500).json({error: error.message})
     }
 }
 
-export async function getAllOfficers(req, res) { 
-    const page = parseInt(req.query.page)
-        const limit = parseInt(req.query.limit)
+export async function getAllOfficers(req: Request, res: Response) { 
+    const page = parseInt(String(req.query.page))
+        const limit = parseInt(String(req.query.limit))
         const totalItems = await User.countDocuments({role : "officer"})
         const currentpage = page
     try {     
@@ -134,27 +136,27 @@ export async function getAllOfficers(req, res) {
 
 
     } catch (err) {
-        console.error('Error in getAllOfficers:', err)
-        res.status(500).json({ error: err.message })
+        const error = err as  Error
+        res.status(500).json({ error: error.message })
     }
 }
 
 
-export async function deleteUser(req,res) {
+export async function deleteUser(req: Request,res: Response) {
     let {id} = req.params
 
     try {
         let deletedUser = await User.findByIdAndDelete(id)
         res.status(200).json({deletedUser})
     } catch(err) {
-        console.error('Error in deleting user:', err)
-        res.status(500).json({ error: err.message })
+        const error = err as  Error
+        res.status(500).json({ error: error.message })
     }
 
 
 }
 
-export async function suspendUser(req, res){
+export async function suspendUser(req: Request, res: Response){
     let { id } = req.params
     let days = 7
     let expiryDate = new Date()
@@ -168,12 +170,12 @@ export async function suspendUser(req, res){
         )
 
     } catch(err) {
-        console.error('Error in suspending user:', err)
-        res.status(500).json({ error: err.message })
+        const error = err as  Error
+        res.status(500).json({ error: error.message })
     }
 }
 
-export async function addOfficer(req, res) {
+export async function addOfficer(req: Request, res: Response) {
     let {username, email, password} = req.body
     let hashed = await bcrypt.hash(password, 10)
 
@@ -186,11 +188,12 @@ export async function addOfficer(req, res) {
         })
         res.status(200).json(newOfficer)
     } catch (err) {
-        res.status(500).json({error: err.message})
+        const error = err as  Error
+        res.status(500).json({error: error.message})
     }
 }
 
-export async function logOutUser(req, res) {
+export async function logOutUser(req: Request, res: Response) {
     const refreshToken = req.cookies.refreshToken
     
     try {
@@ -206,7 +209,6 @@ export async function logOutUser(req, res) {
         return res.status(200).json({success: true})
         
     } catch (error) {
-        console.error('Logout error:', error)
         return res.status(500).json({error: 'Logout failed'})
     }
 }

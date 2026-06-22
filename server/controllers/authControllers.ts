@@ -9,7 +9,6 @@ import { UserProps, UserSchemaProps } from '../types/index.js'
 
 export async function signup(req: Request, res: Response) {
     const { username, email, password } = req.body
-    console.log(username,email)
     
     try {
         const existing = await User.findOne({username})

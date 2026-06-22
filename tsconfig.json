@@ -5,6 +5,6 @@
         "rootDir": ".",
         "resolveJsonModule": true,
       },
-      "include": ["server.ts", "server/**/*.ts"],
+      "include": ["server.ts", "server/**/*.ts", "server/types/express.d.ts"],
       "exclude": ["node_modules", "dist", "src"]
 }

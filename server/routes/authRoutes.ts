@@ -5,6 +5,9 @@ import { signup, login, refreshToken } from '../controllers/authControllers.js'
 import { requireAuth} from '../middleware/auth.js'
 import { handleValidation } from "../middleware/validationMiddleware.js";
 import { signupValidation, logInValidation } from "../validators/authValidators.js";
+import { Document } from "mongoose"
+import { UserSchemaProps } from "../types/index.js"
+
 
 export const authRouter = express.Router()
 
@@ -25,8 +28,8 @@ authRouter.get('/google/callback',
     }),
     async (req, res) => {
         try {
-            const user = req.user
-            const accessToken = await generateToken(req, res, user)
+            const user = req.user as Document & UserSchemaProps
+            const accessToken = await generateToken(req, res, user )
             res.redirect(`/auth-success.html?token=${accessToken}&username=${user.username}&role=${user.role}&id=${user._id}`)
         } catch (error) {
             console.error('Google callback error:', error)
