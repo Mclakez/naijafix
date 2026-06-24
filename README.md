@@ -190,6 +190,12 @@ Contributions, ideas, and feedback are welcome!
 Fadairo Ayokunle
 Frontend Developer | Community Tech Builder
 
-Contact me for admin and officer login
+Admin Login
+Username -- Marvellous
+Password --- Incognito
+
+Officer Login
+Username -- James Johnson
+Password --- Johnson
 
 > Building solutions for real Nigerian problems.
