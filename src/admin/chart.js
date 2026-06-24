@@ -185,7 +185,6 @@ async function getMonthlyStats() {
     try {
       
         const res = await fetchWithAuth('/api/issues')
-        
 
         if (!res.ok) throw new Error('Error with all issues')
         const issues = await res.json()
